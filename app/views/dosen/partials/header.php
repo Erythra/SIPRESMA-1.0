@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="././../assets/css/style.css">
     <link rel="stylesheet" href="././../assets/css/header.css">
     <link rel="stylesheet" href="././../assets/css/mahasiswa/profile.css">
-    
+
 
 </head>
 
