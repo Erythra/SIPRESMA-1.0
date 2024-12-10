@@ -2,7 +2,7 @@
 <?php include 'partials/sidenav.php'; ?>
 
 
-<div class="mt-3" style="margin-left: 317px; margin-right: 32px;">
+<div class="" style="margin-left: 317px; margin-right: 32px; margin-top: 90px;">
     <div style="margin-bottom: 17.5px;">
         <h4 class="fw-semibold">Prestasi</h4>
         <h6 class="fw-medium text-muted">Home - Prestasi</h6>
@@ -82,9 +82,9 @@
                             <td class="align-middle text-center">
                                 <span style="
                         background-color: <?=
-                                            $prestasi['status_pengajuan'] === 'disetujui' ? '#DCFCE7' : ($prestasi['status_pengajuan'] === 'ditolak' ? '#FEE2E2' : '#EAEDEF'); ?>; 
+                                            $prestasi['status_pengajuan'] === 'Approved' ? '#DCFCE7' : ($prestasi['status_pengajuan'] === 'Rejected' ? '#FEE2E2' : '#EAEDEF'); ?>; 
                         color: <?=
-                                $prestasi['status_pengajuan'] === 'disetujui' ? '#166534' : ($prestasi['status_pengajuan'] === 'ditolak' ? '#991B1B' : '#212529'); ?>; 
+                                $prestasi['status_pengajuan'] === 'Approved' ? '#166534' : ($prestasi['status_pengajuan'] === 'Rejected' ? '#991B1B' : '#212529'); ?>; 
                         padding: 4px 8px; 
                         border-radius: 4px; 
                         font-size: 14px; 

@@ -20,14 +20,12 @@
     <link rel="stylesheet" href="././../assets/css/style.css">
     <link rel="stylesheet" href="././../assets/css/header.css">
     <link rel="stylesheet" href="././../assets/css/mahasiswa/profile.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+    
 
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" style="border-radius: 0px">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top" style="border-radius: 0px">
         <div class="container-fluid" style="padding-left: 32px; padding-right: 32px;">
             <div class="d-flex align-items-center ms-auto" style="gap: 12px;">
                 <div class="card p-2">
