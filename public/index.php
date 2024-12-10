@@ -7,6 +7,7 @@ require_once '../app/controllers/PrestasiController.php';
 $authController = new AuthController($conn);
 $prestasiController = new PrestasiController($conn);
 
+// session
 if (isset($_SESSION['user'])) {
     $authController->isSessionActive();
 }
@@ -101,7 +102,7 @@ switch ($page) {
         $dosenList = $prestasiController->getDosenList();
         include '../app/views/dosen/dosen_prestasi_add.php';
         break;
-    
+
     case 'peringkat_akademik':
         include '../app/views/mahasiswa/peringkat_akademik.php';
         break;
@@ -113,7 +114,7 @@ switch ($page) {
     case 'ipk':
         include '../app/views/mahasiswa/ipk.php';
         break;
-    
+
     case 'bantuan':
         include '../app/views/mahasiswa/bantuan.php';
         break;
