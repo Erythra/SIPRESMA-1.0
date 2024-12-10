@@ -29,8 +29,10 @@ class AuthController
 
             if ($user) {
                 $_SESSION['user'] = $user;
+                $_SESSION['role'] = $user['role'] ?? '';
                 $_SESSION['loggedin_time'] = time();
 
+                // Redirection berdasarkan role
                 if (isset($user['role_dosen'])) {
                     header("Location: index.php?page=dosen_dashboard");
                 } else {

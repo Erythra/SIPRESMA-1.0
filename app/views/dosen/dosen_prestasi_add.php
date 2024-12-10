@@ -1,7 +1,7 @@
 <?php include 'partials/header.php'; ?>
 <?php include 'partials/sidenav.php'; ?>
 
-<div class="mt-3" style="margin-left: 317px; margin-right: 32px;">
+<div class="" style="margin-left: 317px; margin-right: 32px; margin-top: 90px;">
     <div style="margin-bottom: 17.5px;">
         <h4 class="fw-semibold">Tambah Prestasi</h4>
         <h6 class="fw-medium text-muted">Home - Prestasi</h6>

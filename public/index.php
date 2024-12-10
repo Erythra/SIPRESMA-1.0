@@ -169,15 +169,3 @@ switch ($page) {
         echo "Halaman tidak ditemukan.";
         break;
 }
-
-// Actions outside switch
-if (isset($_POST['setujui']) && isset($_GET['id_prestasi'])) {
-    $id_prestasi = $_GET['id_prestasi'];
-    $prestasiController->setujuiPrestasi($id_prestasi);
-}
-
-if (isset($_POST['tolak']) && isset($_GET['id_prestasi']) && isset($_POST['alasan'])) {
-    $id_prestasi = $_GET['id_prestasi'];
-    $alasan = $_POST['alasan'];
-    $prestasiController->tolakPrestasi($id_prestasi, $alasan);
-}
