@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F5F2FE;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: #ffffff;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.header .navbar-brand img {
+    height: 50px;
+    margin-right: 10px;
+}
+
+.header .navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.cont2 {
+    background-color: #2d3a87;
+    color: white;
+    padding: 0.8rem 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.instruction {
+    background-color: #e8f4ff;
+    color: #007bff;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    max-width: 600px;
+    margin-left: 5px;
+    margin-right: auto;
+    text-align: center;
+}
+
+.profile-section img {
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+}
+
+.btn-simpan {
+    background-color: #2d3a87;
+    color: white;
+    padding: 0.5rem 1.2rem;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.btn-simpan i {
+    margin-right: 5px;
+}
+
+/* .btn-simpan:hover {
+    color: #ffffff;
+} */
+
+.container.my-5 {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+    background-color: #2d3a87;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: auto;
+    font-size: 0.9rem;
+}
+
+.simpan {
+    text-decoration: none;
+    color: white;
+}

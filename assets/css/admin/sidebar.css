@@ -1,0 +1,33 @@
+/* Default styles for sidebar links */
+.sidebar .nav-link {
+    color: white;
+    font-weight: normal;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s, font-weight 0.3s;
+}
+
+/* Active link styles */
+.sidebar .nav-link.active {
+    color: #244282 !important; /* Text color */
+    background-color: rgba(255, 255, 255, 0.7); /* Background color */
+    font-weight: bold !important; /* Bold text */
+    border-radius: 5px; /* Optional: Rounded corners */
+}
+
+.sidebar .nav-link.active i {
+    color: #244282 !important; /* Text color */
+    font-weight: extra-bold !important; /* Bold text */
+}
+
+/* Hover effect for links */
+.sidebar .nav-link:hover  {
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+    color: #ffffff !important; /* Keep text color white */
+    border-radius: 5px; /* Optional: Rounded corners */
+}
+
+.sidebar .nav-link:hover i  {
+    color: #ffffff !important; /* Keep text color white */
+}
+
+

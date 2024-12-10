@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body {
+    font-family: poppins;
+    margin: 0;
+    background-color: #F8FAFF;
+}
+
+
+.navbar {
+    background-color: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 15px;
+    font-weight: 500;
+    height: 70px;
+}
+.navbar-brand {
+    font-weight: bold;
+}
+
+
+
+
+
+.logo-sipresma{
+    width: 140px;
+    height: 40px;
+    
+}.info-text-nav{
+    margin: 0;
+}
+
+
+
+
+
+
+.footer {
+    background-color: #1a2a6c;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 0px;
+}
+
+
+/* Default button styles */
+.btn {
+    color: #343A40 !important; /* Override Bootstrap default color */
+    background-color: #EAEDEF !important; /* Override Bootstrap default background */
+    border: none !important; /* Remove Bootstrap border */
+    transition: color 0.3s, background-color 0.3s; /* Smooth transition */
+}
+
+/* Hover styles */
+.btn:hover {
+    color: #244282 !important; /* Text color when hovered */
+    background-color:#EAEDEF  !important; /* Remove background color */
+    border-color: #244282 !important; /* Change border (outline) color on hover */
+    outline: 1px solid #244282 !important; /* Add outline on hover */
+}
+
+/* Checked button styles */
+.btn-check:checked + .btn {
+    color: white !important; /* Text color when checked */
+    background-color: #244282 !important; /* Background color when checked */
+    border: none !important; /* Remove Bootstrap border */
+    font-weight: bold; /* Optional bold effect */
+}
+
+.btn-peringkat{
+    background-color: #244282 !important;
+    color: white !important;
+}
+
+
+
+
+
+.bi {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+}
+
+/*
+ * Sidebar
+ */
+
+@media (min-width: 768px) {
+  .sidebar .offcanvas-lg {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 48px;
+  }
+  .navbar-search {
+    display: block;
+  }
+}
+
+.sidebar .nav-link {
+  font-size: .875rem;
+  font-weight: 500;
+}
+
+.sidebar .nav-link.active {
+  color: #2470dc;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+}
+
+
+.rectangle{
+    width: 100%;
+    height: 51.22px;
+    background-color: #d8d8d8;
+    border-radius: 30px;
+}
+
+.nav-tabs .nav-link {
+  color: #6c757d; /* Default: text-muted */
+  transition: color 0.3s ease;
+}
+
+.nav-tabs .nav-link.active {
+  color: #244282; /* Active color */
+  font-weight: bold;
+}
+
+.pagination .page-link {
+  color: #6c757d !important; /* Default: text-muted */
+  transition: color 0.3s ease;
+}
+
+.pagination .page-item.active .page-link {
+  color: white !important;
+  background-color: #244282 !important; /* Active color */
+  font-weight: bold !important;
+}
+
+

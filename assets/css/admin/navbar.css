@@ -1,0 +1,84 @@
+.navbar-collapse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    width: 100%;
+    z-index: 1000; /* Lower z-index so it's under the logo and user info */
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler {
+    position: absolute; /* Ensure it's positioned relative to the navbar */
+    right: 70px; /* Adjust to control the distance from the right */
+    top: 50%; /* Vertically center the toggler */
+    transform: translateY(-50%); /* Fix any slight misalignment */
+    z-index: 120; /* Ensure the toggler button stays above the collapse menu */
+}
+
+/* Main navbar container using flex */
+.navbar .container {
+    display: flex;
+    justify-content: space-between; /* Space out logo, menu, and user info */
+    align-items: center; /* Vertically center all elements */
+    width: 100%;
+}
+
+/* Navbar menu items and logo alignment */
+.navbar-nav {
+    display: flex;
+    justify-content: center; /* Center the navbar items */
+    flex: 1; /* Take up all the available space in the middle */
+    z-index: 101; /* Make sure the navbar items stay above the background */
+}
+
+.navbar-nav .nav-item {
+    margin: 0 20px; /* Space between menu items */
+}
+
+/* User info alignment */
+.user-info {
+    display: flex;
+    align-items: center; /* Align user info vertically */
+    gap: 12px;
+    z-index: 120; /* Ensure the user info stays above everything else */
+}
+
+.user-info .info-text-nav {
+    text-align: right;
+}
+
+/* Hide user info when navbar is expanded */
+.navbar-collapse.show + .user-info {
+    display: none; /* Hide user info when the menu is active */
+}
+
+@media (max-width: 992px) {
+    .navbar-nav {
+        flex-direction: column; /* Stack navbar items vertically */
+        width: 100%;
+        text-align: center; /* Center the text */
+        position: fixed; /* Ensure the menu appears over the content */
+        top: 60px; /* Adjust this value if needed */
+        left: 0;
+        background-color: white; /* Optional: Ensure the background color is white */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for a cleaner look */
+    }
+
+    .user-info {
+        display: none; /* Hide user info on mobile */
+    }
+
+    .navbar-collapse {
+        position: relative;
+        z-index: 100;
+    }
+
+    /* Ensure burger icon stays visible */
+    .navbar-toggler {
+        z-index: 120; /* Make sure burger icon is above other elements */
+    }
+}
+
+
