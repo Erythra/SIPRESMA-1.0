@@ -1,11 +1,9 @@
-<?php include 'partials/header.php'?>
-
-<div class="mb-5">
-    <p class="info-text fw-light">Home - Papan Peringkat - Akademik</p>
-</div>
+<?php include 'partials/header.php' ?>
 
 
-<div class="card mb-5" style="margin: 0px 84px 0px 84px;">
+
+
+<div class="card mb-5" style="margin: 0px 84px 0px 84px; margin-top: 8rem;">
     <div class="card-body">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">

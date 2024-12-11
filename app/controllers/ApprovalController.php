@@ -6,11 +6,11 @@ require_once __DIR__ . '/../models/PrestasiModel.php';
 class ApprovalController
 {
     private $approvalModel;
-    private $prestasiModel;
+    private $dosenPrestasiModel;
 
     public function __construct($conn)
     {
-        $this->prestasiModel = new PrestasiModel($conn);
+        $this->dosenPrestasiModel = new PrestasiModel($conn);
         $this->approvalModel = new ApprovalModel($conn);
     }
 

@@ -82,28 +82,67 @@
                             <!-- Kolom Status Pengajuan -->
                             <td class="align-middle text-center">
                                 <span style="
-                        background-color: <?=
-                                            $prestasi['status_pengajuan'] === 'Approved' ? '#DCFCE7' : ($prestasi['status_pengajuan'] === 'Rejected' ? '#FEE2E2' : '#EAEDEF'); ?>; 
-                        color: <?=
-                                $prestasi['status_pengajuan'] === 'Approved' ? '#166534' : ($prestasi['status_pengajuan'] === 'Rejected' ? '#991B1B' : '#212529'); ?>; 
-                        padding: 4px 8px; 
-                        border-radius: 4px; 
-                        font-size: 14px; 
-                        font-weight: bold;
-                        display: inline-block;
-                    ">
+                                    background-color: <?=
+                                                        $prestasi['status_pengajuan'] === 'Approved' ? '#DCFCE7' : ($prestasi['status_pengajuan'] === 'Rejected' ? '#FEE2E2' : '#EAEDEF'); ?>; 
+                                    color: <?=
+                                            $prestasi['status_pengajuan'] === 'Approved' ? '#166534' : ($prestasi['status_pengajuan'] === 'Rejected' ? '#991B1B' : '#212529'); ?>; 
+                                    padding: 4px 8px; 
+                                    border-radius: 4px; 
+                                    font-size: 14px; 
+                                    font-weight: bold;
+                                    display: inline-block;
+                                ">
                                     <?= htmlspecialchars($prestasi['status_pengajuan']); ?>
                                 </span>
                             </td>
 
                             <!-- Kolom Actions -->
                             <td class="align-middle text-center">
-                                <div class="d-flex align-items-center justify-content-center gap-1">
+                                <div class="d-flex align-items-center justify-content-center gap-3">
                                     <!-- Tombol Detail -->
                                     <a href="index.php?page=dosen_prestasi_detail&id_prestasi=<?php echo $prestasi['id_prestasi']; ?>"
                                         class="btn btn-outline-primary btn-xs">
                                         <i class="fas fa-file-alt"></i>
                                     </a>
+                                    <a href="#"
+                                        class="btn btn-outline-danger btn-xs deleteButton"
+                                        data-id="<?php echo $prestasi['id_prestasi']; ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#confirmDeleteModal">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                    <!-- Modal Konfirmasi -->
+                                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="confirmDeleteLabel">Konfirmasi Penghapusan</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                                                    <p class="text-danger fw-bold">Data yang sudah dihapus tidak dapat dikembalikan!</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                    <a href="#" id="confirmDeleteButton" class="btn btn-danger">Hapus</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const deleteButtons = document.querySelectorAll('.deleteButton');
+                                            const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+
+                                            deleteButtons.forEach(button => {
+                                                button.addEventListener('click', function() {
+                                                    const prestasiId = this.getAttribute('data-id');
+                                                    confirmDeleteButton.setAttribute('href', `index.php?page=dosen_prestasi&action=delete&id_prestasi=${prestasiId}`);
+                                                });
+                                            });
+                                        });
+                                    </script>
                                 </div>
                             </td>
 

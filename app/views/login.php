@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/login.css">
 </head>
+
 <body>
     <section class="login-box">
         <div class="login-form">
             <form id="loginForm" method="POST" action="index.php?action=login">
                 <h1><strong>Login Akun Anda</strong></h1>
-
-                <!-- Tampilkan pesan error jika ada -->
+                <?php if (isset($_GET['message']) && $_GET['message'] == 'session_expired'): ?>
+                    <p style="color: red;">Sesi Anda telah habis. Silakan login kembali.</p>
+                <?php endif; ?>
+                <?php if (isset($_GET['message']) && $_GET['message'] == 'logged_out'): ?>
+                    <p style="color: green;">Anda telah berhasil logout.</p>
+                <?php endif; ?>
                 <?php
                 if (isset($_SESSION['error'])) {
                     echo '<div class="alert alert-danger" role="alert">' . $_SESSION['error'] . '</div>';
@@ -41,4 +47,5 @@
     </section>
     <script src="../assets/js/script.js"></script>
 </body>
+
 </html>

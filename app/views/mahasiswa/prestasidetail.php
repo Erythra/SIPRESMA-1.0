@@ -1,10 +1,10 @@
 <?php include 'partials/header.php' ?>
 
-<div class="mb-5">
-    <p class="info-text fw-light">Home - Prestasi - Detail Prestasi</p>
-</div>
 
-<div class="container-detail-prestasi">
+
+
+
+<div class="container-detail-prestasi" style="margin-top: 6rem;">
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 31px;">
         <h5 style="color: #475261;" class="align-items-center mb-0">Detail Prestasi</h5>
@@ -105,7 +105,13 @@
                         <div class="col-md-6">
                             <p class="mb-1 fw-bold">Tanggal Surat Tugas</p>
                             <p class="mb-0 text-secondary">
-                                <?= htmlspecialchars($prestasi['tgl_surat_tugas'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
+                                <?= htmlspecialchars(
+                                    $prestasi['tgl_surat_tugas'] instanceof DateTime
+                                        ? $prestasi['tgl_surat_tugas']->format('Y-m-d')
+                                        : $prestasi['tgl_surat_tugas'] ?? '',
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                ); ?>
                             </p>
                         </div>
                     </div>
@@ -114,31 +120,53 @@
                     <div class="row">
                         <div class="col-md-6">
                             <p class="fw-bold mb-2">File Surat Tugas</p>
-                            <?php if (!empty($prestasi['file_surat_tugas'])) : ?>
                             <?php
-                    $filePath = '../public/uploads/' . $prestasi['file_surat_tugas']; // Path file relatif
-                    $fileName = basename($filePath); // Mendapatkan nama file
-                    ?>
-                            <!-- Preview Kecil -->
-                            <div class="mb-3">
-                                <img src="<?= $filePath ?>" alt="Preview File Surat Tugas" class="img-thumbnail"
-                                    style="max-width: 150px;">
-                            </div>
-                            <!-- Nama File -->
-                            <p class="text-secondary small mb-3"><?= htmlspecialchars($fileName); ?></p>
+                            if ($prestasi['file_surat_tugas'] !== null) {
+                                $suratTugasFilePath = 'uploads/file_surat_tugas' . $prestasi['id_prestasi'];
+                                $extension = '.pdf';
 
-                            <!-- Tombol View dan Download -->
-                            <div class="d-flex gap-2">
-                                <a href="<?= $filePath ?>" target="_blank" class="btn btn-primary btn-sm">
-                                    View File
-                                </a>
-                                <a href="<?= $filePath ?>" download class="btn btn-success btn-sm">
-                                    Download File
-                                </a>
-                            </div>
-                            <?php else : ?>
-                            <p class="text-danger">File tidak tersedia</p>
-                            <?php endif; ?>
+                                if (str_contains($prestasi['file_surat_tugas'], 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
+                                    $extension = '.docx';
+                                }
+
+                                $suratTugasFilePath .= $extension;
+
+                                file_put_contents($suratTugasFilePath, $prestasi['file_surat_tugas']);
+
+                                echo "<button class='btn btn-outline-primary' data-bs-toggle='modal' data-bs-target='#viewModalFile'>Preview File</button> ";
+                                echo "<a href='" . $suratTugasFilePath . "' download><button class='btn btn-primary'>Download File</button></a>";
+
+                                echo "
+                                    <div class='modal fade' id='viewModalFile' tabindex='-1' aria-labelledby='viewModalLabelFile' aria-hidden='true'>
+                                        <div class='modal-dialog modal-lg'>
+                                            <div class='modal-content'>
+                                                <div class='modal-header'>
+                                                    <h5 class='modal-title' id='viewModalLabelFile'>Preview File</h5>
+                                                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                </div>
+                                                <div class='modal-body'>
+                                                    ";
+
+                                if ($extension === '.pdf') {
+                                    echo "<embed src='$suratTugasFilePath' type='application/pdf' width='100%' height='500px'>";
+                                } elseif ($extension === '.docx') {
+                                    echo "<p>Pratinjau untuk file DOCX tidak didukung langsung di browser. Silakan <a href='$suratTugasFilePath' download>download file ini</a> untuk melihatnya.</p>";
+                                }
+
+                                echo "
+                                                </div>
+                                                <div class='modal-footer'>
+                                                    <a href='$suratTugasFilePath' download><button class='btn btn-success'>Download File</button></a>
+                                                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Kembali</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ";
+                            } else {
+                                echo "<p class='text-danger'>File tidak tersedia.</p>";
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -147,144 +175,258 @@
 
             <!-- Lampiran -->
             <div class="card mb-4 shadow-sm">
-                <div class="card-header bg-white fw-bold" style=" font-size: 16px;">Lampiran</div>
+                <div class="card-header bg-white fw-bold" style="font-size: 16px;">Lampiran</div>
                 <div class="card-body">
                     <div class="row mb-3">
                         <!-- File Sertifikat -->
                         <div class="col-md-6">
                             <p class="fw-bold mb-2">File Sertifikat</p>
-                            <?php if (!empty($prestasi['file_sertifikat'])) : ?>
                             <?php
-                                $filePathSertifikat = '../public/uploads/' . $prestasi['file_sertifikat']; // Path file relatif
-                                $fileNameSertifikat = basename($filePathSertifikat); // Mendapatkan nama file
-                                ?>
-                            <!-- Preview Kecil -->
-                            <div class="mb-3">
-                                <img src="<?= $filePathSertifikat ?>" alt="Preview File Sertifikat"
-                                    class="img-thumbnail" style="max-width: 150px;">
-                            </div>
-                            <!-- Nama File -->
-                            <p class="text-secondary small mb-3"><?= htmlspecialchars($fileNameSertifikat); ?></p>
-                            <!-- Tombol View dan Download -->
-                            <div class="d-flex gap-2">
-                                <a href="<?= $filePathSertifikat ?>" target="_blank" class="btn btn-primary btn-sm">
-                                    View File
-                                </a>
-                                <a href="<?= $filePathSertifikat ?>" download class="btn btn-success btn-sm">
-                                    Download File
-                                </a>
-                            </div>
-                            <?php else : ?>
-                            <p class="text-danger">File tidak tersedia</p>
-                            <?php endif; ?>
+                            if ($prestasi['file_sertifikat'] !== null) {
+                                $fileSertifikatFilePath = 'uploads/file_sertifikat' . $prestasi['id_prestasi'];
+                                $extension = '.pdf';
+
+                                if (str_contains($prestasi['file_sertifikat'], 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
+                                    $extension = '.docx';
+                                }
+
+                                $fileSertifikatFilePath .= $extension;
+
+                                file_put_contents($fileSertifikatFilePath, $prestasi['file_sertifikat']);
+
+                                echo "<button class='btn btn-outline-primary' data-bs-toggle='modal' data-bs-target='#viewModalFile'>Preview File</button> ";
+                                echo "<a href='" . $fileSertifikatFilePath . "' download><button class='btn btn-primary'>Download File</button></a>";
+
+                                echo "
+                                    <div class='modal fade' id='viewModalFile' tabindex='-1' aria-labelledby='viewModalLabelFile' aria-hidden='true'>
+                                        <div class='modal-dialog modal-lg'>
+                                            <div class='modal-content'>
+                                                <div class='modal-header'>
+                                                    <h5 class='modal-title' id='viewModalLabelFile'>Preview File</h5>
+                                                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                </div>
+                                                <div class='modal-body'>
+                                                    ";
+
+                                if ($extension === '.pdf') {
+                                    echo "<embed src='$fileSertifikatFilePath' type='application/pdf' width='100%' height='500px'>";
+                                } elseif ($extension === '.docx') {
+                                    echo "<p>Pratinjau untuk file DOCX tidak didukung langsung di browser. Silakan <a href='$fileSertifikatFilePath' download>download file ini</a> untuk melihatnya.</p>";
+                                }
+
+                                echo "
+                                                </div>
+                                                <div class='modal-footer'>
+                                                    <a href='$fileSertifikatFilePath' download><button class='btn btn-success'>Download File</button></a>
+                                                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Kembali</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ";
+                            } else {
+                                echo "<p class='text-danger'>File tidak tersedia.</p>";
+                            }
+                            ?>
                         </div>
 
                         <!-- Foto Kegiatan -->
                         <div class="col-md-6">
                             <p class="fw-bold mb-2">Foto Kegiatan</p>
-                            <?php if (!empty($prestasi['foto_kegiatan'])) : ?>
                             <?php
-                                $filePathFoto = '../public/uploads/' . $prestasi['foto_kegiatan']; // Path file relatif
-                                $fileNameFoto = basename($filePathFoto); // Mendapatkan nama file
-                                ?>
-                            <!-- Preview Kecil -->
-                            <div class="mb-3">
-                                <img src="<?= $filePathFoto ?>" alt="Preview Foto Kegiatan" class="img-thumbnail"
-                                    style="max-width: 150px;">
-                            </div>
-                            <!-- Nama File -->
-                            <p class="text-secondary small mb-3"><?= htmlspecialchars($fileNameFoto); ?></p>
-                            <!-- Tombol View dan Download -->
-                            <div class="d-flex gap-2">
-                                <a href="<?= $filePathFoto ?>" target="_blank" class="btn btn-primary btn-sm">
-                                    View File
-                                </a>
-                                <a href="<?= $filePathFoto ?>" download class="btn btn-success btn-sm">
-                                    Download File
-                                </a>
-                            </div>
-                            <?php else : ?>
-                            <p class="text-danger">File tidak tersedia</p>
-                            <?php endif; ?>
+                            if ($prestasi['foto_kegiatan'] !== null) {
+                                $fotoFilePath = 'uploads/foto_kegiatan' . $prestasi['id_prestasi'] . '.jpg';
+                                file_put_contents($fotoFilePath, $prestasi['foto_kegiatan']);
+                                echo "<button class='btn btn-outline-primary' data-bs-toggle='modal' data-bs-target='#viewModalFotoKegiatan'>View Foto</button> ";
+                                echo "<a href='" . $fotoFilePath . "' download><button class='btn btn-primary'>Download Foto</button></a>";
+
+                                echo "
+                                <div class='modal fade' id='viewModalFotoKegiatan' tabindex='-1' aria-labelledby='viewModalLabelFotoKegiatan' aria-hidden='true'>
+                                    <div class='modal-dialog'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header'>
+                                                <h5 class='modal-title' id='viewModalLabelFotoKegiatan'>Preview Foto Kegiatan</h5>
+                                                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                            </div>
+                                            <div class='modal-body'>
+                                                <img src='$fotoFilePath' alt='Foto Kegiatan' class='img-fluid'>
+                                            </div>
+                                            <div class='modal-footer'>
+                                                <a href='$fotoFilePath' download><button class='btn btn-success'>Download Foto</button></a>
+                                                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                ";
+                            } else {
+                                echo "<td>Tidak ada foto.</td>";
+                            }
+                            ?>
                         </div>
                     </div>
-                    <div class="row ">
-                        <!-- File Sertifikat -->
+
+                    <div class="row">
+                        <!-- File Poster -->
                         <div class="col-md-6">
                             <p class="fw-bold mb-2">File Poster</p>
-                            <?php if (!empty($prestasi['file_poster'])) : ?>
                             <?php
-                            $filePathSertifikat = '../public/uploads/' . $prestasi['file_poster']; // Path file relatif
-                            $fileNameSertifikat = basename($filePathSertifikat); // Mendapatkan nama file
+                            if ($prestasi['file_poster'] !== null) {
+
+                                $filePosterFilePath = 'uploads/file_poster_' . $prestasi['id_prestasi'];
+                                $extension = '.pdf';
+
+                                if (str_contains($prestasi['file_poster'], 'image/jpeg')) {
+                                    $extension = '.jpg';
+                                } elseif (str_contains($prestasi['file_poster'], 'image/png')) {
+                                    $extension = '.png';
+                                } elseif (str_contains($prestasi['file_poster'], 'application/pdf')) {
+                                    $extension = '.pdf';
+                                }
+
+                                $filePosterFilePath .= $extension;
+
+                                file_put_contents($filePosterFilePath, $prestasi['file_poster']);
+
+                                echo "<button class='btn btn-outline-primary' data-bs-toggle='modal' data-bs-target='#viewModalFile'>Preview File</button> ";
+                                echo "<a href='" . $filePosterFilePath . "' download><button class='btn btn-primary'>Download File</button></a>";
+
+                                echo "
+                                    <div class='modal fade' id='viewModalFile' tabindex='-1' aria-labelledby='viewModalLabelFile' aria-hidden='true'>
+                                        <div class='modal-dialog modal-lg'>
+                                            <div class='modal-content'>
+                                                <div class='modal-header'>
+                                                    <h5 class='modal-title' id='viewModalLabelFile'>Preview File</h5>
+                                                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                </div>
+                                                <div class='modal-body'>
+                                                    ";
+
+                                if ($extension === '.pdf') {
+                                    echo "<embed src='$filePosterFilePath' type='application/pdf' width='100%' height='500px'>";
+                                } elseif ($extension === '.jpg' || $extension === '.png') {
+                                    echo "<img src='$filePosterFilePath' alt='File Poster' class='img-fluid'>";
+                                } else {
+                                    echo "<p>Pratinjau untuk jenis file ini tidak didukung. Silakan <a href='$filePosterFilePath' download>download file ini</a> untuk melihatnya.</p>";
+                                }
+
+                                echo "
+                                            </div>
+                                            <div class='modal-footer'>
+                                                <a href='$filePosterFilePath' download><button class='btn btn-success'>Download File</button></a>
+                                                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Kembali</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ";
+                            } else {
+                                echo "<p class='text-danger'>File tidak tersedia.</p>";
+                            }
                             ?>
-                            <!-- Preview Kecil -->
-                            <div class="mb-3">
-                                <img src="<?= $filePathSertifikat ?>" alt="Preview File Poster" class="img-thumbnail"
-                                    style="max-width: 150px;">
-                            </div>
-                            <!-- Nama File -->
-                            <p class="text-secondary small mb-3"><?= htmlspecialchars($fileNameSertifikat); ?></p>
-                            <!-- Tombol View dan Download -->
-                            <div class="d-flex gap-2">
-                                <a href="<?= $filePathSertifikat ?>" target="_blank" class="btn btn-primary btn-sm">
-                                    View File
-                                </a>
-                                <a href="<?= $filePathSertifikat ?>" download class="btn btn-success btn-sm">
-                                    Download File
-                                </a>
-                            </div>
-                            <?php else : ?>
-                            <p class="text-danger">File tidak tersedia</p>
-                            <?php endif; ?>
                         </div>
 
-                        <!-- Foto Kegiatan -->
+                        <!-- Hasil Karya -->
                         <div class="col-md-6">
                             <p class="fw-bold mb-2">Hasil Karya</p>
-                            <?php if (!empty($prestasi['lampiran_hasil_kompetisi'])) : ?>
                             <?php
-                            $filePathFoto = '../public/uploads/' . $prestasi['lampiran_hasil_kompetisi']; // Path file relatif
-                            $fileNameFoto = basename($filePathFoto); // Mendapatkan nama file
+                            if ($prestasi['lampiran_hasil_kompetisi'] !== null) {
+                                $lampiranKompetisiFilePath = 'uploads/lampiran_hasil_kompetisi' . $prestasi['id_prestasi'];
+                                $extension = '.pdf';
+
+                                if (str_contains($prestasi['lampiran_hasil_kompetisi'], 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
+                                    $extension = '.docx';
+                                }
+
+                                $lampiranKompetisiFilePath .= $extension;
+
+                                file_put_contents($lampiranKompetisiFilePath, $prestasi['lampiran_hasil_kompetisi']);
+
+                                echo "<button class='btn btn-outline-primary' data-bs-toggle='modal' data-bs-target='#viewModalFile'>Preview File</button> ";
+                                echo "<a href='" . $lampiranKompetisiFilePath . "' download><button class='btn btn-primary'>Download File</button></a>";
+
+                                echo "
+                                    <div class='modal fade' id='viewModalFile' tabindex='-1' aria-labelledby='viewModalLabelFile' aria-hidden='true'>
+                                        <div class='modal-dialog modal-lg'>
+                                            <div class='modal-content'>
+                                                <div class='modal-header'>
+                                                    <h5 class='modal-title' id='viewModalLabelFile'>Preview File</h5>
+                                                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                </div>
+                                                <div class='modal-body'>
+                                                    ";
+
+                                if ($extension === '.pdf') {
+                                    echo "<embed src='$lampiranKompetisiFilePath' type='application/pdf' width='100%' height='500px'>";
+                                } elseif ($extension === '.docx') {
+                                    echo "<p>Pratinjau untuk file DOCX tidak didukung langsung di browser. Silakan <a href='$lampiranKompetisiFilePath' download>download file ini</a> untuk melihatnya.</p>";
+                                }
+
+                                echo "
+                                                </div>
+                                                <div class='modal-footer'>
+                                                    <a href='$lampiranKompetisiFilePath' download><button class='btn btn-success'>Download File</button></a>
+                                                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Kembali</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ";
+                            } else {
+                                echo "<p class='text-danger'>File tidak tersedia.</p>";
+                            }
                             ?>
-                            <!-- Preview Kecil -->
-                            <div class="mb-3">
-                                <img src="<?= $filePathFoto ?>" alt="Preview Hasil Karya" class="img-thumbnail"
-                                    style="max-width: 150px;">
-                            </div>
-                            <!-- Nama File -->
-                            <p class="text-secondary small mb-3"><?= htmlspecialchars($fileNameFoto); ?></p>
-                            <!-- Tombol View dan Download -->
-                            <div class="d-flex gap-2">
-                                <a href="<?= $filePathFoto ?>" target="_blank" class="btn btn-primary btn-sm">
-                                    View File
-                                </a>
-                                <a href="<?= $filePathFoto ?>" download class="btn btn-success btn-sm">
-                                    Download File
-                                </a>
-                            </div>
-                            <?php else : ?>
-                            <p class="text-danger">File tidak tersedia</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
         <div class="col-lg-4">
             <!-- Mahasiswa yang Berpartisipasi -->
             <div class="card mb-4 shadow-sm">
-                <div class="card-header bg-white fw-bold" style="font-size: 16px;">Mahasiswa yang Berpartisipasi</div>
+                <div class="card-header bg-white fw-bold" style="font-size: 16px;">Mahasiswa yang Berpartisipasi
+                </div>
                 <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <img src="../../img/animoji.png" alt="Profile" class="rounded-circle"
-                            style="width: 40px; height: 40px;">
-                        <div class="ms-2">
-                            <p class="mb-0 fw-bold">
-                                <?php echo htmlspecialchars($prestasi['nama_mahasiswa'] ?? 'null'); ?></p>
-                            <p class="mb-0" style="color: #495057;">D-IV Teknik Informatika</p>
-                        </div>
+                    <ul class="list-group">
+                        <?php if (!empty($mahasiswa)) : ?>
+                            <?php foreach ($mahasiswa as $row) : ?>
+                                <li class="list-group-item d-flex align-items-center mb-2">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <p class="mb-0 fw-bold">
+                                            <?= htmlspecialchars($row['nama_mahasiswa']); ?>
+                                        </p>
+                                        <p class="mb-0" style="color: #495057;"><?= htmlspecialchars($row['program_studi']); ?></p>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <li class="list-group-item">Tidak ada mahasiswa yang ditemukan.</li>
+                        <?php endif; ?>
+                    </ul>
+                    <hr>
+                    <div>
+                        <div class="bg-white fw-bold mb-2" style="font-size: 16px;">Riwayat Persetujuan</div>
+                        <?php if (isset($historyApproval) && !empty($historyApproval)): ?>
+                            <div style="max-height: 200px; overflow-y: auto;">
+                                <ul class="list-group">
+                                    <?php foreach ($historyApproval as $history): ?>
+                                        <li class="list-group-item <?php echo ($history['status_approval'] == 'Approved') ? 'list-group-item-success' : 'list-group-item-danger'; ?>">
+                                            <?php echo htmlspecialchars($history['status_approval'] ?? 'Status tidak tersedia'); ?> by
+                                            <strong><?php echo htmlspecialchars($history['nama_dosen'] ?? 'Tidak diketahui'); ?></strong>
+                                            <br>
+                                            <?php if ($history['status_approval'] == 'Rejected'): ?>
+                                                <small>Alasan: <?php echo htmlspecialchars($history['alasan'] ?? 'Tidak ada alasan'); ?></small>
+                                                <br>
+                                            <?php endif; ?>
+                                            <small>Tanggal: <?php echo isset($history['tgl_approval']) ? $history['tgl_approval']->format('d-m-Y H:i') : 'Tanggal tidak tersedia'; ?></small>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php else: ?>
+                            <p>Tidak ada riwayat persetujuan untuk prestasi ini.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -292,20 +434,29 @@
             <div class="card mb-4 shadow-sm">
                 <div class="card-header bg-white fw-bold" style="font-size: 16px;">Dosen Pembimbing</div>
                 <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <img src="https://via.placeholder.com/40" alt="Profile" class="rounded-circle"
-                            style="width: 40px; height: 40px;">
-                        <div class="ms-2">
-                            <p class="mb-0 fw-bold"><?php echo htmlspecialchars($prestasi['nama_dosen'] ?? 'null'); ?>
-                            </p>
-                            <p class="mb-0" style="color: #495057;">Dosen</p>
-                        </div>
-                    </div>
+                    <ul class="list-group">
+                        <?php if (!empty($dosen)) : ?>
+                            <?php foreach ($dosen as $row) : ?>
+                                <li class="list-group-item d-flex align-items-center mb-3">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <p class="mb-0 fw-bold">
+                                            <?= htmlspecialchars($row['nama_dosen']); ?>
+                                        </p>
+                                        <p class="mb-0" style="color: #495057;"><?= htmlspecialchars($row['peran_pembimbing']); ?></p>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <li class="list-group-item">Tidak ada Dosen yang ditemukan.</li>
+                        <?php endif; ?>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 <?php include 'partials/footer.php'; ?>

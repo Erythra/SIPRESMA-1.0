@@ -3,11 +3,14 @@ session_start();
 require_once '../config/config.php';
 require_once '../app/controllers/AuthController.php';
 require_once '../app/controllers/PrestasiController.php';
+require_once '../app/controllers/DosenPrestasiController.php';
+require_once '../app/controllers/ApprovalController.php';
 
 $authController = new AuthController($conn);
 $prestasiController = new PrestasiController($conn);
+$dosenPrestasiController = new DosenPrestasiController($conn);
+$approvalController = new ApprovalController($conn);
 
-// session
 if (isset($_SESSION['user'])) {
     $authController->isSessionActive();
 }
@@ -23,19 +26,67 @@ if ($action === 'login') {
     $authController->login();
 }
 
-if ($action === 'edit') {
-    $authController->editprofilemahasiswa();
+if ($action === 'submit_prestasi') {
+    $prestasiController->handlePostRequest();
 }
 
-if ($action === 'submit_prestasi') {
-    $prestasiController->submitForm();
-}
+$page = $_GET['page'] ?? 'homepertama';
+$action = $_GET['action'] ?? '';
 
 switch ($page) {
     case 'homepertama':
         include '../app/views/homepertama.php';
         break;
 
+        // DOSEN
+    case 'dosen_dashboard':
+        $countPrestasi = $dosenPrestasiController->countPrestasiDashboard();
+        include '../app/views/dosen/dosen_dashboard.php';
+        break;
+
+    case 'dosen_prestasi':
+        if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id_prestasi'])) {
+            $id_prestasi = $_GET['id_prestasi'];
+            $dosenPrestasiController->deletePrestasi($id_prestasi);
+        }
+        $prestasiList = $dosenPrestasiController->showAllPrestasi();
+        include '../app/views/dosen/dosen_prestasi.php';
+        break;
+
+    case 'dosen_prestasi_add':
+        $dosenPrestasiController->handlePostRequest();
+
+        $dosenPrestasiController->tampilForm();
+        break;
+
+    case 'dosen_prestasi_detail':
+        $id_prestasi = $_GET['id_prestasi'] ?? 0;
+        if ($id_prestasi > 0) {
+            $dosenPrestasiController->showPrestasiDetail($id_prestasi);
+        } else {
+            echo "ID Prestasi tidak valid.";
+        }
+
+        if (isset($_GET['action'])) {
+            $action = $_GET['action'];
+            $dosen_id = $_SESSION['user']['id_dosen'];
+
+            if ($action == 'approve') {
+                $approvalController->approve($id_prestasi, $dosen_id);
+            } elseif ($action == 'reject') {
+                $approvalController->reject($id_prestasi, $dosen_id);
+            }
+        }
+
+        break;
+
+    case 'dosen_prestasi_add':
+        $mahasiswaList = $dosenPrestasiController->getMahasiswaList();
+        $dosenList = $dosenPrestasiController->getDosenList();
+        include '../app/views/dosen/dosen_prestasi_add.php';
+        break;
+
+        // MAHASISWA
     case 'home':
         include '../app/views/mahasiswa/home.php';
         break;
@@ -48,26 +99,22 @@ switch ($page) {
         include '../app/views/mahasiswa/edit.php';
         break;
 
-    case 'dosen_dashboard':
-        include '../app/views/dosen/dosen_dashboard.php';
-        break;
-
-    case 'dosen_prestasi':
-        $prestasiList = $prestasiController->showAllPrestasi();
-        include '../app/views/dosen/dosen_prestasi.php';
-        break;
-
-    case 'dosen_prestasi_detail':
-        $id_prestasi = $_GET['id_prestasi'] ?? 0;
-        if ($id_prestasi > 0) {
-            $prestasiController->showPrestasiDetail($id_prestasi);
-        } else {
-            echo "ID Prestasi tidak valid.";
-        }
+    case 'prestasiedit':
+        include '../app/views/mahasiswa/prestasiedit.php';
         break;
 
     case 'prestasi':
-        $prestasiList = $prestasiController->showAllPrestasi();
+        $filters = [
+            'juara' => $_GET['juara'] ?? '',
+            'jenis_kompetisi' => $_GET['jenis_kompetisi'] ?? '',
+            'tingkat_kompetisi' => $_GET['tingkat_kompetisi'] ?? '',
+            'tempat_kompetisi' => $_GET['tempat_kompetisi'] ?? '',
+            'status_pengajuan' => $_GET['status_pengajuan'] ?? '',
+        ];
+
+        $id_mahasiswa = $_SESSION['user']['id_mahasiswa'];
+        $prestasiList = $prestasiController->showPrestasi($id_mahasiswa, $filters);
+
         include '../app/views/mahasiswa/prestasi.php';
         break;
 
@@ -75,15 +122,6 @@ switch ($page) {
         $id_prestasi = $_GET['id_prestasi'] ?? 0;
         if ($id_prestasi > 0) {
             $prestasiController->showPrestasiDetailMahasiswa($id_prestasi);
-        } else {
-            echo "ID Prestasi tidak valid.";
-        }
-        break;
-
-    case 'dosen_prestasi_detail':
-        $id_prestasi = $_GET['id_prestasi'] ?? 0;
-        if ($id_prestasi > 0) {
-            $prestasiController->showPrestasiDetailDosen($id_prestasi);
         } else {
             echo "ID Prestasi tidak valid.";
         }
@@ -97,11 +135,6 @@ switch ($page) {
         include '../app/views/mahasiswa/tambahprestasi.php';
         break;
 
-    case 'dosen_prestasi_add':
-        $mahasiswaList = $prestasiController->getMahasiswaList();
-        $dosenList = $prestasiController->getDosenList();
-        include '../app/views/dosen/dosen_prestasi_add.php';
-        break;
 
     case 'peringkat_akademik':
         include '../app/views/mahasiswa/peringkat_akademik.php';
@@ -117,6 +150,14 @@ switch ($page) {
 
     case 'bantuan':
         include '../app/views/mahasiswa/bantuan.php';
+        break;
+
+    case 'faq':
+        include '../app/views/mahasiswa/faq.php';
+        break;
+
+    case 'panduan':
+        include '../app/views/mahasiswa/panduan.php';
         break;
 
     case 'addPrestasi':

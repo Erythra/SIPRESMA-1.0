@@ -6,21 +6,21 @@
         <h4 class="fw-semibold">Dashboard</h4>
         <h6 class="fw-medium text-muted">Home</h6>
     </div>
-    <div class="d-flex justify-content-start gap-2">
-        <div class="card" style="width: 40%; padding: 18px 24px; border-top: solid 4px #212529;">
-            <p class="fw-semibold mb-0" style="margin-bottom: 10px;">Prestasi Belum Diverifikasi</p>
-            <p class="fw-semibold fs-2 mb-0">100</p>
+    <div class="d-flex justify-content-start gap-4">
+        <div class="card" style="width: 40%; padding: 18px 24px; border-top: solid 4px #212529; border-radius: 12px;">
+            <p class="fw-semibold mb-0" style="margin-bottom: 10px;">Prestasi Menunggu Disetujui</p>
+            <p class="fw-semibold fs-2 mb-0"><?php echo isset($countPrestasi['waiting_for_approval']) ? $countPrestasi['waiting_for_approval'] : 0; ?></p>
         </div>
-        <div class="card" style="width: 40%; padding: 18px 24px; border-top: solid 4px #15803D;">
-            <p class="fw-semibold mb-0" style="margin-bottom: 10px;">Prestasi Diverifikasi</p>
-            <p class="fw-semibold fs-2 mb-0">100</p>
+        <div class="card" style="width: 40%; padding: 18px 24px; border-top: solid 4px #15803D; border-radius: 12px;">
+            <p class="fw-semibold mb-0" style="margin-bottom: 10px;">Prestasi Disetujui</p>
+            <p class="fw-semibold fs-2 mb-0"><?php echo isset($countPrestasi['approved']) ? $countPrestasi['approved'] : 0; ?></p>
         </div>
-        <div class="card" style="width: 40%; padding: 18px 24px; border-top: solid 4px #B91C1C;">
+        <div class="card" style="width: 40%; padding: 18px 24px; border-top: solid 4px #B91C1C; border-radius: 12px;">
             <p class="fw-semibold mb-0" style="margin-bottom: 10px;">Prestasi Ditolak</p>
-            <p class="fw-semibold fs-2 mb-0">100</p>
+            <p class="fw-semibold fs-2 mb-0"><?php echo isset($countPrestasi['rejected']) ? $countPrestasi['rejected'] : 0; ?></p>
         </div>
     </div>
-    
+
 
     <div class="card mt-3">
         <div class="card-body">
@@ -134,47 +134,47 @@
             <div class="d-flex justify-content-start gap-3">
                 <div class="text-center align-items-center" style="width: 40%; padding: 18px 24px;">
                     <div class="mb-3">
-                        <img src="../../assets/img/profile.png" alt="" style="width: 64px; height: 87px;">
+                        <img src="../assets/img/profile.png" alt="" style="width: 64px; height: 87px;">
                     </div>
                     <div class="mb-3">
                         <p class="fw-semibold mb-0" style="margin-bottom: 10px;">Daniel Levi</p>
-                        <p class="fw-light mb-0 text-muted">DIV-Teknik Informatika</p>
+                        <p class="fw-light mb-0 text-muted">D-IV Teknik Informatika</p>
                     </div>
-                    <div class="rectangle d-flex justify-content-start align-items-center" style="padding-left: 6px;">
-                        <img src="../../assets/img/piala.png" alt="" style="width: 36.4px; height: 37.22px; margin-right: 10px;">
-                        <div class="d-flex justify-content-start align-items-center">
-                            <p class="mb-0" style="color: #212529;"><span class="fw-semibold fs-5" style="color: #244282;">50</span> Prestasi</p>
-                        </div>
+                    <div class="rectangle d-flex justify-content-center align-items-center" style="padding-left: 6px;">
+                        <img src="../assets/img/piala.png" alt="" style="width: 36.4px; height: 37.22px; margin-right: 10px;">
+                        <p class="mb-0 text-center" style="color: #212529;">
+                            <span class="fw-semibold fs-5" style="color: #244282;">50</span> Prestasi
+                        </p>
                     </div>
                 </div>
                 <div class="text-center align-items-center" style="width: 40%; padding: 18px 24px;">
                     <div class="mb-3">
-                        <img src="../../assets/img/profile 1.png" alt="" style="width: 64px; height: 87px;">
+                        <img src="../assets/img/profile 1.png" alt="" style="width: 64px; height: 87px;">
                     </div>
                     <div class="mb-3">
-                        <p class="fw-semibold mb-0" style="margin-bottom: 10px;">Daniel Levi</p>
-                        <p class="fw-light mb-0 text-muted">DIV-Teknik Informatika</p>
+                        <p class="fw-semibold mb-0">Daniel Levi</p>
+                        <p class="fw-light mb-0 text-muted">D-IV Teknik Informatika</p>
                     </div>
-                    <div class="rectangle d-flex justify-content-start align-items-center" style="padding-left: 6px;">
-                        <img src="../../assets/img/piala.png" alt="" style="width: 36.4px; height: 37.22px; margin-right: 10px;">
-                        <div class="d-flex justify-content-start align-items-center">
-                            <p class="mb-0" style="color: #212529;"><span class="fw-semibold fs-5" style="color: #244282;">50</span> Prestasi</p>
-                        </div>
+                    <div class="rectangle d-flex justify-content-center align-items-center" style="padding-left: 6px;">
+                        <img src="../assets/img/piala.png" alt="" style="width: 36.4px; height: 37.22px; margin-right: 10px;">
+                        <p class="mb-0 text-center" style="color: #212529;">
+                            <span class="fw-semibold fs-5" style="color: #244282;">50</span> Prestasi
+                        </p>
                     </div>
                 </div>
                 <div class="text-center align-items-center" style="width: 40%; padding: 18px 24px;">
                     <div class="mb-3">
-                        <img src="../../assets/img/profile 3.png" alt="" style="width: 64px; height: 87px;">
+                        <img src="../assets/img/profile 3.png" alt="" style="width: 64px; height: 87px;">
                     </div>
                     <div class="mb-3">
                         <p class="fw-semibold mb-0" style="margin-bottom: 10px;">Daniel Levi</p>
-                        <p class="fw-light mb-0 text-muted">DIV-Teknik Informatika</p>
+                        <p class="fw-light mb-0 text-muted">D-IV Teknik Informatika</p>
                     </div>
-                    <div class="rectangle d-flex justify-content-start align-items-center" style="padding-left: 6px;">
-                        <img src="../../assets/img/piala.png" alt="" style="width: 36.4px; height: 37.22px; margin-right: 10px;">
-                        <div class="d-flex justify-content-start align-items-center">
-                            <p class="mb-0" style="color: #212529;"><span class="fw-semibold fs-5" style="color: #244282;">50</span> Prestasi</p>
-                        </div>
+                    <div class="rectangle d-flex justify-content-center align-items-center" style="padding-left: 6px;">
+                        <img src="../assets/img/piala.png" alt="" style="width: 36.4px; height: 37.22px; margin-right: 10px;">
+                        <p class="mb-0 text-center" style="color: #212529;">
+                            <span class="fw-semibold fs-5" style="color: #244282;">50</span> Prestasi
+                        </p>
                     </div>
                 </div>
             </div>

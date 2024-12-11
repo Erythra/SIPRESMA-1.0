@@ -15,10 +15,10 @@ class PrestasiController
         return $this->prestasiModel->getAllMahasiswa();
     }
 
-    public function showPrestasi($id_mahasiswa)
+    public function showPrestasi($id_mahasiswa, $filters = [])
     {
         // Ambil daftar prestasi berdasarkan id mahasiswa
-        return $this->prestasiModel->getPrestasiByMahasiswa($id_mahasiswa);
+        return $this->prestasiModel->getPrestasiByMahasiswa($id_mahasiswa, $filters);
     }
 
     public function getDosenList()
@@ -31,10 +31,10 @@ class PrestasiController
         $prestasi = $this->prestasiModel->getPrestasiById($id_prestasi);
         include '../app/views/dosen/dosen_prestasi_detail.php';
     }
-    
+
 
     public function showPrestasiDetailMahasiswa($id_prestasi)
-    {   
+    {
         $mahasiswa = $this->prestasiModel->getPrestasiById($id_prestasi);
         $dosen = $this->prestasiModel->getPrestasiById($id_prestasi);
         $prestasi = $this->prestasiModel->getPrestasiById($id_prestasi);
@@ -42,95 +42,95 @@ class PrestasiController
     }
 
     public function submitForm()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Path direktori upload
-        $uploadDir = realpath(__DIR__ . '/../../public/uploads/') . '/';
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Path direktori upload
+            $uploadDir = realpath(__DIR__ . '/../../public/uploads/') . '/';
 
-        // Pastikan folder `uploads` ada
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
-        }
+            // Pastikan folder `uploads` ada
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
 
-        // Menangani file upload
-        $file_surat_tugas = $this->handleFileUpload($_FILES['file_surat_tugas'], $uploadDir, 'surat_tugas_');
-        $foto_kegiatan = $this->handleFileUpload($_FILES['foto_kegiatan'], $uploadDir, 'foto_kegiatan_');
-        $file_sertifikat = $this->handleFileUpload($_FILES['file_sertifikat'], $uploadDir, 'sertifikat_');
-        $file_poster = $this->handleFileUpload($_FILES['file_poster'], $uploadDir, 'poster_');
-        $lampiran_hasil_kompetisi = $this->handleFileUpload($_FILES['lampiran_hasil_kompetisi'], $uploadDir, 'lampiran_');
+            // Menangani file upload
+            $file_surat_tugas = $this->handleFileUpload($_FILES['file_surat_tugas'], $uploadDir, 'surat_tugas_');
+            $foto_kegiatan = $this->handleFileUpload($_FILES['foto_kegiatan'], $uploadDir, 'foto_kegiatan_');
+            $file_sertifikat = $this->handleFileUpload($_FILES['file_sertifikat'], $uploadDir, 'sertifikat_');
+            $file_poster = $this->handleFileUpload($_FILES['file_poster'], $uploadDir, 'poster_');
+            $lampiran_hasil_kompetisi = $this->handleFileUpload($_FILES['lampiran_hasil_kompetisi'], $uploadDir, 'lampiran_');
 
-        $id_mahasiswa = $_SESSION['user']['id_mahasiswa'];
+            $id_mahasiswa = $_SESSION['user']['id_mahasiswa'];
 
-        // Data input
-        $data = [
-            'tgl_pengajuan' => date('Y-m-d H:i:s'),
-            'thn_akademik' => $_POST['thn_akademik'],
-            'jenis_kompetisi' => $_POST['jenis_kompetisi'],
-            'juara' => $_POST['juara'],
-            'url_kompetisi' => $_POST['url_kompetisi'],
-            'program_studi' => $_POST['program_studi'],
-            'tingkat_kompetisi' => $_POST['tingkat_kompetisi'],
-            'judul_kompetisi' => $_POST['judul_kompetisi'],
-            'tempat_kompetisi' => $_POST['tempat_kompetisi'],
-            'jumlah_pt' => $_POST['jumlah_pt'],
-            'jumlah_peserta' => $_POST['jumlah_peserta'],
-            'foto_kegiatan' => $foto_kegiatan,
-            'no_surat_tugas' => $_POST['no_surat_tugas'],
-            'tgl_surat_tugas' => date('Y-m-d', strtotime($_POST['tgl_surat_tugas'])),
-            'file_surat_tugas' => $file_surat_tugas,
-            'file_sertifikat' => $file_sertifikat,
-            'file_poster' => $file_poster,
-            'lampiran_hasil_kompetisi' => $lampiran_hasil_kompetisi,
-            'id_mahasiswa' => $id_mahasiswa
-        ];
+            // Data input
+            $data = [
+                'tgl_pengajuan' => date('Y-m-d H:i:s'),
+                'thn_akademik' => $_POST['thn_akademik'],
+                'jenis_kompetisi' => $_POST['jenis_kompetisi'],
+                'juara' => $_POST['juara'],
+                'url_kompetisi' => $_POST['url_kompetisi'],
+                'program_studi' => $_POST['program_studi'],
+                'tingkat_kompetisi' => $_POST['tingkat_kompetisi'],
+                'judul_kompetisi' => $_POST['judul_kompetisi'],
+                'tempat_kompetisi' => $_POST['tempat_kompetisi'],
+                'jumlah_pt' => $_POST['jumlah_pt'],
+                'jumlah_peserta' => $_POST['jumlah_peserta'],
+                'foto_kegiatan' => $foto_kegiatan,
+                'no_surat_tugas' => $_POST['no_surat_tugas'],
+                'tgl_surat_tugas' => date('Y-m-d', strtotime($_POST['tgl_surat_tugas'])),
+                'file_surat_tugas' => $file_surat_tugas,
+                'file_sertifikat' => $file_sertifikat,
+                'file_poster' => $file_poster,
+                'lampiran_hasil_kompetisi' => $lampiran_hasil_kompetisi,
+                'id_mahasiswa' => $id_mahasiswa
+            ];
 
-        // Data Mahasiswa (Multi-input)
-        $mahasiswaData = [];
-        if (isset($_POST['id_mahasiswa']) && is_array($_POST['id_mahasiswa'])) {
-            foreach ($_POST['id_mahasiswa'] as $index => $id_mahasiswa) {
-                $mahasiswaData[] = [
-                    'id_mahasiswa' => $id_mahasiswa,
-                    'peran_mahasiswa' => $_POST['peran_mahasiswa'][$index] ?? null,
-                ];
+            // Data Mahasiswa (Multi-input)
+            $mahasiswaData = [];
+            if (isset($_POST['id_mahasiswa']) && is_array($_POST['id_mahasiswa'])) {
+                foreach ($_POST['id_mahasiswa'] as $index => $id_mahasiswa) {
+                    $mahasiswaData[] = [
+                        'id_mahasiswa' => $id_mahasiswa,
+                        'peran_mahasiswa' => $_POST['peran_mahasiswa'][$index] ?? null,
+                    ];
+                }
+            }
+
+            // Data Dosen (Multi-input)
+            $dosenData = [];
+            if (isset($_POST['id_dosen']) && is_array($_POST['id_dosen'])) {
+                foreach ($_POST['id_dosen'] as $index => $id_dosen) {
+                    $dosenData[] = [
+                        'id_dosen' => $id_dosen,
+                        'peran_pembimbing' => $_POST['peran_pembimbing'][$index] ?? null,
+                    ];
+                }
+            }
+
+            // Gabungkan data ke dalam array final
+            $data['mahasiswa_data'] = $mahasiswaData;
+            $data['dosen_data'] = $dosenData;
+
+            // Simpan ke database
+            $success = $this->prestasiModel->insertPrestasi($data);
+
+            if ($success) {
+                header('Location: index.php?page=prestasi');
+            } else {
+                echo "Error inserting data into database.";
             }
         }
+    }
 
-        // Data Dosen (Multi-input)
-        $dosenData = [];
-        if (isset($_POST['id_dosen']) && is_array($_POST['id_dosen'])) {
-            foreach ($_POST['id_dosen'] as $index => $id_dosen) {
-                $dosenData[] = [
-                    'id_dosen' => $id_dosen,
-                    'peran_pembimbing' => $_POST['peran_pembimbing'][$index] ?? null,
-                ];
+    private function handleFileUpload($file, $uploadDir, $prefix)
+    {
+        if (isset($file) && $file['error'] == 0) {
+            $filePath = $uploadDir . $prefix . uniqid() . '_' . basename($file['name']);
+            if (move_uploaded_file($file['tmp_name'], $filePath)) {
+                return str_replace(realpath($uploadDir), '', $filePath); // Simpan relative path
             }
         }
-
-        // Gabungkan data ke dalam array final
-        $data['mahasiswa_data'] = $mahasiswaData;
-        $data['dosen_data'] = $dosenData;
-
-        // Simpan ke database
-        $success = $this->prestasiModel->insertPrestasi($data);
-
-        if ($success) {
-            header('Location: index.php?page=prestasi');
-        } else {
-            echo "Error inserting data into database.";
-        }
+        return null;
     }
-}
-
-private function handleFileUpload($file, $uploadDir, $prefix)
-{
-    if (isset($file) && $file['error'] == 0) {
-        $filePath = $uploadDir . $prefix . uniqid() . '_' . basename($file['name']);
-        if (move_uploaded_file($file['tmp_name'], $filePath)) {
-            return str_replace(realpath($uploadDir), '', $filePath); // Simpan relative path
-        }
-    }
-    return null;
-}
 
 
     public function addPrestasi($data_prestasi, $mahasiswa_ids, $dosen_ids, $files)
@@ -147,10 +147,10 @@ private function handleFileUpload($file, $uploadDir, $prefix)
                     exit;
                 }
             }
-    
+
             // Panggil model untuk menyimpan data
             $isInserted = $this->prestasiModel->addPrestasi($data_prestasi, $mahasiswa_ids, $dosen_ids, $files);
-    
+
             if ($isInserted) {
                 $_SESSION['flash_message'] = [
                     'type' => 'success',

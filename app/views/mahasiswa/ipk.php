@@ -78,26 +78,24 @@ $ipkList = [
 <script src="https://cdn.jsdelivr.net/npm/@floating-ui/core@1.6.8"></script>
 <link rel="stylesheet" href="./../../../assets/css/style.css">
 <style>
-table.table-hover tbody tr td {
-    color: #6C757D !important;
-    font-weight: lighter !important;
-}
+    table.table-hover tbody tr td {
+        color: #6C757D !important;
+        font-weight: lighter !important;
+    }
 
-table.table-hover thead th {
-    color: #475261 !important;
-}
+    table.table-hover thead th {
+        color: #475261 !important;
+    }
 
-table tbody td:nth-child(3),
-/* Kolom "Mata Kuliah" */
-table thead th:nth-child(3) {
-    text-align: left;
-}
+    table tbody td:nth-child(3),
+    /* Kolom "Mata Kuliah" */
+    table thead th:nth-child(3) {
+        text-align: left;
+    }
 </style>
-<div class="info">
-    <p class="info-text">Home - IPK</p>
-</div>
 
-<div class="card p-4" style="margin: 50px 84px 50px 84px;">
+
+<div class="card p-4" style="margin: 50px 84px 50px 84px; margin-top: 8rem;">
     <div class="d-flex justify-content-center align-items-center mb-4">
         <h5 class="card-title fw-semibold mb-0 fs-4" style="color: #475261;">
             List Data IPK
@@ -140,20 +138,20 @@ table thead th:nth-child(3) {
         </thead>
         <tbody>
             <?php if (!empty($ipkList)) : ?>
-            <?php foreach ($ipkList as $ipk) : ?>
-            <tr>
-                <td><?= htmlspecialchars($ipk['id_ipk']); ?></td>
-                <td><?= htmlspecialchars($ipk['kode_matakuliah']); ?></td>
-                <td><?= htmlspecialchars($ipk['matakuliah']); ?></td>
-                <td><?= htmlspecialchars($ipk['sks']); ?></td>
-                <td><?= htmlspecialchars($ipk['jam']); ?></td>
-                <td><?= htmlspecialchars($ipk['nilai']); ?></td>
-            </tr>
-            <?php endforeach; ?>
+                <?php foreach ($ipkList as $ipk) : ?>
+                    <tr>
+                        <td><?= htmlspecialchars($ipk['id_ipk']); ?></td>
+                        <td><?= htmlspecialchars($ipk['kode_matakuliah']); ?></td>
+                        <td><?= htmlspecialchars($ipk['matakuliah']); ?></td>
+                        <td><?= htmlspecialchars($ipk['sks']); ?></td>
+                        <td><?= htmlspecialchars($ipk['jam']); ?></td>
+                        <td><?= htmlspecialchars($ipk['nilai']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
             <?php else : ?>
-            <tr>
-                <td colspan="6" class="text-center">Tidak ada data ipk tersedia.</td>
-            </tr>
+                <tr>
+                    <td colspan="6" class="text-center">Tidak ada data ipk tersedia.</td>
+                </tr>
             <?php endif; ?>
         </tbody>
     </table>

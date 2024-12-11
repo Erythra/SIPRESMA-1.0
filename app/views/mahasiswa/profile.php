@@ -11,21 +11,19 @@ if (!isset($_SESSION['user'])) {
 ?>
 
 <body>
-    <div class="mb-0">
-        <p class="info-text fw-light">Profile</p>
-    </div>
 
     <!-- Main Content -->
-    <div class="container my-5">
+    <div class="container my-5" style="margin-top: 8rem !important;">
         <div class="row">
             <!-- Form Section -->
             <div class="col-lg-6">
                 <form>
                     <?php if (isset($_SESSION['success'])): ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <?php echo $_SESSION['success']; unset($_SESSION['success']); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?php echo $_SESSION['success'];
+                            unset($_SESSION['success']); ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     <?php endif; ?>
                     <div class="row mb-3">
                         <div class="">
