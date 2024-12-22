@@ -1,9 +1,9 @@
 <?php
 // config.php
 
-$serverName = "LAPTOP-CACRPO0M\SQLEXPRESS";
+$serverName = "?";
 $connectionOptions = array(
-    "Database" => "PBLSIPRESMA",
+    "Database" => "SIPRESMA",
     "Uid" => "",
     "PWD" => ""
 );
