@@ -66,10 +66,10 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                 <label class="form-label fw-medium" for="programStudi">Program Studi<span
                         class="text-danger">*</span></label>
                 <select class="form-select" id="programStudi" name="program_studi" required>
-                    <option value="">Pilih Program Studi</option>
-                    <option value="Informatika">Informatika</option>
-                    <option value="Sistem Informasi">Sistem Informasi</option>
-                    <option value=""></option>
+                <option value="">Pilih Program Studi</option>
+                    <option value="D-IV Teknik Informatika">D-IV Teknik Informatika</option>
+                    <option value="D-IV Sistem Informasi Bisnis">D-IV Sistem Informasi Bisnis</option>
+                    <option value="D-II Pengembangan Perangkat Lunak Situs">D-II Pengembangan Perangkat Lunak Situs</option>
                 </select>
             </div>
         </div>
@@ -594,89 +594,3 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
 </script>
-<!-- <script>
-var mahasiswaList = <?php echo json_encode($mahasiswaList); ?>;
-var dosenList = <?php echo json_encode($dosenList); ?>;
-// Fungsi untuk menambah baris mahasiswa
-function tambahMahasiswa() {
-    var table = document.getElementById('mahasiswa-table').getElementsByTagName('tbody')[0];
-    var rowCount = table.rows.length;
-    var newRow = table.insertRow(rowCount);
-
-    var cell1 = newRow.insertCell(0); // Kolom No
-    var cell2 = newRow.insertCell(1); // Kolom Mahasiswa
-    var cell3 = newRow.insertCell(2); // Kolom Peran
-    var cell4 = newRow.insertCell(3); // Kolom Action
-
-    // Nomor
-    cell1.innerHTML = rowCount + 1;
-
-    // Dropdown Mahasiswa
-    var mahasiswaDropdown = `<select class="form-select" name="id_mahasiswa[]" required>`;
-    mahasiswaDropdown += `<option value="">Pilih Mahasiswa</option>`;
-    mahasiswaList.forEach(mahasiswa => {
-        mahasiswaDropdown += `<option value="${mahasiswa.id_mahasiswa}">${mahasiswa.nama_mahasiswa}</option>`;
-    });
-    mahasiswaDropdown += `</select>`;
-    cell2.innerHTML = mahasiswaDropdown;
-
-    // Dropdown Peran
-    cell3.innerHTML = `
-        <select class="form-select" name="peran_mahasiswa[]" required>
-            <option value="Peserta">Peserta</option>
-            <option value="Ketua Tim">Ketua Tim</option>
-        </select>
-    `;
-
-    // Tombol Hapus
-    cell4.innerHTML = `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
-}
-
-// Fungsi untuk menambah baris dosen
-function tambahDosen() {
-    var table = document.getElementById('dosen-table').getElementsByTagName('tbody')[0];
-    var rowCount = table.rows.length;
-    var newRow = table.insertRow(rowCount);
-
-    var cell1 = newRow.insertCell(0); // Kolom No
-    var cell2 = newRow.insertCell(1); // Kolom Dosen
-    var cell3 = newRow.insertCell(2); // Kolom Peran
-    var cell4 = newRow.insertCell(3); // Kolom Action
-
-    // Nomor
-    cell1.innerHTML = rowCount + 1;
-
-    // Dropdown Dosen
-    var dosenDropdown = `<select class="form-select" name="id_dosen[]" required>`;
-    dosenDropdown += `<option value="">Pilih Dosen</option>`;
-    dosenList.forEach(dosen => {
-        dosenDropdown += `<option value="${dosen.id_dosen}">${dosen.nama_dosen}</option>`;
-    });
-    dosenDropdown += `</select>`;
-    cell2.innerHTML = dosenDropdown;
-
-    // Dropdown Peran
-    cell3.innerHTML = `
-        <select class="form-select" name="peran_pembimbing[]" required>
-            <option value="Pembimbing Utama">Pembimbing Utama</option>
-            <option value="Pendamping">Pendamping</option>
-        </select>
-    `;
-
-    // Tombol Hapus
-    cell4.innerHTML = `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
-}
-
-// Fungsi untuk menghapus baris (berlaku untuk mahasiswa dan dosen)
-function hapusBaris(button) {
-    var row = button.closest('tr');
-    row.parentNode.removeChild(row);
-
-    // Perbarui nomor setelah penghapusan
-    var table = row.closest('table');
-    var rows = table.getElementsByTagName('tbody')[0].rows;
-    for (var i = 0; i < rows.length; i++) {
-        rows[i].cells[0].innerText = i + 1;
-    }
-}
-</script> -->
