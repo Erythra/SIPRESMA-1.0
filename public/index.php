@@ -30,6 +30,16 @@ if ($action === 'submit_prestasi') {
     $prestasiController->handlePostRequest();
 }
 
+if ($action === 'update_prestasi') {
+    $id_prestasi = $_GET['id_prestasi'] ?? 0;
+    if ($id_prestasi <= 0) {
+        echo "ID Prestasi tidak valid.";
+        exit;
+    }
+    $prestasiController->handleUpdateRequest($id_prestasi);
+
+}
+
 $page = $_GET['page'] ?? 'homepertama';
 $action = $_GET['action'] ?? '';
 
