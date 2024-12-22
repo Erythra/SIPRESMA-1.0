@@ -50,9 +50,9 @@ include 'partials/header.php';
                             <label for="filterJuara" class="form-label">Juara</label>
                             <select class="form-select" id="filterJuara" name="juara">
                                 <option value="">All</option>
-                                <option value="1" <?= isset($_GET['juara']) && $_GET['juara'] === '1' ? 'selected' : '' ?>>Juara 1</option>
-                                <option value="2" <?= isset($_GET['juara']) && $_GET['juara'] === '2' ? 'selected' : '' ?>>Juara 2</option>
-                                <option value="3" <?= isset($_GET['juara']) && $_GET['juara'] === '3' ? 'selected' : '' ?>>Juara 3</option>
+                                <option value="1" <?= isset($_GET['juara']) && $_GET['juara'] === '1' ? 'selected' : '' ?>>1</option>
+                                <option value="2" <?= isset($_GET['juara']) && $_GET['juara'] === '2' ? 'selected' : '' ?>>2</option>
+                                <option value="3" <?= isset($_GET['juara']) && $_GET['juara'] === '3' ? 'selected' : '' ?>>3</option>
                             </select>
                         </div>
 
