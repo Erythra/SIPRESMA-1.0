@@ -20,10 +20,10 @@ class AuthController
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            if (strlen($username) < 5 || strlen($password) < 5) {
-                echo "Username dan password harus minimal 5 karakter.";
-                return;
-            }
+            // if (strlen($username) < 5 || strlen($password) < 5) {
+            //     echo "Username dan password harus minimal 5 karakter.";
+            //     return;
+            // }
 
             $user = $this->userModel->validateLogin($username, $password);
 

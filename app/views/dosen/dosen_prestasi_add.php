@@ -69,13 +69,13 @@
                     </label>
                     <select class="form-select" id="juara" name="juara" required>
                         <option value="1">
-                            Juara 1
+                            1
                         </option>
                         <option value=" 2">
-                            Juara 2
+                            2
                         </option>
                         <option value=" 3">
-                            Juara 3
+                            3
                         </option>
                     </select>
                 </div>

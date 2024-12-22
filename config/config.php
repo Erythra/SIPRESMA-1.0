@@ -1,11 +1,11 @@
 <?php
 // config.php
 
-$serverName = "localhost";
+$serverName = "LAPTOP-CACRPO0M\SQLEXPRESS";
 $connectionOptions = array(
-    "Database" => "sipresma",
-    "Uid" => "sa",
-    "PWD" => "siwof"
+    "Database" => "PBLSIPRESMA",
+    "Uid" => "",
+    "PWD" => ""
 );
 
 $conn = sqlsrv_connect($serverName, $connectionOptions);
