@@ -5,6 +5,8 @@
 
 include 'partials/header.php';
 
+$_SESSION['id_prestasi'] = $_GET['id_prestasi'] ?? null;
+
 if (!isset($_SESSION['user'])) {
     echo "<div class='alert alert-danger text-center' role='alert'>
             Data pengguna tidak ditemukan. Silakan login kembali.
