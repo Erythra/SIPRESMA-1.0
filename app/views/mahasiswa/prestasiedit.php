@@ -43,7 +43,8 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                 <label class="form-label fw-medium" for="thnAkademik">Tahun Akademik<span
                         class="text-danger">*</span></label>
                 <select class="form-select" id="thnAkademik" name="thn_akademik">
-                    <option value=""><?php echo $prestasi['thn_akademik']; ?></option>
+                    <option value="<?php echo $prestasi['thn_akademik']; ?>"><?php echo $prestasi['thn_akademik']; ?>
+                    </option>
                     <option value="2024">2024</option>
                     <option value="2023">2023</option>
                     <option value="2022">2022</option>
@@ -55,20 +56,30 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                         class="text-danger">*</span></label>
                 <input class="form-control" value="<?php echo $prestasi['jenis_kompetisi']; ?>" id="jenisKompetisi"
                     type="text" name="jenis_kompetisi" placeholder="Jenis Kompetisi">
+                <small class="form-text text-muted">Contoh: Lomba Coding</small>
             </div>
         </div>
+
+        <hr class="separator my-3">
 
         <div class="row mb-3">
             <div class="col-md-6">
                 <label class="form-label fw-medium" for="juara">Juara</label>
-                <input class="form-control" id="juara" type="text" name="juara" placeholder="Juara"
-                    value="<?php echo $prestasi['juara']; ?>">
+                <select class="form-select" id="juara" name="juara" required>
+                    <option value="<?php echo $prestasi['juara']; ?>"><?php echo $prestasi['juara']; ?></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                <!-- <input class="form-control" id="juara" type="text" name="juara" placeholder="Juara"
+                    value="<?php echo $prestasi['juara']; ?>"> -->
             </div>
             <div class="col-md-6">
                 <label class="form-label fw-medium" for="programStudi">Program Studi<span
                         class="text-danger">*</span></label>
-                <select class="form-select" id="programStudi" name="program_studi">
-                    <option value=""><?php echo $prestasi['program_studi']; ?></option>
+                <select class="form-select" id="programStudi" name="program_studi" required>
+                    <option value="<?php echo $prestasi['program_studi']; ?>"><?php echo $prestasi['program_studi']; ?>
+                    </option>
                     <option value="D-IV Teknik Informatika">D-IV Teknik Informatika</option>
                     <option value="D-IV Sistem Informasi Bisnis">D-IV Sistem Informasi Bisnis</option>
                     <option value="D-II Pengembangan Perangkat Lunak Situs">D-II Pengembangan Perangkat Lunak Situs
@@ -86,8 +97,21 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
             <div class="col-md-6">
                 <label class="form-label fw-medium" for="tingkatKompetisi">Tingkat Kompetisi<span
                         class="text-danger">*</span></label>
-                <input class="form-control" value="<?php echo $prestasi['tingkat_kompetisi']; ?>" id="tingkatKompetisi"
-                    type="text" name="tingkat_kompetisi" placeholder="Tingkat Kompetisi">
+                <select class="form-select" id="tingkatKompetisi" name="tingkat_kompetisi" required>
+                    <option value="<?php echo $prestasi['tingkat_kompetisi']; ?>">
+                        <?php echo $prestasi['tingkat_kompetisi']; ?></option>
+                    <option value="Kota">
+                        Kota
+                    </option>
+                    <option value=" Nasional">
+                        Nasional
+                    </option>
+                    <option value=" Internasional">
+                        Internasional
+                    </option>
+                </select>
+                <!-- <input class="form-control" value="<?php echo $prestasi['tingkat_kompetisi']; ?>" id="tingkatKompetisi"
+                    type="text" name="tingkat_kompetisi" placeholder="Tingkat Kompetisi"> -->
             </div>
         </div>
 
@@ -138,7 +162,13 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                 <label class="form-label fw-medium" for="tanggalSuratTugas">
                     Tanggal Surat Tugas<span class="text-danger">*</span>
                 </label>
-                <input class="form-control" id="tanggalSuratTugas" type="date" name="tgl_surat_tugas" required /> 
+                <input value="<?= htmlspecialchars(
+                                    $prestasi['tgl_surat_tugas'] instanceof DateTime
+                                        ? $prestasi['tgl_surat_tugas']->format('Y-m-d')
+                                        : $prestasi['tgl_surat_tugas'] ?? '',
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                ); ?>" class="form-control" id="tanggalSuratTugas" type="date" name="tgl_surat_tugas" required />
             </div>
         </div>
         <div class="mb-3">
@@ -618,7 +648,6 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
         <div class="text-end">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-
     </form>
 </div>
 

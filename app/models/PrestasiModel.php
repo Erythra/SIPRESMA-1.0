@@ -484,7 +484,7 @@ class PrestasiModel
     {
         // Query utama untuk mendapatkan data prestasi
         $query = "SELECT 
-        *
+        dp.*
     FROM 
         data_prestasi dp
     WHERE dp.id_prestasi = ?";
