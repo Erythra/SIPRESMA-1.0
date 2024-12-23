@@ -233,8 +233,8 @@
                             if ($prestasi['foto_kegiatan'] !== null) {
                                 $fotoFilePath = 'uploads/foto_kegiatan' . $prestasi['id_prestasi'] . '.jpg';
                                 file_put_contents($fotoFilePath, $prestasi['foto_kegiatan']);
-                                echo "<button class='btn btn-outline-primary' data-bs-toggle='modal' data-bs-target='#viewModalFotoKegiatan' style='color: #244282; border-color: #244282; background-color: transparent; margin-right: 5px;' >View Foto</button> ";
-                                echo "<a href='" . $fotoFilePath . "' download><button class='btn btn-primary'  style='background-color: #244282; border-color: #244282;'>Download Foto</button></a>";
+                                echo "<button class='btn btn-outline-primary' data-bs-toggle='modal' data-bs-target='#viewModalFotoKegiatan' style='color: #244282; border-color: #244282; background-color: transparent; margin-right: 5px;'>View Foto</button> ";
+                                echo "<a href='" . $fotoFilePath . "' download><button class='btn btn-primary' style='background-color: #244282; border-color: #244282;'>Download Foto</button></a>";
 
                                 echo "
                                 <div class='modal fade' id='viewModalFotoKegiatan' tabindex='-1' aria-labelledby='viewModalLabelFotoKegiatan' aria-hidden='true'>
