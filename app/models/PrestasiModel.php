@@ -466,19 +466,29 @@ class PrestasiModel
 
 
 
-    public function deletePrestasi($id_prestasi)
-    {
-        $sql = "DELETE FROM data_prestasi WHERE id_prestasi = ?";
+public function deletePrestasi($id_prestasi)
+{
+    // Step 1: Hapus data terkait di tabel prestasi_mahasiswa
+    $sqlDeleteRelated = "DELETE FROM prestasi_mahasiswa WHERE id_prestasi = ?";
+    $stmtDeleteRelated = sqlsrv_query($this->conn, $sqlDeleteRelated, [$id_prestasi]);
 
-        // Prepare and execute the statement using sqlsrv_query
-        $stmt = sqlsrv_query($this->conn, $sql, [$id_prestasi]);
-
-        if ($stmt === false) {
-            die(print_r(sqlsrv_errors(), true)); // Handle query failure
-        }
-
-        return true; // Return true if the query executed successfully
+    if ($stmtDeleteRelated === false) {
+        error_log("Error deleting related data: " . print_r(sqlsrv_errors(), true));
+        return false; // Return false if deleting related data fails
     }
+
+    // Step 2: Hapus data dari tabel data_prestasi
+    $sqlDeleteMain = "DELETE FROM data_prestasi WHERE id_prestasi = ?";
+    $stmtDeleteMain = sqlsrv_query($this->conn, $sqlDeleteMain, [$id_prestasi]);
+
+    if ($stmtDeleteMain === false) {
+        error_log("Error deleting main data: " . print_r(sqlsrv_errors(), true));
+        return false; // Return false if deleting main data fails
+    }
+
+    return true; // Return true if both operations succeed
+}
+
 
     public function getPrestasiById($id_prestasi)
     {

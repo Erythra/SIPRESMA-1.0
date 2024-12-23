@@ -168,7 +168,8 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                                         : $prestasi['tgl_surat_tugas'] ?? '',
                                     ENT_QUOTES,
                                     'UTF-8'
-                                ); ?>" class="form-control" id="tanggalSuratTugas" type="date" name="tgl_surat_tugas" required />
+                                ); ?>" class="form-control" id="tanggalSuratTugas" type="date" name="tgl_surat_tugas"
+                    required />
             </div>
         </div>
         <div class="mb-3">
@@ -184,11 +185,14 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                         onchange="updateFileName()">
                     <span id="fileName" class="ms-2 text-muted fs-6">
                         <?php
-                        $suratTugasFilePath = 'uploads/file_surat_tugas' . $prestasi['id_prestasi'] . '.pdf';
-                        if (file_exists($suratTugasFilePath)) {
-                            echo basename($suratTugasFilePath);
-                        }
-                         ?>
+                // Cek jika file sudah ada
+                $suratTugasFilePath = 'uploads/file_surat_tugas' . $prestasi['id_prestasi'] . '.pdf';
+                if (file_exists($suratTugasFilePath)) {
+                    echo basename($suratTugasFilePath);
+                } else {
+                    echo "No file chosen";
+                }
+                ?>
                     </span>
                 </div>
                 <small class="form-text text-muted">
@@ -203,7 +207,7 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
 
                 if (file) {
                     var maxSize = 5000 * 1024; // 5000 KB
-                    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
+                    var allowedExtensions = /(\.pdf|\.docx)$/i;
 
                     if (file.size > maxSize) {
                         alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
@@ -211,7 +215,7 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                         fileName.textContent = "No file chosen";
                     } else if (!allowedExtensions.exec(file.name)) {
                         alert(
-                            'Ekstensi file tidak valid. Hanya file .jpg, .jpeg, .png, .pdf, .docx yang diperbolehkan.'
+                            'Ekstensi file tidak valid. Hanya file .pdf, .docx yang diperbolehkan.'
                         );
                         fileInput.value = ''; // Reset file input
                         fileName.textContent = "No file chosen";
@@ -219,11 +223,14 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                         fileName.textContent = file.name;
                     }
                 } else {
-                    fileName.textContent = "No file chosen";
+                    // Jika tidak ada file baru yang dipilih, gunakan nilai dari database
+                    fileName.textContent = "<?php echo basename($suratTugasFilePath); ?>";
                 }
             }
             </script>
         </div>
+
+
         <hr class="separator my-3" />
         <h5 class="fw-semibold mb-3">
             Lampiran
@@ -409,7 +416,7 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                             Pilih File
                         </label>
                         <input type="file" id="customFileHasilKompetisi" name="lampiran_hasil_kompetisi"
-                            style="display: none;" onchange="updateFileNameHasilKompetisi()">
+                            style="display: none;" onchange="updateFileNameHasilKompetisi()" value="">
                         <span id="fileNameHasilKompetisi" class="ms-2 text-muted fs-6">
                             <?php
                             $lampiranKompetisiFilePath = 'uploads/lampiran_hasil_kompetisi' . $prestasi['id_prestasi'] . '.pdf';
