@@ -505,7 +505,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <a href="index.php?page=dosen_prestasi_detail&id_prestasi=<?php echo $prestasi['id_prestasi']; ?>&action=approve" class="btn btn-success">Ya, Setujui</a>
+                <a href="index.php?page=dosen_prestasi_detail&id_preJuara
+
+1stasi=<?php echo $prestasi['id_prestasi']; ?>&action=approve" class="btn btn-success">Ya, Setujui</a>
             </div>
         </div>
     </div>

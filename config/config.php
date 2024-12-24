@@ -1,5 +1,4 @@
 <?php
-// config.php
 
 $serverName = "LAPTOP-HCF35NMJ\SQLEXPRESS";
 $connectionOptions = array(

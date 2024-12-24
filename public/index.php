@@ -37,7 +37,6 @@ if ($action === 'update_prestasi') {
         exit;
     }
     $prestasiController->handleUpdateRequest($id_prestasi);
-
 }
 
 $page = $_GET['page'] ?? 'homepertama';
@@ -94,6 +93,18 @@ switch ($page) {
         $mahasiswaList = $dosenPrestasiController->getMahasiswaList();
         $dosenList = $dosenPrestasiController->getDosenList();
         include '../app/views/dosen/dosen_prestasi_add.php';
+        break;
+
+    case 'dosen_pengumuman_list':
+        include '../app/views/dosen/dosen_pengumuman_list.php';
+        break;
+
+    case 'dosen_pengumuman_add':
+        include '../app/views/dosen/dosen_pengumuman_add.php';
+        break;
+
+    case 'dosen_pengumuman_detail':
+        include '../app/views/dosen/dosen_pengumuman_detail.php';
         break;
 
         // MAHASISWA
