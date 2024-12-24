@@ -15,6 +15,33 @@ $pengumumanList = [];
 while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
     $pengumumanList[] = $row;
 }
+
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id_pengumuman'])) {
+    $id_pengumuman = $_GET['id_pengumuman'];
+
+    $sql = "DELETE FROM pengumuman WHERE id_pengumuman = ?";
+
+    $params = array($id_pengumuman);
+
+    $stmt = sqlsrv_query($conn, $sql, $params);
+
+    if ($stmt) {
+        $_SESSION['flash_message'] = [
+            'type' => 'success',
+            'message' => 'Pengumuman berhasil dihapus.'
+        ];
+    } else {
+        $_SESSION['flash_message'] = [
+            'type' => 'danger',
+            'message' => 'Gagal menghapus pengumuman.'
+        ];
+    }
+
+    header("Location: index.php?page=dosen_pengumuman_list");
+    exit;
+}
+?>
+
 ?>
 
 <div class="" style="margin-left: 317px; margin-right: 32px; margin-top: 90px;">
@@ -67,10 +94,10 @@ while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                     <?php foreach ($pengumumanList as $pengumuman) : ?>
                         <tr class="prestasiRow">
 
-                            <td class="align-middle text-center">
+                            <td class="align-middle">
                                 <?= htmlspecialchars($pengumuman['judul_pengumuman']); ?>
                             </td>
-                            <td class="align-middle text-center">
+                            <td class="align-middle">
                                 <?= htmlspecialchars($pengumuman['isi_pengumuman']); ?>
                             </td>
 
@@ -84,7 +111,7 @@ while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                                     </a>
                                     <a href="#"
                                         class="btn btn-outline-danger btn-xs deleteButton"
-                                        data-id="<?php echo $prestasi['id_prestasi']; ?>"
+                                        data-id="<?php echo $pengumuman['id_pengumuman']; ?>"
                                         data-bs-toggle="modal"
                                         data-bs-target="#confirmDeleteModal">
                                         <i class="fas fa-trash-alt"></i>
@@ -98,7 +125,7 @@ while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                                                    <p>Apakah Anda yakin ingin menghapus pengumuman ini?</p>
                                                     <p class="text-danger fw-bold">Data yang sudah dihapus tidak dapat dikembalikan!</p>
                                                 </div>
                                                 <div class="modal-footer">
@@ -115,8 +142,8 @@ while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
 
                                             deleteButtons.forEach(button => {
                                                 button.addEventListener('click', function() {
-                                                    const prestasiId = this.getAttribute('data-id');
-                                                    confirmDeleteButton.setAttribute('href', `index.php?page=dosen_prestasi&action=delete&id_prestasi=${prestasiId}`);
+                                                    const pengumumanId = this.getAttribute('data-id');
+                                                    confirmDeleteButton.setAttribute('href', `index.php?page=dosen_pengumuman_list&action=delete&id_pengumuman=${pengumumanId}`);
                                                 });
                                             });
                                         });
