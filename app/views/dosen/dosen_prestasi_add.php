@@ -27,11 +27,14 @@
                         Program Studi<span class="text-danger">*</span>
                     </label>
                     <select class="form-select" name="program_studi" id="programStudi" required>
-                        <option value="Informatika">
-                            D-IV Informatika
+                        <option value="D-IV Teknik Informatika">
+                            D-IV Teknik Informatika
                         </option>
-                        <option value=" Sistem Informasi Bisnis">
+                        <option value="Sistem Informasi Bisnis">
                             D-IV Sistem Informasi Bisnis
+                        </option>
+                        <option value="D-II Pengembangan Perangkat Lunak Situs">
+                            D-II Pengembangan Perangkat Lunak Situs
                         </option>
                     </select>
                 </div>
@@ -40,12 +43,6 @@
                         Tahun Akademik<span class="text-danger">*</span>
                     </label>
                     <select class="form-select" id="thn_akademik" name="thn_akademik" required>
-                        <option value="2022">
-                            2022
-                        </option>
-                        <option value="2023">
-                            2023
-                        </option>
                         <option value="2024">
                             2024
                         </option>
@@ -344,14 +341,11 @@
                                 var maxSize = 5000 * 1024; // 5000 KB
                                 var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
 
-                                // Check file size
                                 if (file.size > maxSize) {
                                     alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
                                     fileInput.value = ''; // Reset file input
                                     fileName.textContent = "No file chosen";
-                                }
-                                // Check file extension
-                                else if (!allowedExtensions.exec(file.name)) {
+                                } else if (!allowedExtensions.exec(file.name)) {
                                     alert('Ekstensi file tidak valid. Hanya file .jpg, .jpeg, .png yang diperbolehkan.');
                                     fileInput.value = ''; // Reset file input
                                     fileName.textContent = "No file chosen";
@@ -440,7 +434,7 @@
                             </td>
                             <td>
                                 <select class="form-select" name="peran_mahasiswa[]" required>
-                                    <option value="Peserta">Anggota</option>
+                                    <option value="Anggota">Anggota</option>
                                     <option value="Ketua Tim">Ketua Tim</option>
                                 </select>
                             </td>
@@ -522,7 +516,7 @@
                     // Dropdown Peran
                     cell3.innerHTML = `
                             <select class="form-select" name="peran_mahasiswa[]" required>
-                                <option value="Peserta">Peserta</option>
+                                <option value="Anggota">Anggota</option>
                                 <option value="Ketua Tim">Ketua Tim</option>
                             </select>
                             `;
