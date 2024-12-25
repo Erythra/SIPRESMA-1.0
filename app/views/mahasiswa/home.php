@@ -12,6 +12,8 @@ $pengumumanList = [];
 while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
     $pengumumanList[] = $row;
 }
+
+$pengumumanList = array_slice($pengumumanList, 0, 3);
 ?>
 
 <div style="margin-top: 4rem;">

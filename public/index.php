@@ -111,6 +111,10 @@ switch ($page) {
         include '../app/views/dosen/dosen_peringkat_akademik.php';
         break;
 
+    case 'dosen_pengumuman_update':
+        include '../app/views/dosen/dosen_pengumuman_update.php';
+        break;
+
         // MAHASISWA
     case 'home':
         include '../app/views/mahasiswa/home.php';

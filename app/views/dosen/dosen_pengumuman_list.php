@@ -109,6 +109,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id_pen
                                         class="btn btn-outline-primary btn-xs">
                                         <i class="fas fa-file-alt"></i>
                                     </a>
+                                    <a href="index.php?page=dosen_pengumuman_update&id_pengumuman=<?php echo $pengumuman['id_pengumuman']; ?>"
+                                        class="btn btn-outline-warning btn-xs">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
                                     <a href="#"
                                         class="btn btn-outline-danger btn-xs deleteButton"
                                         data-id="<?php echo $pengumuman['id_pengumuman']; ?>"
