@@ -1,254 +1,278 @@
-<?php include 'partials/header.php' ?>
+<?php
+include 'partials/header.php';
 
+$semester = isset($_GET['smt']) ? $_GET['smt'] : 3;
 
+require_once __DIR__ . '/../../controllers/AuthController.php';
 
+$AuthController = new AuthController($conn);
 
-<div class="card mb-5" style="margin: 0px 84px 0px 84px; margin-top: 8rem;">
-    <div class="card-body">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button aria-controls="akademik" aria-selected="true" class="nav-link active" data-bs-target="#akademik"
-                    data-bs-toggle="tab" id="akademik-tab" role="tab" type="button">
-                    Akademik
+if (!isset($_SESSION['user'])) {
+    echo "<div class='alert alert-danger text-center' role='alert'>
+            Data pengguna tidak ditemukan. Silakan login kembali.
+          </div>";
+    exit;
+}
+
+$AuthController = new AuthController($conn);
+$leaderboard = $AuthController->getLeaderboardMahasiswa($semester);
+
+$topRanked = array_slice($leaderboard, 0, 3);
+$remainingLeaderboard = array_slice($leaderboard, 3);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table-leaderboard {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: #F5F2FE;
+            font-family: Arial, sans-serif;
+        }
+
+        .container-leaderboard {
+            padding: 40px 20px;
+            align-self: stretch;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #17254E;
+            text-align: center;
+        }
+
+        .title2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FEC01A;
+        }
+
+        .card-profile {
+            border-radius: 10px;
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            width: 276px;
+            height: 288px;
+            margin: 0 auto;
+        }
+
+        .card-profile1 {
+            border: 2px solid #FEC01A;
+        }
+
+        .card-profile2 {
+            border: 2px solid #AEAEB2;
+        }
+
+        .card-profile3 {
+            border: 2px solid #A36D1D;
+        }
+
+        .card-profile .profile-img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
+        }
+
+        .card-profile .name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .card-profile .id {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .card-profile .ipk {
+            font-size: 16px;
+            font-weight: bold;
+            color: #343a40;
+            margin-top: 10px;
+        }
+
+        .dropdown-menu {
+            min-width: 150px;
+        }
+
+        .parent {
+            padding: 50px;
+        }
+
+        .kon-text {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .kon-card {
+            justify-content: center;
+            gap: 200px;
+            margin: auto;
+            display: flex;
+        }
+
+        .profile-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-img {
+            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .profile-text {
+            padding: 2px;
+            justify-content: center;
+            align-items: center !important;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .profile-text .name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        .profile-text .nim {
+            font-size: 12px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="info">
+        <p class="info-text">Home - Papan Peringkat - Akademik</p>
+    </div>
+
+    <div class="container-leaderboard">
+        <div class="text-center">
+            <h3 class="title">Most Accomplished</h3>
+            <h3 class="title2">Students</h3>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="d-flex gap-3">
+                <button class="btn btn-outline-primary">Akademik</button>
+                <button class="btn btn-outline-secondary">Non-Akademik</button>
+                <button class="btn btn-outline-secondary">Semua</button>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle shadow-sm" style="background-color: #EAEDEF; border: none; color: #212529;" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Tahun Ajar
                 </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button aria-controls="non-akademik" aria-selected="false" class="nav-link"
-                    data-bs-target="#non-akademik" data-bs-toggle="tab" id="non-akademik-tab" role="tab" type="button">
-                    Non-Akademik
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button aria-controls="ipk" aria-selected="false" class="nav-link" data-bs-target="#ipk"
-                    data-bs-toggle="tab" id="ipk-tab" role="tab" type="button">
-                    IPK
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button aria-controls="semua" aria-selected="false" class="nav-link" data-bs-target="#semua"
-                    data-bs-toggle="tab" id="semua-tab" role="tab" type="button">
-                    Semua
-                </button>
-            </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-            <div aria-labelledby="akademik-tab" class="tab-pane fade show active" id="akademik" role="tabpanel">
-                <div class="d-flex justify-content-end mt-3">
-                    <div class="dropdown">
-                        <button aria-expanded="false" class="btn btn-outline-secondary dropdown-toggle"
-                            data-bs-toggle="dropdown" id="dropdownMenuButton" type="button">
-                            2024
-                        </button>
-                        <ul aria-labelledby="dropdownMenuButton" class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    2023
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    2022
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    2021
-                                </a>
-                            </li>
-                        </ul>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="index.php?page=peringkat_akademik&smt=3" <?= isset($_GET['smt']) && $_GET['smt'] == 3 ? 'class="active"' : ''; ?>>2024/2025 Ganjil</a></li>
+                    <li><a class="dropdown-item" href="index.php?page=peringkat_akademik&smt=2" <?= isset($_GET['smt']) && $_GET['smt'] == 2 ? 'class="active"' : ''; ?>>2024/2025 Genap</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row mt-4 mb-4 d-flex justify-content-center">
+            <?php foreach ($topRanked as $index => $student): ?>
+                <div class="col-md-4">
+                    <div class="card-profile <?= ($index == 0) ? 'card-profile1' : (($index == 1) ? 'card-profile2' : 'card-profile3'); ?>">
+                        <img src="<?= !empty($student['foto_mahasiswa']) ? $student['foto_mahasiswa'] : 'default-image.jpg'; ?>" alt="Profile Image" class="profile-img">
+                        <div class="name"><?= $student['nama_mahasiswa']; ?></div>
+                        <div class="id"><?= $student['NIM']; ?></div>
+                        <div class="ipk">IPK <?= number_format($student['IPK'], 2); ?></div>
                     </div>
                 </div>
-                <table class="table mt-3">
+            <?php endforeach; ?>
+        </div>
+
+        <div class="card p-4">
+            <div class="table-container">
+                <table class="table table-hover text-center">
                     <thead>
-                        <tr class="text-center">
-                            <th>
-                                Peringkat
-                            </th>
-                            <th>
-                                NIM
-                            </th>
-                            <th>
-                                Nama
-                            </th>
-                            <th>
-                                Jurusan
-                            </th>
-                            <th>
-                                Jumlah Prestasi
-                            </th>
+                        <tr>
+                            <th>Peringkat</th>
+                            <th style="text-align: left;">Nama</th>
+                            <th>Jurusan</th>
+                            <th>IPK</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="text-center">
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1234567890
-                            </td>
-                            <td>
-                                <img alt="Profile picture of Daniel Levi" height="40"
-                                    src="https://storage.googleapis.com/a1aa/image/S97ecnhW5jW0QiiW7vDbmbljqn6Zthh9oS6plZrNSeRVBwzTA.jpg"
-                                    width="40" />
-                                Daniel Levi
-                            </td>
-                            <td>
-                                D-IV Teknik Informatika
-                            </td>
-                            <td>
-                                50
-                            </td>
-                        </tr>
-                        <tr class="text-center">
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                1234567890
-                            </td>
-                            <td>
-                                <img alt="Profile picture of Daniel Levi" height="40"
-                                    src="https://storage.googleapis.com/a1aa/image/S97ecnhW5jW0QiiW7vDbmbljqn6Zthh9oS6plZrNSeRVBwzTA.jpg"
-                                    width="40" />
-                                Daniel Levi
-                            </td>
-                            <td>
-                                D-IV Teknik Informatika
-                            </td>
-                            <td>
-                                50
-                            </td>
-                        </tr>
-                        <tr class="text-center">
-                            <td>
-                                3
-                            </td>
-                            <td>
-                                1234567890
-                            </td>
-                            <td>
-                                <img alt="Profile picture of Daniel Levi" height="40"
-                                    src="https://storage.googleapis.com/a1aa/image/S97ecnhW5jW0QiiW7vDbmbljqn6Zthh9oS6plZrNSeRVBwzTA.jpg"
-                                    width="40" />
-                                Daniel Levi
-                            </td>
-                            <td>
-                                D-IV Teknik Informatika
-                            </td>
-                            <td>
-                                50
-                            </td>
-                        </tr>
-                        <tr class="text-center">
-                            <td>
-                                4
-                            </td>
-                            <td>
-                                1234567890
-                            </td>
-                            <td>
-                                <img alt="Profile picture of Daniel Levi" height="40"
-                                    src="https://storage.googleapis.com/a1aa/image/S97ecnhW5jW0QiiW7vDbmbljqn6Zthh9oS6plZrNSeRVBwzTA.jpg"
-                                    width="40" />
-                                Daniel Levi
-                            </td>
-                            <td>
-                                D-IV Teknik Informatika
-                            </td>
-                            <td>
-                                50
-                            </td>
-                        </tr>
-                        <tr class="text-center">
-                            <td>
-                                5
-                            </td>
-                            <td>
-                                1234567890
-                            </td>
-                            <td>
-                                <img alt="Profile picture of Daniel Levi" height="40"
-                                    src="https://storage.googleapis.com/a1aa/image/S97ecnhW5jW0QiiW7vDbmbljqn6Zthh9oS6plZrNSeRVBwzTA.jpg"
-                                    width="40" />
-                                Daniel Levi
-                            </td>
-                            <td>
-                                D-IV Teknik Informatika
-                            </td>
-                            <td>
-                                50
-                            </td>
-                        </tr>
+                        <?php foreach ($remainingLeaderboard as $index => $student): ?>
+                            <tr class="text-center">
+                                <td><?= $index + 4; ?></td>
+                                <td>
+                                    <div class="profile-container gap-2">
+                                        <img src="<?= !empty($student['foto_mahasiswa']) ? $student['foto_mahasiswa'] : 'default-image.jpg'; ?>" alt="Foto Profil" class="profile-img">
+                                        <div class="profile-text">
+                                            <p class="name"><?= $student['nama_mahasiswa']; ?></p>
+                                            <p class="nim"><?= $student['NIM']; ?></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><?= $student['program_studi']; ?></td>
+                                <td><?= number_format($student['IPK'], 2); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <select class="form-select" style="width: 70px;">
-                            <option value="10">
-                                10
-                            </option>
-                            <option value="20">
-                                20
-                            </option>
-                            <option value="30">
-                                30
-                            </option>
-                        </select>
-                    </div>
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a aria-label="Previous" class="page-link" href="#">
-                                    <span aria-hidden="true">
-                                        «
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">
-                                    1
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    2
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    ...
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    10
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a aria-label="Next" class="page-link" href="#">
-                                    <span aria-hidden="true">
-                                        »
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <select class="form-select" style="width: 70px;">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
                 </div>
-            </div>
-            <div aria-labelledby="non-akademik-tab" class="tab-pane fade" id="non-akademik" role="tabpanel">
-                Non-Akademik content
-            </div>
-            <div aria-labelledby="ipk-tab" class="tab-pane fade" id="ipk" role="tabpanel">
-                IPK content
-            </div>
-            <div aria-labelledby="semua-tab" class="tab-pane fade" id="semua" role="tabpanel">
-                Semua content
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a aria-label="Previous" class="page-link" href="#">
+                                <span aria-hidden="true">«</span>
+                            </a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">...</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">10</a>
+                        </li>
+                        <li class="page-item">
+                            <a aria-label="Next" class="page-link" href="#">
+                                <span aria-hidden="true">»</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
-</div>
-</div>
-<?php include 'partials/footer.php'; ?>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-</script>
+
+    <?php include 'partials/footer.php'; ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
