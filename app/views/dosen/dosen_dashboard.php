@@ -3,6 +3,74 @@ include 'partials/header.php';
 include 'partials/sidenav.php';
 include '../config/config.php';
 
+$timePeriod = 'hari';
+
+if (isset($_POST['btnradio1'])) {
+    $timePeriod = $_POST['btnradio1'];
+}
+
+function getUploadData($conn, $timePeriod)
+{
+    $query = '';
+
+    switch ($timePeriod) {
+        case 'bulan':
+
+            $query = "SELECT MONTH(tgl_pengajuan) as month, COUNT(*) as total_uploads 
+                      FROM data_prestasi 
+                      GROUP BY MONTH(tgl_pengajuan) 
+                      ORDER BY month";
+            break;
+        case 'tahun':
+
+            $query = "SELECT YEAR(tgl_pengajuan) as year, COUNT(*) as total_uploads 
+                      FROM data_prestasi 
+                      GROUP BY YEAR(tgl_pengajuan) 
+                      ORDER BY year";
+            break;
+        case 'hari':
+        default:
+
+            $query = "SELECT DAY(tgl_pengajuan) as day, COUNT(*) as total_uploads 
+                      FROM data_prestasi 
+                      GROUP BY DAY(tgl_pengajuan) 
+                      ORDER BY day";
+            break;
+    }
+
+    $result = sqlsrv_query($conn, $query);
+
+    if ($result === false) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+
+    $data = [];
+    while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+        $data[] = $row;
+    }
+
+    return $data;
+}
+
+$data = getUploadData($conn, $timePeriod);
+
+$labels = [];
+$uploadData = [];
+foreach ($data as $row) {
+    switch ($timePeriod) {
+        case 'bulan':
+            $labels[] = 'Bulan ' . $row['month'];
+            break;
+        case 'tahun':
+            $labels[] = 'Tahun ' . $row['year'];
+            break;
+        case 'hari':
+        default:
+            $labels[] = 'Hari ' . $row['day'];
+            break;
+    }
+    $uploadData[] = $row['total_uploads'];
+}
 ?>
 
 <div style="margin-left: 317px; margin-right: 32px; margin-top: 90px;">
@@ -32,14 +100,16 @@ include '../config/config.php';
                     <div class="d-flex justify-content-between align-items-center" style="margin-left: 24px; margin-right: 24px;">
                         <h4 class="fw-semibold mb-0">Total Upload Data Prestasi</h4>
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" name="btnradio1" id="btnradio1" autocomplete="off" checked>
-                            <label class="btn btn-outline-primary" for="btnradio1">Hari</label>
+                            <form method="POST" id="timePeriodForm">
+                                <input type="radio" class="btn-check" name="btnradio1" id="btnradio1" value="hari" <?= $timePeriod == 'hari' ? 'checked' : '' ?> autocomplete="off">
+                                <label class="btn btn-outline-primary" for="btnradio1">Hari</label>
 
-                            <input type="radio" class="btn-check" name="btnradio1" id="btnradio2" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio2">Bulan</label>
+                                <input type="radio" class="btn-check" name="btnradio1" id="btnradio2" value="bulan" <?= $timePeriod == 'bulan' ? 'checked' : '' ?> autocomplete="off">
+                                <label class="btn btn-outline-primary" for="btnradio2">Bulan</label>
 
-                            <input type="radio" class="btn-check" name="btnradio1" id="btnradio3" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio3">Tahun</label>
+                                <input type="radio" class="btn-check" name="btnradio1" id="btnradio3" value="tahun" <?= $timePeriod == 'tahun' ? 'checked' : '' ?> autocomplete="off">
+                                <label class="btn btn-outline-primary" for="btnradio3">Tahun</label>
+                            </form>
                         </div>
                     </div>
                     <canvas class="mt-2" id="totalupload" width="900" height="400"></canvas>
@@ -177,7 +247,6 @@ include '../config/config.php';
     </div>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
 </script>
@@ -187,36 +256,24 @@ include '../config/config.php';
 <script src="././../assets/js/prestasi.js"></script>
 
 <script>
-    /* globals Chart:false */
+    document.querySelectorAll('input[name="btnradio1"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.getElementById('timePeriodForm').submit();
+        });
+    });
+</script>
 
+<script>
     (() => {
         'use strict'
 
-        // Graphs
-        const ctx = document.getElementById('totalupload')
-        // eslint-disable-next-line no-unused-vars
+        const ctx = document.getElementById('totalupload');
         const totalupload = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: [
-                    'Sunday',
-                    'Monday',
-                    'Tuesday',
-                    'Wednesday',
-                    'Thursday',
-                    'Friday',
-                    'Saturday'
-                ],
+                labels: <?php echo json_encode($labels); ?>,
                 datasets: [{
-                    data: [
-                        15339,
-                        21345,
-                        18483,
-                        24003,
-                        23489,
-                        24092,
-                        12034
-                    ],
+                    data: <?php echo json_encode($uploadData); ?>,
                     lineTension: 0,
                     backgroundColor: 'transparent',
                     borderColor: '#007bff',
@@ -234,10 +291,9 @@ include '../config/config.php';
                     }
                 }
             }
-        })
+        });
     })()
 </script>
-
 
 </body>
 
