@@ -3,7 +3,6 @@ include 'partials/header.php';
 include 'partials/sidenav.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Ambil data dari form
     $judul_pengumuman = $_POST['judul_pengumuman'];
     $isi_pengumuman = $_POST['isi_pengumuman'];
     $tgl_dibuat = $_POST['tgl_dibuat'];
@@ -26,13 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$date) {
             throw new Exception("Format tanggal tidak valid untuk tgl_diupdate.");
         }
-        $tgl_diupdate = $date->format('Y-m-d'); // Menyimpan hanya tanggal
+        $tgl_diupdate = $date->format('Y-m-d');
     } catch (Exception $e) {
         echo 'Kesalahan format tanggal: ', $e->getMessage();
         exit();
     }
 
-    // Proses upload gambar
     $gambar_path = '';
     if (isset($_FILES['gambar_pengumuman']) && $_FILES['gambar_pengumuman']['error'] === UPLOAD_ERR_OK) {
         $gambar_pengumuman = $_FILES['gambar_pengumuman'];
@@ -68,7 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // Redirect ke halaman list pengumuman dengan membawa flash message
     header("Location: http://localhost/sipresma-1.0/public/index.php?page=dosen_pengumuman_list");
     exit();
 }

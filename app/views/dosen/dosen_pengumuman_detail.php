@@ -6,7 +6,6 @@ include '../config/config.php';
 if (isset($_GET['id_pengumuman'])) {
     $id_pengumuman = $_GET['id_pengumuman'];
 
-    // Query untuk mengambil data pengumuman berdasarkan ID
     $sql = "SELECT * FROM pengumuman WHERE id_pengumuman = ?";
     $stmt = sqlsrv_prepare($conn, $sql, array($id_pengumuman));
 
@@ -14,19 +13,14 @@ if (isset($_GET['id_pengumuman'])) {
         die(print_r(sqlsrv_errors(), true));
     }
 
-    // Eksekusi query
     $result = sqlsrv_execute($stmt);
 
-    // Cek apakah data ditemukan
     if ($result && sqlsrv_has_rows($stmt)) {
-        // Ambil data pengumuman
         $pengumuman = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
-        // Format tanggal
         $tgl_dibuat = $pengumuman['tgl_dibuat'];
         $tgl_diupdate = $pengumuman['tgl_diupdate'] ? $pengumuman['tgl_diupdate'] : null;
 
-        // Mengonversi tanggal ke format yang diinginkan
         $formatted_tgl_dibuat = date_format($tgl_dibuat, 'd-m-Y H:i');
         $formatted_tgl_diupdate = $tgl_diupdate ? date_format($tgl_diupdate, 'd-m-Y H:i') : 'Belum diupdate';
     } else {
@@ -38,7 +32,6 @@ if (isset($_GET['id_pengumuman'])) {
     exit();
 }
 
-// Menutup koneksi
 sqlsrv_free_stmt($stmt);
 sqlsrv_close($conn);
 ?>
@@ -62,7 +55,6 @@ sqlsrv_close($conn);
                 <div class="card-header bg-white fw-bold" style="font-size: 16px;">Detail Pengumuman</div>
                 <div class="card-body">
                     <div class="row mb-2">
-                        <!-- Kolom Kiri: Judul Pengumuman dan Isi Pengumuman -->
                         <div class="col-md-6">
                             <p class="mb-0 fw-bold">Judul Pengumuman</p>
                             <p class="mb-3" style="color: #495057;">
@@ -75,7 +67,6 @@ sqlsrv_close($conn);
                             </p>
                         </div>
 
-                        <!-- Kolom Kanan: Gambar Pengumuman -->
                         <div class="col-md-4">
                             <p class="mb-0 fw-bold">Gambar Pengumuman</p>
                             <p class="mb-3" style="color: #495057;">
@@ -108,7 +99,6 @@ sqlsrv_close($conn);
                         </div>
                     </div>
                     <hr class="separator my-3" />
-                    <!-- Baris untuk tanggal dibuat dan diupdate -->
                     <div class="row">
                         <div class="col-md-6">
                             <p class="mb-0 fw-bold">Tanggal Dibuat</p>
