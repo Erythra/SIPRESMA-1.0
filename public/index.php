@@ -31,9 +31,13 @@ if ($action === 'submit_prestasi') {
 }
 
 if ($action === 'update_prestasi') {
-    $prestasiController->handleUpdateRequest();
+    $id_prestasi = $_GET['id_prestasi'] ?? 0;
+    if ($id_prestasi <= 0) {
+        echo "ID Prestasi tidak valid.";
+        exit;
+    }
+    $prestasiController->handleUpdateRequest($id_prestasi);
 }
-
 
 $page = $_GET['page'] ?? 'homepertama';
 $action = $_GET['action'] ?? '';
@@ -89,6 +93,18 @@ switch ($page) {
         $mahasiswaList = $dosenPrestasiController->getMahasiswaList();
         $dosenList = $dosenPrestasiController->getDosenList();
         include '../app/views/dosen/dosen_prestasi_add.php';
+        break;
+
+    case 'dosen_pengumuman_list':
+        include '../app/views/dosen/dosen_pengumuman_list.php';
+        break;
+
+    case 'dosen_pengumuman_add':
+        include '../app/views/dosen/dosen_pengumuman_add.php';
+        break;
+
+    case 'dosen_pengumuman_detail':
+        include '../app/views/dosen/dosen_pengumuman_detail.php';
         break;
 
         // MAHASISWA
