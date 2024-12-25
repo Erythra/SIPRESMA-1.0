@@ -98,7 +98,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id_pen
                                 <?= htmlspecialchars($pengumuman['judul_pengumuman']); ?>
                             </td>
                             <td class="align-middle">
-                                <?= htmlspecialchars($pengumuman['isi_pengumuman']); ?>
+                                <?= htmlspecialchars(mb_strimwidth($pengumuman['isi_pengumuman'], 0, 200, '...')); ?>
                             </td>
 
                             <!-- Kolom Actions -->

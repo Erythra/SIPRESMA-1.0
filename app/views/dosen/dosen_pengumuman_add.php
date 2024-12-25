@@ -6,29 +6,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $judul_pengumuman = $_POST['judul_pengumuman'];
     $isi_pengumuman = $_POST['isi_pengumuman'];
     $tgl_dibuat = $_POST['tgl_dibuat'];
-    $tgl_diupdate = $_POST['tgl_diupdate'];
+    $tgl_diupdate = isset($_POST['tgl_diupdate']) ? $_POST['tgl_diupdate'] : null;
 
-    // Format ulang untuk memastikan hanya tanggal yang dikirim
     try {
         $date = DateTime::createFromFormat('Y-m-d\TH:i', $tgl_dibuat);
         if (!$date) {
             throw new Exception("Format tanggal tidak valid untuk tgl_dibuat.");
         }
-        $tgl_dibuat = $date->format('Y-m-d'); // Menyimpan hanya tanggal
+        $tgl_dibuat = $date->format('Y-m-d');
     } catch (Exception $e) {
         echo 'Kesalahan format tanggal: ', $e->getMessage();
         exit();
     }
 
-    try {
-        $date = DateTime::createFromFormat('Y-m-d\TH:i', $tgl_diupdate);
-        if (!$date) {
-            throw new Exception("Format tanggal tidak valid untuk tgl_diupdate.");
+    if ($tgl_diupdate) {
+        try {
+            $date = DateTime::createFromFormat('Y-m-d\TH:i', $tgl_diupdate);
+            if (!$date) {
+                throw new Exception("Format tanggal tidak valid untuk tgl_diupdate.");
+            }
+            $tgl_diupdate = $date->format('Y-m-d');
+        } catch (Exception $e) {
+            echo 'Kesalahan format tanggal: ', $e->getMessage();
+            exit();
         }
-        $tgl_diupdate = $date->format('Y-m-d');
-    } catch (Exception $e) {
-        echo 'Kesalahan format tanggal: ', $e->getMessage();
-        exit();
+    } else {
+        $tgl_diupdate = null; // Biarkan kosong jika tidak ada input
     }
 
     $gambar_path = '';

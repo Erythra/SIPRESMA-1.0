@@ -67,8 +67,22 @@ sqlsrv_close($conn);
                             </p>
                         </div>
 
-                        <div class="col-md-4">
-                            <p class="mb-0 fw-bold">Gambar Pengumuman</p>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-0 fw-bold">Tanggal Dibuat</p>
+                                    <p class="mb-0" style="color: #495057;">
+                                        <?php echo htmlspecialchars($formatted_tgl_dibuat); ?>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-0 fw-bold">Tanggal Diupdate</p>
+                                    <p class="mb-0" style="color: #495057;">
+                                        <?php echo htmlspecialchars($formatted_tgl_diupdate); ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="mb-0 mt-3 fw-bold">Gambar Pengumuman</p>
                             <p class="mb-3" style="color: #495057;">
                                 <style>
                                     .image-container {
@@ -96,21 +110,6 @@ sqlsrv_close($conn);
                             Tidak ada gambar
                         <?php endif; ?>
                         </p>
-                        </div>
-                    </div>
-                    <hr class="separator my-3" />
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="mb-0 fw-bold">Tanggal Dibuat</p>
-                            <p class="mb-0" style="color: #495057;">
-                                <?php echo htmlspecialchars($formatted_tgl_dibuat); ?>
-                            </p>
-                        </div>
-                        <div class="col-md-6">
-                            <p class="mb-0 fw-bold">Tanggal Diupdate</p>
-                            <p class="mb-0" style="color: #495057;">
-                                <?php echo htmlspecialchars($formatted_tgl_diupdate); ?>
-                            </p>
                         </div>
                     </div>
                 </div>
