@@ -1,7 +1,11 @@
-<?php include 'partials/header.php'; ?>
-<?php include 'partials/sidenav.php'; ?>
+<?php
+include 'partials/header.php';
+include 'partials/sidenav.php';
+include '../config/config.php';
 
-<div class="" style="margin-left: 317px; margin-right: 32px; margin-top: 90px;">
+?>
+
+<div style="margin-left: 317px; margin-right: 32px; margin-top: 90px;">
     <div style="margin-bottom: 17.5px;">
         <h4 class="fw-semibold">Dashboard</h4>
         <h6 class="fw-medium text-muted">Home</h6>
@@ -21,66 +25,60 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-6 d-flex">
+            <div class="card mt-3 w-100">
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center" style="margin-left: 24px; margin-right: 24px;">
+                        <h4 class="fw-semibold mb-0">Total Upload Data Prestasi</h4>
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="btnradio1" id="btnradio1" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="btnradio1">Hari</label>
 
-    <div class="card mt-3">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center"
-                style="margin-left: 24px; margin-right: 24px;">
-                <h4 class="fw-semibold mb-0">Total Upload Data Prestasi</h4>
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio1" id="btnradio1" autocomplete="off" checked>
-                    <label class="btn btn-outline-primary" for="btnradio1">Hari</label>
+                            <input type="radio" class="btn-check" name="btnradio1" id="btnradio2" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio2">Bulan</label>
 
-                    <input type="radio" class="btn-check" name="btnradio1" id="btnradio2" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio2">Bulan</label>
-
-                    <input type="radio" class="btn-check" name="btnradio1" id="btnradio3" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio3">Tahun</label>
+                            <input type="radio" class="btn-check" name="btnradio1" id="btnradio3" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio3">Tahun</label>
+                        </div>
+                    </div>
+                    <canvas class="mt-2" id="totalupload" width="900" height="400"></canvas>
                 </div>
             </div>
         </div>
 
-        <div style="padding: 5px 24px 24px 24px;">
-            <canvas class="my-4 w-100" id="totalupload" width="900" height="380"></canvas>
-        </div>
-    </div>
-
-    <div class="card mt-3">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center"
-                style="margin-left: 24px; margin-right: 24px;">
-                <h4 class="fw-semibold mb-0">Rata-rata IPK Mahasiswa</h4>
-                <div class="d-flex gap-2">
-                    <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Angkatan 2023
-                        </a>
-
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+        <!-- Second card -->
+        <div class="col-md-6 d-flex">
+            <div class="card mt-3 w-100">
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center" style="margin-left: 24px; margin-right: 24px;">
+                        <h4 class="fw-semibold mb-0">Rata-rata IPK Mahasiswa</h4>
+                        <div class="d-flex gap-2">
+                            <div class="dropdown">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Angkatan 2023
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    2023 - 2024 Ganjil
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            2023 - 2024 Ganjil
-                        </a>
-
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
+                    <canvas id="rataipk" width="900" height="400"></canvas>
                 </div>
             </div>
-        </div>
-
-        <div style="padding: 5px 24px 24px 24px;">
-            <canvas class="my-4 w-100" id="rataipk" width="900" height="380"></canvas>
         </div>
     </div>
 
@@ -100,10 +98,7 @@
                     <label class="btn btn-outline-primary" for="btnradio6">Tahun</label>
                 </div>
             </div>
-        </div>
-
-        <div style="padding: 5px 24px 24px 24px;">
-            <canvas id="prestasiChart"></canvas>
+            <canvas id="prestasiChart" width="900" height="400"></canvas>
         </div>
     </div>
 
@@ -183,13 +178,66 @@
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
-    integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp"
-    crossorigin="anonymous"></script>
-<script src="././../assets/js/totalupload.js"></script>
 <script src="././../assets/js/rataipk.js"></script>
+
 <script src="././../assets/js/prestasi.js"></script>
+
+<script>
+    /* globals Chart:false */
+
+    (() => {
+        'use strict'
+
+        // Graphs
+        const ctx = document.getElementById('totalupload')
+        // eslint-disable-next-line no-unused-vars
+        const totalupload = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [
+                    'Sunday',
+                    'Monday',
+                    'Tuesday',
+                    'Wednesday',
+                    'Thursday',
+                    'Friday',
+                    'Saturday'
+                ],
+                datasets: [{
+                    data: [
+                        15339,
+                        21345,
+                        18483,
+                        24003,
+                        23489,
+                        24092,
+                        12034
+                    ],
+                    lineTension: 0,
+                    backgroundColor: 'transparent',
+                    borderColor: '#007bff',
+                    borderWidth: 4,
+                    pointBackgroundColor: '#007bff'
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        boxPadding: 3
+                    }
+                }
+            }
+        })
+    })()
+</script>
+
 
 </body>
 

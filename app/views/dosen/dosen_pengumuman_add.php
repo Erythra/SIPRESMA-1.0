@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         }
     } else {
-        $tgl_diupdate = null; // Biarkan kosong jika tidak ada input
+        $tgl_diupdate = null;
     }
 
     $gambar_path = '';
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    header("Location: http://localhost/sipresma-1.0/public/index.php?page=dosen_pengumuman_list");
+    header("Location: index.php?page=dosen_pengumuman_list");
     exit();
 }
 ?>

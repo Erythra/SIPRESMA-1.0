@@ -1,6 +1,5 @@
 <?php include 'partials/header.php';
 include 'partials/sidenav.php';
-
 include '../config/config.php';
 
 if (isset($_GET['id_pengumuman'])) {
