@@ -31,12 +31,16 @@ if ($action === 'submit_prestasi') {
 }
 
 if ($action === 'update_prestasi') {
-    $id_prestasi = $_GET['id_prestasi'] ?? 0;
+    $id_prestasi = $_SESSION['id_prestasi'] ?? 0;
     if ($id_prestasi <= 0) {
         echo "ID Prestasi tidak valid.";
         exit;
     }
     $prestasiController->handleUpdateRequest($id_prestasi);
+}
+
+if ($action === 'ganti_password') {
+    $authController->changePassword();
 }
 
 $page = $_GET['page'] ?? 'homepertama';
