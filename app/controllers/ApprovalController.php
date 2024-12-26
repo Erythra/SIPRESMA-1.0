@@ -14,7 +14,6 @@ class ApprovalController
         $this->approvalModel = new ApprovalModel($conn);
     }
 
-
     public function approve($id_prestasi, $dosen_id)
     {
         $this->approvalModel->approvePrestasi($id_prestasi, $dosen_id);

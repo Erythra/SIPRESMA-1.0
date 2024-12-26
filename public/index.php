@@ -82,6 +82,7 @@ switch ($page) {
         if (isset($_GET['action'])) {
             $action = $_GET['action'];
             $dosen_id = $_SESSION['user']['id_dosen'];
+            // $id_prestasi = $_GET['id_prestasi'];
 
             if ($action == 'approve') {
                 $approvalController->approve($id_prestasi, $dosen_id);
