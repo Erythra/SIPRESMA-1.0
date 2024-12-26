@@ -1,6 +1,20 @@
-<?php include 'partials/header.php'; ?>
+<?php
+include 'partials/header.php';
 
+$sql = "SELECT id_pengumuman, gambar_pengumuman, judul_pengumuman, isi_pengumuman, tgl_dibuat FROM pengumuman";
+$stmt = sqlsrv_query($conn, $sql);
 
+if ($stmt === false) {
+    die(print_r(sqlsrv_errors(), true));
+}
+
+$pengumumanList = [];
+while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+    $pengumumanList[] = $row;
+}
+
+$pengumumanList = array_slice($pengumumanList, 0, 3);
+?>
 
 <div style="margin-top: 4rem;">
     <section class="hero-section d-flex align-items-center mb-2">
@@ -9,67 +23,65 @@
                 Selamat datang di Sistem Informasi<br>
                 <span style="color: #FEC01A;">Pencatatan Prestasi Mahasiswa</span>
             </h1>
-            <!-- <a class="btn btn-log" href="login.html">Login ke Sistem</a> -->
         </div>
     </section>
 
 
     <section class="announcement-section">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center ">
+            <div class="d-flex justify-content-between align-items-center">
                 <h2 style="font-weight: bold;">Pengumuman <span class="text-warning">Terbaru</span></h2>
                 <div class="d-flex align-items-center button">
-                    <a class="btn btn-outline-primary d-flex align-items-center" href="#">
+                    <a class="btn btn-outline-primary d-flex align-items-center" href="index.php?page=semua_pengumuman">
                         Lihat semua Pengumuman
                         <i class="bi bi-arrow-right ms-2"></i>
                     </a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-lg-4">
-                    <div class="card rounded-3 shadow-sm">
-                        <div class="card-body">
-                            <img src="../assets/img/ruang.jpg" alt="" class="card-img-top rounded-2">
-                            <h5 class="card-title mt-3">Beasiswa Unggul untuk Mahasiswa Berprestasi!</h5>
-                            <p class="card-text">Selamat! Bagi kalian mahasiswa berprestasi, kini saatnya meraih kesempatan
-                                emas. membuka pendaftaran Beasiswa Unggul dengan berbagai benefit menarik. Jangan lewatkan
-                                kesempatan untuk mengembangkan potensimu lebih jauh.</p>
+
+            <div style="max-height: 400px;">
+                <div class="row">
+                    <?php foreach ($pengumumanList as $pengumuman) : ?>
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card h-100">
+                                <style>
+                                    .aspect-ratio-16-9 {
+                                        position: relative;
+                                        width: 100%;
+                                        padding-top: 56.25%;
+                                        overflow: hidden;
+                                        background: #f0f0f0
+                                    }
+
+                                    .aspect-ratio-16-9 img {
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                        width: 100%;
+                                        height: 100%;
+                                        object-fit: cover;
+                                    }
+                                </style>
+                                <div class="aspect-ratio-16-9" style="border-radius: 1rem;">
+                                    <img src="<?php echo htmlspecialchars($pengumuman['gambar_pengumuman']); ?>" alt="Pengumuman">
+                                </div>
+                                <div class="card-body d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h5 class="card-title"><?php echo htmlspecialchars($pengumuman['judul_pengumuman']); ?></h5>
+                                        <p class="card-text">
+                                            <?php
+                                            echo htmlspecialchars(mb_strimwidth($pengumuman['isi_pengumuman'], 0, 100, '...'));
+                                            ?>
+                                        </p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                                        <p class="card-text text-muted mb-0"><small><?php echo date_format($pengumuman['tgl_dibuat'], "d M Y"); ?></small></p>
+                                        <a href="index.php?page=detail_pengumuman&id_pengumuman=<?php echo $pengumuman['id_pengumuman']; ?>" class="btn btn-link">Baca Selengkapnya</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-between align-items-center">
-                            <small class="text-muted">31 Februari 2024</small>
-                            <a class="float-end link" href="#">Baca Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card rounded-3 shadow-sm">
-                        <div class="card-body">
-                            <img src="../assets/img/ruang.jpg" alt="" class="card-img-top rounded-2">
-                            <h5 class="card-title mt-3">Beasiswa Unggul untuk Mahasiswa Berprestasi!</h5>
-                            <p class="card-text">Selamat! Bagi kalian mahasiswa berprestasi, kini saatnya meraih kesempatan
-                                emas. membuka pendaftaran Beasiswa Unggul dengan berbagai benefit menarik. Jangan lewatkan
-                                kesempatan untuk mengembangkan potensimu lebih jauh.</p>
-                        </div>
-                        <div class="card-footer d-flex justify-content-between align-items-center">
-                            <small class="text-muted">31 Februari 2024</small>
-                            <a class="float-end link" href="#">Baca Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card rounded-3 shadow-sm">
-                        <div class="card-body">
-                            <img src="../assets/img/ruang.jpg" alt="" class="card-img-top rounded-2">
-                            <h5 class="card-title mt-3">Beasiswa Unggul untuk Mahasiswa Berprestasi!</h5>
-                            <p class="card-text">Selamat! Bagi kalian mahasiswa berprestasi, kini saatnya meraih kesempatan
-                                emas. membuka pendaftaran Beasiswa Unggul dengan berbagai benefit menarik. Jangan lewatkan
-                                kesempatan untuk mengembangkan potensimu lebih jauh.</p>
-                        </div>
-                        <div class="card-footer d-flex justify-content-between align-items-center">
-                            <small class="text-muted">31 Februari 2024</small>
-                            <a class="float-end link" href="#">Baca Selengkapnya</a>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -77,7 +89,7 @@
 
     <section class="help-center-section">
         <div class="container">
-            <h2 class=mb-2">Informasi & Bantuan</h2>
+            <h2 class="mb-2">Informasi & Bantuan</h2>
             <div class="row d-flex justify-content-between align-items-start">
                 <div class="col-md-6">
                     <ul class="list-group mb-3">

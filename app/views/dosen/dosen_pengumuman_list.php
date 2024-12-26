@@ -98,7 +98,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id_pen
                                 <?= htmlspecialchars($pengumuman['judul_pengumuman']); ?>
                             </td>
                             <td class="align-middle">
-                                <?= htmlspecialchars($pengumuman['isi_pengumuman']); ?>
+                                <?= htmlspecialchars(mb_strimwidth($pengumuman['isi_pengumuman'], 0, 200, '...')); ?>
                             </td>
 
                             <!-- Kolom Actions -->
@@ -108,6 +108,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id_pen
                                     <a href="index.php?page=dosen_pengumuman_detail&id_pengumuman=<?php echo $pengumuman['id_pengumuman']; ?>"
                                         class="btn btn-outline-primary btn-xs">
                                         <i class="fas fa-file-alt"></i>
+                                    </a>
+                                    <a href="index.php?page=dosen_pengumuman_update&id_pengumuman=<?php echo $pengumuman['id_pengumuman']; ?>"
+                                        class="btn btn-outline-warning btn-xs">
+                                        <i class="fas fa-pencil-alt"></i>
                                     </a>
                                     <a href="#"
                                         class="btn btn-outline-danger btn-xs deleteButton"

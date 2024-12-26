@@ -54,7 +54,7 @@ class AuthController
     {
         if (isset($_SESSION['loggedin_time']) && (time() - $_SESSION['loggedin_time'] > 3600)) {
             session_destroy();
-            header("Location: index.php?page=login&message=session_expired");
+            echo "<script>sessionExpired();</script>";
             exit();
         }
         return true;

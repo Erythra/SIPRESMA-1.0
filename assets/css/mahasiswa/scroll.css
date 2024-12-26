@@ -1,0 +1,27 @@
+::-webkit-scrollbar {
+    width: 10px;  
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ffd900de; 
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #bb9f00;  
+}
+
+.announcement-section {
+    overflow: visible;  
+}
+
+.scrollable-announcement-list {
+    max-height: 400px;  
+    overflow-y: auto;   
+    overflow-x: hidden;
+}
