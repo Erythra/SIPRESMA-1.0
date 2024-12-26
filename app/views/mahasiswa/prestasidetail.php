@@ -4,7 +4,7 @@
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 31px;">
         <h5 style="color: #475261;" class="align-items-center mb-0">Detail Prestasi</h5>
-        <a class="btn btn-warning d-flex align-items-center" href="#" style="color: white;">
+        <a class="btn btn-warning d-flex align-items-center" href="index.php?page=prestasiedit&id_prestasi=<?php echo $prestasi['id_prestasi']; ?>" style="color: white;">
             <i class="bi bi-pencil me-2"></i>Edit
         </a>
     </div>
