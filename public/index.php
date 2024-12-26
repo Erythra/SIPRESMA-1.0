@@ -58,7 +58,6 @@ switch ($page) {
             $id_prestasi = $_GET['id_prestasi'];
             $dosenPrestasiController->deletePrestasi($id_prestasi);
         }
-        $prestasiList = $dosenPrestasiController->showAllPrestasi();
         include '../app/views/dosen/dosen_prestasi.php';
         break;
 
