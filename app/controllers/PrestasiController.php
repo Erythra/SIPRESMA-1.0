@@ -185,72 +185,87 @@ class PrestasiController
     }
 
     public function handleUpdateRequest()
-{
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $id_prestasi = $_POST['id_prestasi'] ?? $_SESSION['id_prestasi'] ?? null;
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $id_prestasi = $_POST['id_prestasi'] ?? $_SESSION['id_prestasi'] ?? null;
 
-        if (!$id_prestasi) {
-            echo "ID Prestasi tidak ditemukan.";
+            if (!$id_prestasi) {
+                echo "ID Prestasi tidak ditemukan.";
+                exit;
+            }
+
+            // Data utama prestasi
+            $data = [
+                'id_prestasi' => $id_prestasi,
+                'tgl_pengajuan' => date('Y-m-d H:i:s'),
+                'program_studi' => $_POST['program_studi'],
+                'thn_akademik' => $_POST['thn_akademik'],
+                'jenis_kompetisi' => $_POST['jenis_kompetisi'],
+                'juara' => $_POST['juara'],
+                'tingkat_kompetisi' => $_POST['tingkat_kompetisi'],
+                'judul_kompetisi' => $_POST['judul_kompetisi'],
+                'tempat_kompetisi' => $_POST['tempat_kompetisi'],
+                'jumlah_pt' => $_POST['jumlah_pt'],
+                'jumlah_peserta' => $_POST['jumlah_peserta'],
+                'no_surat_tugas' => $_POST['no_surat_tugas'],
+                'tgl_surat_tugas' => date('Y-m-d', strtotime($_POST['tgl_surat_tugas'])),
+                'foto_kegiatan' => isset($_FILES['foto_kegiatan']) && $_FILES['foto_kegiatan']['error'] == 0
+                    ? file_get_contents($_FILES['foto_kegiatan']['tmp_name'])
+                    : $this->prestasiModel->getExistingFile('foto_kegiatan', $id_prestasi),
+
+                'file_surat_tugas' => isset($_FILES['file_surat_tugas']) && $_FILES['file_surat_tugas']['error'] == 0
+                    ? file_get_contents($_FILES['file_surat_tugas']['tmp_name'])
+                    : $this->prestasiModel->getExistingFile('file_surat_tugas', $id_prestasi),
+
+                'file_sertifikat' => isset($_FILES['file_sertifikat']) && $_FILES['file_sertifikat']['error'] == 0
+                    ? file_get_contents($_FILES['file_sertifikat']['tmp_name'])
+                    : $this->prestasiModel->getExistingFile('file_sertifikat', $id_prestasi),
+
+                'file_poster' => isset($_FILES['file_poster']) && $_FILES['file_poster']['error'] == 0
+                    ? file_get_contents($_FILES['file_poster']['tmp_name'])
+                    : $this->prestasiModel->getExistingFile('file_poster', $id_prestasi),
+
+                'lampiran_hasil_kompetisi' => isset($_FILES['lampiran_hasil_kompetisi']) && $_FILES['lampiran_hasil_kompetisi']['error'] == 0
+                    ? file_get_contents($_FILES['lampiran_hasil_kompetisi']['tmp_name'])
+                    : $this->prestasiModel->getExistingFile('lampiran_hasil_kompetisi', $id_prestasi),
+            ];
+
+            // Data Mahasiswa
+            $data['mahasiswa_data'] = [];
+            if (isset($_POST['id_mahasiswa']) && is_array($_POST['id_mahasiswa'])) {
+                foreach ($_POST['id_mahasiswa'] as $index => $id_mahasiswa) {
+                    $data['mahasiswa_data'][] = [
+                        'id_mahasiswa' => $id_mahasiswa,
+                        'peran_mahasiswa' => $_POST['peran_mahasiswa'][$index] ?? null,
+                    ];
+                }
+            }
+
+            // Data Dosen
+            $data['dosen_data'] = [];
+            if (isset($_POST['id_dosen']) && is_array($_POST['id_dosen'])) {
+                foreach ($_POST['id_dosen'] as $index => $id_dosen) {
+                    $data['dosen_data'][] = [
+                        'id_dosen' => $id_dosen,
+                        'peran_pembimbing' => $_POST['peran_pembimbing'][$index] ?? null,
+                    ];
+                }
+            }
+
+            // Simpan data ke model
+
+            $success = $this->prestasiModel->updatePrestasi($data);
+
+            if ($success) {
+                echo "Data berhasil diperbarui.";
+                header('Location: index.php?page=prestasi');
+                exit;
+            } else {
+                echo "Data gagal diperbarui.";
+            }
             exit;
         }
-
-        // Data utama prestasi
-        $data = [
-            'id_prestasi' => $id_prestasi,
-            'tgl_pengajuan' => date('Y-m-d H:i:s'),
-            'program_studi' => $_POST['program_studi'],
-            'thn_akademik' => $_POST['thn_akademik'],
-            'jenis_kompetisi' => $_POST['jenis_kompetisi'],
-            'juara' => $_POST['juara'],
-            'tingkat_kompetisi' => $_POST['tingkat_kompetisi'],
-            'judul_kompetisi' => $_POST['judul_kompetisi'],
-            'tempat_kompetisi' => $_POST['tempat_kompetisi'],
-            'jumlah_pt' => $_POST['jumlah_pt'],
-            'jumlah_peserta' => $_POST['jumlah_peserta'],
-            'no_surat_tugas' => $_POST['no_surat_tugas'],
-            'tgl_surat_tugas' => date('Y-m-d', strtotime($_POST['tgl_surat_tugas'])),
-            'foto_kegiatan' => isset($_FILES['foto_kegiatan']) && $_FILES['foto_kegiatan']['error'] == 0 ? file_get_contents($_FILES['foto_kegiatan']['tmp_name']) : NULL,
-            'file_surat_tugas' => isset($_FILES['file_surat_tugas']) && $_FILES['file_surat_tugas']['error'] == 0 ? file_get_contents($_FILES['file_surat_tugas']['tmp_name']) : NULL,
-            'file_sertifikat' => isset($_FILES['file_sertifikat']) && $_FILES['file_sertifikat']['error'] == 0 ? file_get_contents($_FILES['file_sertifikat']['tmp_name']) : NULL,
-            'file_poster' => isset($_FILES['file_poster']) && $_FILES['file_poster']['error'] == 0 ? file_get_contents($_FILES['file_poster']['tmp_name']) : NULL,
-            'lampiran_hasil_kompetisi' => isset($_FILES['lampiran_hasil_kompetisi']) && $_FILES['lampiran_hasil_kompetisi']['error'] == 0 ? file_get_contents($_FILES['lampiran_hasil_kompetisi']['tmp_name']) : NULL,
-        ];
-
-        // Data Mahasiswa
-        $data['mahasiswa_data'] = [];
-        if (isset($_POST['id_mahasiswa']) && is_array($_POST['id_mahasiswa'])) {
-            foreach ($_POST['id_mahasiswa'] as $index => $id_mahasiswa) {
-                $data['mahasiswa_data'][] = [
-                    'id_mahasiswa' => $id_mahasiswa,
-                    'peran_mahasiswa' => $_POST['peran_mahasiswa'][$index] ?? null,
-                ];
-            }
-        }
-
-        // Data Dosen
-        $data['dosen_data'] = [];
-        if (isset($_POST['id_dosen']) && is_array($_POST['id_dosen'])) {
-            foreach ($_POST['id_dosen'] as $index => $id_dosen) {
-                $data['dosen_data'][] = [
-                    'id_dosen' => $id_dosen,
-                    'peran_pembimbing' => $_POST['peran_pembimbing'][$index] ?? null,
-                ];
-            }
-        }
-
-        // Simpan data ke model
-        $success = $this->prestasiModel->updatePrestasi($data);
-
-        if ($success) {
-            echo "Data berhasil diperbarui.";
-            header('Location: index.php?page=prestasi');
-            exit;
-        } else {
-            echo "Data gagal diperbarui.";
-        }
-        exit;
     }
-}
 
 
 
