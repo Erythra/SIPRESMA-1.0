@@ -389,33 +389,41 @@ class PrestasiModel
                     [jenis_kompetisi] = ?, [juara] = ?, [tingkat_kompetisi] = ?, 
                     [judul_kompetisi] = ?, [tempat_kompetisi] = ?, [jumlah_pt] = ?, 
                     [jumlah_peserta] = ?, [no_surat_tugas] = ?, [tgl_surat_tugas] = ?, 
-                    [foto_kegiatan] = CONVERT(VARBINARY(MAX), ?), 
-                    [file_surat_tugas] = CONVERT(VARBINARY(MAX), ?), 
-                    [file_sertifikat] = CONVERT(VARBINARY(MAX), ?), 
-                    [file_poster] = CONVERT(VARBINARY(MAX), ?), 
-                    [lampiran_hasil_kompetisi] = CONVERT(VARBINARY(MAX), ?) 
+                    [foto_kegiatan] = CASE WHEN ? IS NOT NULL THEN CONVERT(VARBINARY(MAX), ?) ELSE [foto_kegiatan] END, 
+                    [file_surat_tugas] = CASE WHEN ? IS NOT NULL THEN CONVERT(VARBINARY(MAX), ?) ELSE [file_surat_tugas] END, 
+                    [file_sertifikat] = CASE WHEN ? IS NOT NULL THEN CONVERT(VARBINARY(MAX), ?) ELSE [file_sertifikat] END, 
+                    [file_poster] = CASE WHEN ? IS NOT NULL THEN CONVERT(VARBINARY(MAX), ?) ELSE [file_poster] END, 
+                    [lampiran_hasil_kompetisi] = CASE WHEN ? IS NOT NULL THEN CONVERT(VARBINARY(MAX), ?) ELSE [lampiran_hasil_kompetisi] END 
                 WHERE [id_prestasi] = ?";
 
             $params = [
-                $data['tgl_pengajuan'],
-                $data['program_studi'],
-                $data['thn_akademik'],
-                $data['jenis_kompetisi'],
-                $data['juara'],
-                $data['tingkat_kompetisi'],
-                $data['judul_kompetisi'],
-                $data['tempat_kompetisi'],
-                $data['jumlah_pt'],
-                $data['jumlah_peserta'],
-                $data['no_surat_tugas'],
-                $data['tgl_surat_tugas'],
-                $data['foto_kegiatan'],
-                $data['file_surat_tugas'],
-                $data['file_sertifikat'],
-                $data['file_poster'],
-                $data['lampiran_hasil_kompetisi'],
-                $data['id_prestasi'],
+                $data['tgl_pengajuan'],          // 1
+                $data['program_studi'],          // 2
+                $data['thn_akademik'],           // 3
+                $data['jenis_kompetisi'],        // 4
+                $data['juara'],                  // 5
+                $data['tingkat_kompetisi'],      // 6
+                $data['judul_kompetisi'],        // 7
+                $data['tempat_kompetisi'],       // 8
+                $data['jumlah_pt'],              // 9
+                $data['jumlah_peserta'],         // 10
+                $data['no_surat_tugas'],         // 11
+                $data['tgl_surat_tugas'],        // 12
+                $data['foto_kegiatan'],          // 13
+                $data['foto_kegiatan'],          // 14 (untuk CASE WHEN)
+                $data['file_surat_tugas'],       // 15
+                $data['file_surat_tugas'],       // 16 (untuk CASE WHEN)
+                $data['file_sertifikat'],        // 17
+                $data['file_sertifikat'],        // 18 (untuk CASE WHEN)
+                $data['file_poster'],            // 19
+                $data['file_poster'],            // 20 (untuk CASE WHEN)
+                $data['lampiran_hasil_kompetisi'], // 21
+                $data['lampiran_hasil_kompetisi'], // 22 (untuk CASE WHEN)
+                $data['id_prestasi'],            // 23 (untuk WHERE)
             ];
+
+            error_log("Jumlah parameter: " . count($params));
+            error_log("Parameter: " . print_r($params, true));
 
             $stmt = sqlsrv_query($this->conn, $sql, $params);
             if (!$stmt) {
@@ -795,5 +803,17 @@ class PrestasiModel
         }
 
         return $result;
+    }
+    public function getExistingFile($field, $id_prestasi)
+    {
+        $sql = "SELECT $field FROM [dbo].[data_prestasi] WHERE id_prestasi = ?";
+        $stmt = sqlsrv_query($this->conn, $sql, [$id_prestasi]);
+
+        if (!$stmt) {
+            throw new Exception("Query failed: " . print_r(sqlsrv_errors(), true));
+        }
+
+        $result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+        return $result[$field] ?? null;
     }
 }
