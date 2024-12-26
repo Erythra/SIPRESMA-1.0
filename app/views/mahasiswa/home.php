@@ -41,47 +41,51 @@ $pengumumanList = array_slice($pengumumanList, 0, 3);
 
             <div style="max-height: 400px;">
                 <div class="row">
-                    <?php foreach ($pengumumanList as $pengumuman) : ?>
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <div class="card h-100">
-                                <style>
-                                    .aspect-ratio-16-9 {
-                                        position: relative;
-                                        width: 100%;
-                                        padding-top: 56.25%;
-                                        overflow: hidden;
-                                        background: #f0f0f0
-                                    }
+                    <?php if (empty($pengumumanList)) : ?>
+                        <div class="col-12 text-center">
+                            <p>Pengumuman tidak tersedia</p>
+                        </div>
+                    <?php else : ?>
+                        <?php foreach ($pengumumanList as $pengumuman) : ?>
+                            <div class="col-md-4 col-sm-6 mb-4">
+                                <div class="card h-100">
+                                    <style>
+                                        .aspect-ratio-16-9 {
+                                            position: relative;
+                                            width: 100%;
+                                            padding-top: 56.25%;
+                                            overflow: hidden;
+                                            background: #f0f0f0
+                                        }
 
-                                    .aspect-ratio-16-9 img {
-                                        position: absolute;
-                                        top: 0;
-                                        left: 0;
-                                        width: 100%;
-                                        height: 100%;
-                                        object-fit: cover;
-                                    }
-                                </style>
-                                <div class="aspect-ratio-16-9" style="border-radius: 1rem;">
-                                    <img src="<?php echo htmlspecialchars($pengumuman['gambar_pengumuman']); ?>" alt="Pengumuman">
-                                </div>
-                                <div class="card-body d-flex flex-column justify-content-between">
-                                    <div>
-                                        <h5 class="card-title"><?php echo htmlspecialchars($pengumuman['judul_pengumuman']); ?></h5>
-                                        <p class="card-text">
-                                            <?php
-                                            echo htmlspecialchars(mb_strimwidth($pengumuman['isi_pengumuman'], 0, 100, '...'));
-                                            ?>
-                                        </p>
+                                        .aspect-ratio-16-9 img {
+                                            position: absolute;
+                                            top: 0;
+                                            left: 0;
+                                            width: 100%;
+                                            height: 100%;
+                                            object-fit: cover;
+                                        }
+                                    </style>
+                                    <div class="aspect-ratio-16-9" style="border-radius: 1rem;">
+                                        <img src="<?php echo htmlspecialchars($pengumuman['gambar_pengumuman']); ?>" alt="Pengumuman">
                                     </div>
-                                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                                        <p class="card-text text-muted mb-0"><small><?php echo date_format($pengumuman['tgl_dibuat'], "d M Y"); ?></small></p>
-                                        <a href="index.php?page=detail_pengumuman&id_pengumuman=<?php echo $pengumuman['id_pengumuman']; ?>" class="btn btn-link">Baca Selengkapnya</a>
+                                    <div class="card-body d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h5 class="card-title"><?php echo htmlspecialchars($pengumuman['judul_pengumuman']); ?></h5>
+                                            <p class="card-text">
+                                                <?php echo htmlspecialchars(mb_strimwidth($pengumuman['isi_pengumuman'], 0, 100, '...')); ?>
+                                            </p>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <p class="card-text text-muted mb-0"><small><?php echo date_format($pengumuman['tgl_dibuat'], "d M Y"); ?></small></p>
+                                            <a href="index.php?page=detail_pengumuman&id_pengumuman=<?php echo $pengumuman['id_pengumuman']; ?>" class="btn btn-link">Baca Selengkapnya</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

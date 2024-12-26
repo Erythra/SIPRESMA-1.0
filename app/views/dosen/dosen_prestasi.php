@@ -1,5 +1,28 @@
-<?php include 'partials/header.php'; ?>
-<?php include 'partials/sidenav.php'; ?>
+<?php
+include 'partials/header.php';
+include 'partials/sidenav.php';
+include '../config/config.php';
+
+$query = "SELECT * FROM data_prestasi ORDER BY tgl_pengajuan DESC";
+
+// Eksekusi query menggunakan sqlsrv_query
+$result = sqlsrv_query($conn, $query);
+
+// Jika query berhasil, ambil data ke dalam array $prestasiList
+if ($result === false) {
+    die(print_r(sqlsrv_errors(), true)); // Jika ada error dalam query
+}
+
+$prestasiList = [];
+while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+    $prestasiList[] = $row;
+}
+
+// Jika tidak ada data, set menjadi array kosong
+if (empty($prestasiList)) {
+    $prestasiList = [];
+}
+?>
 
 
 <div class="" style="margin-left: 317px; margin-right: 32px; margin-top: 90px;">
@@ -25,17 +48,35 @@
                 </button>
                 <input class="form-control" placeholder="Search Prestasi" type="text" />
             </div>
-            <div class="d-flex align-items-center gap-3">
+            <div class="">
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                    <button class="btn btn-primary d-flex justify-content-center align-items-center gap-2"
-                        style="color: white; background-color: #244282; outline: none; border: none;">
-                        <i class="fas fa-plus"></i>
-                        <a href="index.php?page=dosen_prestasi_add" style="text-decoration: none; color: white;">
-                            <p class="mb-0">Tambah</p>
+                    <div class="d-flex justify-content-center align-items-center gap-3">
+                        <a href="javascript:void(0);" class="btn btn-primary align-items-center gap-2"
+                            style="color: white; background-color:rgb(36, 130, 64); outline: none; border: none; height: 100%;"
+                            onclick="submitForm();">
+                            <i class="fas fa-file-excel"></i>
+                            Export Excel
                         </a>
-                    </button>
-                <?php endif; ?>
 
+                        <form id="exportForm" method="POST" action="export_excel.php" style="display: none;">
+                        </form>
+
+                        <script>
+                            function submitForm() {
+                                document.getElementById('exportForm').submit(); // Submit the form via JavaScript
+                            }
+                        </script>
+
+                        <!-- Tombol Tambah -->
+                        <button class="btn btn-primary d-flex justify-content-center align-items-center gap-2"
+                            style="color: white; background-color: #244282; outline: none; border: none; height: 100%;">
+                            <i class="fas fa-plus"></i>
+                            <a href="index.php?page=dosen_prestasi_add" style="text-decoration: none; color: white;">
+                                <p class="mb-0">Tambah</p>
+                            </a>
+                        </button>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -99,11 +140,18 @@
                             <!-- Kolom Actions -->
                             <td class="align-middle text-center">
                                 <div class="d-flex align-items-center justify-content-center gap-3">
+                                    <!-- Tombol Export -->
+                                    <a href="export_pdf_fpdf.php?id_prestasi=<?php echo $prestasi['id_prestasi']; ?>"
+                                        class="btn btn-outline-danger btn-xs"
+                                        target="_blank">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </a>
                                     <!-- Tombol Detail -->
                                     <a href="index.php?page=dosen_prestasi_detail&id_prestasi=<?php echo $prestasi['id_prestasi']; ?>"
                                         class="btn btn-outline-primary btn-xs">
                                         <i class="fas fa-file-alt"></i>
                                     </a>
+                                    <!-- Tombol Delete -->
                                     <a href="#"
                                         class="btn btn-outline-danger btn-xs deleteButton"
                                         data-id="<?php echo $prestasi['id_prestasi']; ?>"
