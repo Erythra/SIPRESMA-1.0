@@ -14,6 +14,8 @@
         rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
         rel="stylesheet">
+
+    <link rel="stylesheet" href="././../assets/css/mahasiswa/scroll.css">
     <link rel="stylesheet" href="././../assets/css/style.css">
     <link rel="stylesheet" href="././../assets/css/header.css">
     <link rel="stylesheet" href="././../assets/css/mahasiswa/profile.css">
@@ -63,6 +65,10 @@
                         <li class="nav-item">
                             <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'bantuan') ? 'active' : ''; ?>"
                                 href="././../public/index.php?page=bantuan">Bantuan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'semua_pengumuman') ? 'active' : ''; ?>"
+                                href="././../public/index.php?page=semua_pengumuman">Pengumuman</a>
                         </li>
                     </ul>
                 </div>

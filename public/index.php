@@ -107,9 +107,25 @@ switch ($page) {
         include '../app/views/dosen/dosen_pengumuman_detail.php';
         break;
 
+    case 'dosen_peringkat_akademik':
+        include '../app/views/dosen/dosen_peringkat_akademik.php';
+        break;
+
+    case 'dosen_pengumuman_update':
+        include '../app/views/dosen/dosen_pengumuman_update.php';
+        break;
+
         // MAHASISWA
     case 'home':
         include '../app/views/mahasiswa/home.php';
+        break;
+
+    case 'semua_pengumuman':
+        include '../app/views/mahasiswa/mhs_semua_pengumuman.php';
+        break;
+
+    case 'detail_pengumuman':
+        include '../app/views/mahasiswa/mhs_detail_pengumuman.php';
         break;
 
     case 'profile':
@@ -161,10 +177,6 @@ switch ($page) {
         include '../app/views/mahasiswa/peringkat_akademik.php';
         break;
 
-    case 'dosen_peringkat_akademik':
-        include '../app/views/dosen/dosen_peringkat_akademik.php';
-        break;
-
     case 'ipk':
         include '../app/views/mahasiswa/ipk.php';
         break;
@@ -191,6 +203,14 @@ switch ($page) {
 
     case 'panduan':
         include '../app/views/mahasiswa/panduan.php';
+        break;
+
+    case 'pengumuman':
+        include '../app/views/mahasiswa/mhs_semua_pengumuman.php';
+        break;
+
+    case 'detail_pengumuman':
+        include '../app/views/mahasiswa/mhs_detail_pengumuman.php';
         break;
 
     case 'addPrestasi':
