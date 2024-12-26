@@ -31,8 +31,6 @@
 
 <body>
     <div class="fixed-top">
-
-
         <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
             <div class="container">
                 <!-- Logo -->
@@ -49,7 +47,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'prestasi' || isset($_GET['page']) && $_GET['page'] == 'tambahprestasi') ? 'active' : ''; ?>"
+                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'prestasi' || isset($_GET['page']) && $_GET['page'] == 'tambahprestasi') || isset($_GET['page']) && $_GET['page'] == 'prestasidetail' ? 'active' : ''; ?>"
                                 href="././../public/index.php?page=prestasi">
                                 Prestasi
                             </a>

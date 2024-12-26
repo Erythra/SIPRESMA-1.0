@@ -653,6 +653,7 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
 
         <hr>
         <div class="text-end">
+        <input type="hidden" name="id_prestasi" value="<?= $_SESSION['id_prestasi'] ?? '' ?>">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>

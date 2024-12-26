@@ -16,40 +16,54 @@ if (!isset($_SESSION['user'])) {
     <div class="container my-5" style="margin-top: 8rem !important;">
         <div class="row">
             <!-- Form Section -->
-            <div class="col-lg-6">
+            <div class="col-lg-6 my-4">
                 <form>
                     <?php if (isset($_SESSION['success'])): ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?php echo $_SESSION['success'];
-                            unset($_SESSION['success']); ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <?php echo $_SESSION['success'];
+                                unset($_SESSION['success']); ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <?php elseif (isset($_SESSION['error'])): ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <?php echo $_SESSION['error'];
+                                unset($_SESSION['error']); ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     <?php endif; ?>
                     <div class="row mb-3">
-                        <div class="">
+                        <h4 class="fw-semibold fs-3 mb-3">Profile Mahasiswa</h4>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
                             <label for="nama" class="form-label">Nama Lengkap</label>
-                            <p class="form-control-plaintext">
-                                <?= $_SESSION['user']['nama_mahasiswa'] ?? '<span class="text-danger">Nama tidak tersedia</span>'; ?>
-                            </p>
+                            <input type="text" class="form-control" id="nama" name="nama"
+                                value=" <?= $_SESSION['user']['nama_mahasiswa'] ?? '<span class="text-danger">Nama tidak tersedia</span>'; ?>"
+                                disabled>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="">
+                        <div class="col-md-6">
                             <label for="nim" class="form-label">NIM</label>
-                            <p class="form-control-plaintext">
-                                <?= $_SESSION['user']['NIM'] ?? '<span class="text-danger">NIM tidak tersedia</span>'; ?>
-                            </p>
+                            <input type="text" class="form-control" id="nim" name="nim"
+                                value="<?= $_SESSION['user']['NIM'] ?? '<span class="text-danger">NIM tidak tersedia</span>'; ?>"
+                                disabled>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="">
+                        <div class="col-md-6">
                             <label for="email" class="form-label">Email</label>
-                            <p class="form-control-plaintext">
-                                <?= $_SESSION['user']['email_mahasiswa'] ?? '<span class="text-danger">Email tidak tersedia</span>'; ?>
-                            </p>
+                            <input type="email" class="form-control" id="email" name="email"
+                                value="<?= $_SESSION['user']['email_mahasiswa'] ?? '<span class="text-danger">Email tidak tersedia</span>'; ?>"
+                                disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="nim" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password_mahasiswa" name="password_mahasiswa"
+                                value="<?= $_SESSION['user']['password_mahasiswa'] ?? '<span class="text-danger">Email tidak tersedia</span>'; ?>"
+                                disabled>
                         </div>
                     </div>
-                    <a href="index.php?page=edit" class="btn btn-simpan">
+
+                    <a href="index.php?page=edit" class="btn btn-simpan mt-3">
                         <i class="fa fa-edit"></i> Edit
                     </a>
                 </form>

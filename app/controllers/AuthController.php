@@ -60,4 +60,48 @@ class AuthController
         }
         return true;
     }
+
+    public function changePassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $oldPassword = $_POST['old_password'];
+            $newPassword = $_POST['new_password'];
+            $confirmPassword = $_POST['confirm_password'];
+
+            // Validasi input
+            if (strlen($newPassword) < 6) {
+                $_SESSION['error'] = "Password baru harus minimal 6 karakter.";
+                header("Location: index.php?page=edit");
+                return;
+            }
+
+            if ($newPassword !== $confirmPassword) {
+                $_SESSION['error'] = "Password baru dan konfirmasi password tidak cocok.";
+                header("Location: index.php?page=edit");
+                return;
+            }
+
+            // Pastikan pengguna login sebagai mahasiswa
+            $user = $_SESSION['user'] ?? null;
+            if (!$user || $user['role'] !== 'mahasiswa') {
+                $_SESSION['error'] = "Anda tidak memiliki izin untuk mengubah password.";
+                header("Location: index.php?page=login");
+                return;
+            }
+
+            $NIM = $user['NIM'];
+
+            // Ganti password
+            $result = $this->userModel->changePasswordMahasiswa($NIM, $oldPassword, $newPassword);
+
+            if ($result) {
+                $_SESSION['user']['password_mahasiswa'] = $newPassword;
+                $_SESSION['success'] = "Password berhasil diubah.";
+                header("Location: index.php?page=profile");
+            } else {
+                $_SESSION['error'] = "Password lama salah atau gagal mengubah password.";
+                header("Location: index.php?page=profile");
+            }
+        }
+    }
 }

@@ -78,7 +78,7 @@ $id_mahasiswa = $_SESSION['user']['id_mahasiswa'];
 
         <div class="list-group mt-3">
             <!-- Panduan -->
-            <a href="index.php?page=panduan" class="list-group-item list-group-item-action d-flex align-items-center gap-3" style="border-radius: 12px !important;">
+            <a href="index.php?page=panduan" class="list-group-item list-group-item-action d-flex align-items-center gap-3" style="border-radius: 12px !important; padding: 20px;">
                 <i class="bi bi-book text-warning fs-4"></i>
                 <div>
                     <h6 class="mb-1 fw-bold" style="color: #1a2a6c ;">Panduan</h6>
@@ -90,7 +90,7 @@ $id_mahasiswa = $_SESSION['user']['id_mahasiswa'];
             </a>
             <br>
             <!-- Pertanyaan yang Sering Diajukan -->
-            <a href="index.php?page=faq" class="list-group-item list-group-item-action d-flex align-items-center gap-3" style="border-radius: 12px !important;">
+            <a href="index.php?page=faq" class="list-group-item list-group-item-action d-flex align-items-center gap-3" style="border-radius: 12px !important; padding: 20px;">
                 <i class="bi bi-question-circle text-warning fs-4"></i>
                 <div>
                     <h6 class="mb-1 fw-bold" style="color: #1a2a6c;">Pertanyaan yang sering diajukan</h6>

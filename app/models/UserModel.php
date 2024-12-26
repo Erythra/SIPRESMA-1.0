@@ -37,4 +37,16 @@ class UserModel
 
         return false;
     }
+
+    public function changePasswordMahasiswa($NIM, $oldPassword, $newPassword)
+    {
+        $sql = "UPDATE mahasiswa SET password_mahasiswa = ? WHERE NIM = ? AND password_mahasiswa = ?";
+        $stmt = sqlsrv_prepare($this->conn, $sql, array(&$newPassword, &$NIM, &$oldPassword));
+
+        if (sqlsrv_execute($stmt)) {
+            return sqlsrv_rows_affected($stmt) > 0;
+        }
+
+        return false;
+    }
 }
