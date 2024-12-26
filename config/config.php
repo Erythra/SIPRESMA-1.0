@@ -1,8 +1,8 @@
 <?php
 
-$serverName = "LAPTOP-HCF35NMJ\SQLEXPRESS";
+$serverName = "LAPTOP-AQ8AA8CK";
 $connectionOptions = array(
-    "Database" => "SIPRESMA",
+    "Database" => "sipresmaPBL",
     "Uid" => "sa",
     "PWD" => "siwof"
 );
