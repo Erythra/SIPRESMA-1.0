@@ -1,5 +1,8 @@
 <?php include 'partials/header.php'; ?>
 <?php include 'partials/sidenav.php'; ?>
+<?php
+$_SESSION['id_prestasi'] = $_GET['id_prestasi'];
+?>
 
 <div class="" style="margin-left: 317px; margin-right: 32px; margin-top: 90px;">
 

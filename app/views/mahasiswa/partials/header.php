@@ -26,6 +26,44 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet">
+
+    <style>
+                /* Basic styling for table and dropdown */
+        .table-bordered {
+            border: 1px solid #dee2e6;
+            border-radius: .25rem;
+        }
+
+        .table-bordered th, .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-outline-primary {
+            color: #007bff;
+            border-color: #007bff;
+        }
+
+        .select2 {
+            width: 100%;
+        }
+
+        .select2-container .select2-selection--single {
+            height: calc(1.5em + .75rem + 2px);
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            display: none;
+        }
+    </style>
+
 </head>
 
 
@@ -113,8 +151,8 @@
 
                 <!-- Navbar Toggler for mobile view -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>

@@ -470,10 +470,10 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
             <table id="mahasiswa-table" class="table table-bordered">
                 <thead>
                     <tr class="text-center">
-                        <th>No</th>
-                        <th>Mahasiswa</th>
-                        <th>Peran</th>
-                        <th>Action</th>
+                        <th style="width: 10%;">No</th>
+                        <th style="width: 50%;">Mahasiswa</th>
+                        <th style="width: 30%;">Peran</th>
+                        <th style="width: 10%;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -481,7 +481,8 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                     <tr>
                         <td class="text-center"><?php echo $index + 1; ?></td>
                         <td>
-                            <select class="form-select" name="id_mahasiswa[]">
+                            <select class="form-select select2" id="select-mahasiswa-<?php echo $index; ?>"
+                                name="id_mahasiswa[]">
                                 <?php foreach ($mahasiswaList as $mhs): ?>
                                 <option value="<?php echo htmlspecialchars($mhs['id_mahasiswa']); ?>"
                                     <?php echo ($mahasiswa['id_mahasiswa'] == $mhs['id_mahasiswa']) ? 'selected' : ''; ?>>
@@ -519,10 +520,10 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
             <table id="dosen-table" class="table table-bordered">
                 <thead>
                     <tr class="text-center">
-                        <th>No</th>
-                        <th>Pembimbing</th>
-                        <th>Peran</th>
-                        <th>Action</th>
+                        <th style="width: 10%;">No</th>
+                        <th style="width: 50%;">Pembimbing</th>
+                        <th style="width: 30%;">Peran</th>
+                        <th style="width: 10%;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -530,7 +531,8 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                     <tr>
                         <td class="text-center"><?php echo $index + 1; ?></td>
                         <td>
-                            <select class="form-select" name="id_dosen[]">
+                            <select class="form-select select2" id="select-dosen-<?php echo $index; ?>"
+                                name="id_dosen[]">
                                 <?php foreach ($dosenList as $d): ?>
                                 <option value="<?php echo htmlspecialchars($d['id_dosen']); ?>"
                                     <?php echo ($dosen['id_dosen'] == $d['id_dosen']) ? 'selected' : ''; ?>>
@@ -557,6 +559,7 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
+
             </table>
         </div>
         <button class="btn btn-outline-primary mb-3" type="button" onclick="tambahDosen()">Tambah Dosen</button>
@@ -578,7 +581,11 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
             // Nomor
             cell1.innerHTML = rowCount + 1;
             cell1.classList.add('text-center');
-            var mahasiswaDropdown = `<select class="form-select" name="id_mahasiswa[]" required>`;
+
+            // Dropdown Mahasiswa
+            var mahasiswaDropdownId = `mahasiswa-dropdown-${rowCount}`; // ID unik untuk Select2
+            var mahasiswaDropdown =
+                `<select class="form-select select2" id="${mahasiswaDropdownId}" name="id_mahasiswa[]" required>`;
             mahasiswaDropdown += `<option value="">Pilih Mahasiswa</option>`;
             mahasiswaList.forEach(mahasiswa => {
                 mahasiswaDropdown +=
@@ -589,16 +596,47 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
 
             // Dropdown Peran
             cell3.innerHTML = `
-                            <select class="form-select" name="peran_mahasiswa[]" required>
-                                <option value="Peserta">Peserta</option>
-                                <option value="Ketua Tim">Ketua Tim</option>
-                            </select>
-                            `;
+                    <select class="form-select"  name="peran_mahasiswa[]" required>
+                        <option value="Anggota">Anggota</option>
+                        <option value="Ketua Tim">Ketua Tim</option>
+                    </select>
+                `;
 
             // Tombol Hapus
-            cell4.innerHTML = `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
-            cell4.classList.add('text-center'); // Menambahkan text-center
+            cell4.innerHTML =
+                `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
+            cell4.classList.add('text-center');
+
+            // Inisialisasi Select2 untuk dropdown baru
+            $(`#${mahasiswaDropdownId}`).select2({
+                placeholder: "Pilih Mahasiswa",
+                allowClear: true
+            });
+
+            // Inisialisasi ulang Select2 untuk dropdown Peran
+            $(cell3.querySelector('select')).select2({
+                minimumResultsForSearch: -1 // Nonaktifkan pencarian (opsional)
+            });
         }
+
+        // Inisialisasi Select2 pada elemen mahasiswa yang sudah ada
+        $(document).ready(function() {
+            $('#select-dosen, .select2').select2({
+                placeholder: "Pilih Pembimbing",
+                allowClear: true
+            });
+
+            // Inisialisasi untuk dropdown mahasiswa yang sudah ada
+            $('select[name="id_mahasiswa[]"]').select2({
+                placeholder: "Pilih Mahasiswa",
+                allowClear: true
+            });
+
+            $('select[name="peran_mahasiswa[]"]').select2({
+                minimumResultsForSearch: -1 // Nonaktifkan pencarian (opsional)
+            });
+        });
+
 
         // Fungsi untuk menambah baris dosen
         function tambahDosen() {
@@ -616,7 +654,9 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
             cell1.classList.add('text-center'); // Menambahkan text-center
 
             // Dropdown Dosen
-            var dosenDropdown = `<select class="form-select" name="id_dosen[]" required>`;
+            var dosenDropdownId = `dosen-dropdown-${rowCount}`; // ID unik untuk Select2
+            var dosenDropdown =
+                `<select class="form-select select2" id="${dosenDropdownId}" name="id_dosen[]" required>`;
             dosenDropdown += `<option value="">Pilih Pembimbing</option>`;
             dosenList.forEach(dosen => {
                 dosenDropdown += `<option value="${dosen.id_dosen}">${dosen.nama_dosen}</option>`;
@@ -626,16 +666,29 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
 
             // Dropdown Peran
             cell3.innerHTML = `
-                        <select class="form-select" name="peran_pembimbing[]" required>
-                            <option value="Pembimbing Utama">Pembimbing Utama</option>
-                            <option value="Pendamping">Pendamping</option>
-                        </select>
-                        `;
+        <select class="form-select select2" name="peran_pembimbing[]" required>
+            <option value="Pembimbing Utama">Pembimbing Utama</option>
+            <option value="Pendamping">Pendamping</option>
+        </select>
+    `;
 
             // Tombol Hapus
-            cell4.innerHTML = `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
+            cell4.innerHTML =
+                `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
             cell4.classList.add('text-center'); // Menambahkan text-center
+
+            // Inisialisasi Select2 untuk dropdown baru
+            $(`#${dosenDropdownId}`).select2({
+                placeholder: "Pilih Pembimbing",
+                allowClear: true
+            });
+
+            // Inisialisasi ulang Select2 untuk dropdown Peran
+            $(cell3.querySelector('select')).select2({
+                minimumResultsForSearch: -1 // Nonaktifkan pencarian (opsional)
+            });
         }
+
 
         // Fungsi untuk menghapus baris (berlaku untuk mahasiswa dan dosen)
         function hapusBaris(button) {
@@ -653,7 +706,7 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
 
         <hr>
         <div class="text-end">
-        <input type="hidden" name="id_prestasi" value="<?= $_SESSION['id_prestasi'] ?? '' ?>">
+            <input type="hidden" name="id_prestasi" value="<?= $_SESSION['id_prestasi'] ?? '' ?>">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
@@ -663,4 +716,25 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+<script>
+$(document).ready(function() {
+    <?php for ($i = 0; $i < count($dosenTabel); $i++): ?>
+    $('#select-dosen-<?php echo $i; ?>').select2({
+        placeholder: "Pilih Pembimbing",
+        allowClear: true,
+        dropdownCssClass: 'text-start'
+    });
+    <?php endfor; ?>
+
+    <?php for ($i = 0; $i < count($mahasiswaTabel); $i++): ?>
+            $('#select-mahasiswa-<?php echo $i; ?>').select2({
+                placeholder: "Pilih Mahasiswa",
+                allowClear: true,
+                dropdownCssClass: 'text-start'
+            });
+        <?php endfor; ?>
+});
 </script>
