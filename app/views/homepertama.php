@@ -6,7 +6,7 @@
     <title>SIPRESMA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -21,27 +21,28 @@
 
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container" >
+        <div class="container">
             <!-- Logo -->
-            <img class="logo-sipresma" src="../assets/img/Logo 4x.png" alt="SIPRESMA-LOGO" href="index.html" style="z-index: 120;">
+            <img class="logo-sipresma" src="../assets/img/Logo 4x.png" alt="SIPRESMA-LOGO" href="index.html"
+                style="z-index: 120;">
 
             <!-- Navbar Links -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav text-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="./home.php">Home</a>
+                        <a class="nav-link active" href="homepertama.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="prestasi.php">Prestasi</a>
+                        <a class="nav-link" href="index.php?page=login">Prestasi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">IPK</a>
+                        <a class="nav-link" href="index.php?page=login">IPK</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="peringkatakademik.html">Leaderboard</a>
+                        <a class="nav-link" href="index.php?page=login">Leaderboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Bantuan</a>
+                        <a class="nav-link" href="index.php?page=bantuantanpalogin">Bantuan</a>
                     </li>
                 </ul>
             </div>
@@ -57,16 +58,17 @@
             </div>
 
             <!-- Navbar Toggler for mobile view -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
     </nav>
 
-    <div class="mb-0">
+    <!-- <div class="mb-0">
         <p class="info-text fw-light">Home</p>
-    </div>
+    </div> -->
 
 
     <section class="hero-section d-flex align-items-center mb-2">
@@ -146,32 +148,37 @@
             <h2 class=mb-2">Informasi & Bantuan</h2>
             <div class="row d-flex justify-content-between align-items-start">
                 <div class="col-md-6">
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="text-content">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <i class="fas fa-book me-3"></i>
-                                        <h5>Panduan</h5>
+                    <a href="index.php?page=panduantanpalogin" class="text-decoration-none">
+                        <ul class="list-group mb-3 shadow-sm">
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="text-content">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <img src="../assets/img/ri_guide-line.png"
+                                                style="width: 32px; height: 32px; margin-right: 12px;" alt="">
+                                            <h5 class="fw-bold">Panduan</h5>
+                                        </div>
+                                        <p>Temukan semua informasi yang Anda butuhkan untuk menggunakan platform
+                                            pencatatan
+                                            prestasi mahasiswa dengan mudah.</p>
                                     </div>
-                                    <p>Temukan semua informasi yang Anda butuhkan untuk menggunakan platform pencatatan
-                                        prestasi mahasiswa dengan mudah.</p>
+                                    <div class="separator"></div>
+                                    <i class="bi bi-chevron-right icon-arrow"></i>
                                 </div>
-                                <div class="separator"></div>
-                                <i class="bi bi-chevron-right icon-arrow"></i>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="list-group mb-3">
+                            </li>
+                        </ul>
+                    </a>
+                    <ul class="list-group mb-3 shadow-sm">
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="text-content">
                                     <div class="d-flex align-items-center mb-3">
-                                        <i class="fas fa-book me-3"></i>
-                                        <h5>Panduan</h5>
+                                        <img src="../assets/img/lucide_circle-help.png"
+                                            style="width: 32px; height: 32px; margin-right: 12px;" alt="">
+                                        <h5 class="fw-bold">Pertanyaan yang sering diajukan</h5>
                                     </div>
-                                    <p>Temukan semua informasi yang Anda butuhkan untuk menggunakan platform pencatatan
-                                        prestasi mahasiswa dengan mudah.</p>
+                                    <p>Punya pertanyaan? Temukan jawabannya di sini! Kami telah mengumpulkan pertanyaan
+                                        yang sering diajukan oleh mahasiswa.</p>
                                 </div>
                                 <div class="separator"></div>
                                 <i class="bi bi-chevron-right icon-arrow"></i>
