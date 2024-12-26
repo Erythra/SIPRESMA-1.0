@@ -38,7 +38,8 @@ class AuthController
                     header("Location: index.php?page=home");
                 }
             } else {
-                echo "NIM/NIDN atau password salah.";
+                $_SESSION['error'] = "NIM/NIDN atau password salah.";
+                header("Location: index.php?page=login");
             }
         }
     }

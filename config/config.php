@@ -1,10 +1,11 @@
 <?php
 
-$serverName = "LAPTOP-AQ8AA8CK";
+$serverName = "LAPTOP-CACRPO0M\SQLEXPRESS";
 $connectionOptions = array(
-    "Database" => "sipresmaPBL",
-    "Uid" => "sa",
-    "PWD" => "siwof"
+    "Database" => "PBLSIPRESMA",
+    "Uid" => "",
+    "PWD" => ""
+
 );
 
 $conn = sqlsrv_connect($serverName, $connectionOptions);

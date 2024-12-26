@@ -184,7 +184,19 @@ switch ($page) {
     case 'bantuan':
         include '../app/views/mahasiswa/bantuan.php';
         break;
+    
+    case 'bantuantanpalogin':
+        include '../app/views/bantuantanpalogin.php';
+        break;
+    
+    case 'panduantanpalogin':
+        include '../app/views/panduantanpalogin.php';
+        break;
 
+    case 'faqtanpalogin':
+        include '../app/views/faqtanpalogin.php';
+        break;
+    
     case 'faq':
         include '../app/views/mahasiswa/faq.php';
         break;
