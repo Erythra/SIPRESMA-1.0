@@ -96,13 +96,13 @@ $pengumumanList = array_slice($pengumumanList, 0, 3);
             <h2 class="mb-2">Informasi & Bantuan</h2>
             <div class="row d-flex justify-content-between align-items-start">
                 <div class="col-md-6">
-                    <ul class="list-group mb-3">
+                    <ul class="list-group mb-3 shadow-sm">
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="text-content">
                                     <div class="d-flex align-items-center mb-3">
-                                        <i class="fas fa-book me-3"></i>
-                                        <h5>Panduan</h5>
+                                        <img src="../assets/img/ri_guide-line.png" style="width: 32px; height: 32px; margin-right: 12px;" alt="">
+                                        <h5 class="fw-bold">Panduan</h5>
                                     </div>
                                     <p>Temukan semua informasi yang Anda butuhkan untuk menggunakan platform pencatatan
                                         prestasi mahasiswa dengan mudah.</p>
@@ -112,16 +112,15 @@ $pengumumanList = array_slice($pengumumanList, 0, 3);
                             </div>
                         </li>
                     </ul>
-                    <ul class="list-group mb-3">
+                    <ul class="list-group mb-3 shadow-sm">
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="text-content">
                                     <div class="d-flex align-items-center mb-3">
-                                        <i class="fas fa-book me-3"></i>
-                                        <h5>Panduan</h5>
+                                        <img src="../assets/img/lucide_circle-help.png" style="width: 32px; height: 32px; margin-right: 12px;" alt="">
+                                        <h5 class="fw-bold">Pertanyaan yang sering diajukan</h5>
                                     </div>
-                                    <p>Temukan semua informasi yang Anda butuhkan untuk menggunakan platform pencatatan
-                                        prestasi mahasiswa dengan mudah.</p>
+                                    <p>Punya pertanyaan? Temukan jawabannya di sini! Kami telah mengumpulkan pertanyaan yang sering diajukan oleh mahasiswa.</p>
                                 </div>
                                 <div class="separator"></div>
                                 <i class="bi bi-chevron-right icon-arrow"></i>

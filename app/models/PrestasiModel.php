@@ -379,12 +379,12 @@ class PrestasiModel
 
 
     public function updatePrestasi($data)
-{
-    sqlsrv_begin_transaction($this->conn);
+    {
+        sqlsrv_begin_transaction($this->conn);
 
-    try {
-        // Update data_prestasi
-        $sql = "UPDATE [dbo].[data_prestasi] 
+        try {
+            // Update data_prestasi
+            $sql = "UPDATE [dbo].[data_prestasi] 
                 SET [tgl_pengajuan] = ?, [program_studi] = ?, [thn_akademik] = ?, 
                     [jenis_kompetisi] = ?, [juara] = ?, [tingkat_kompetisi] = ?, 
                     [judul_kompetisi] = ?, [tempat_kompetisi] = ?, [jumlah_pt] = ?, 
@@ -396,98 +396,98 @@ class PrestasiModel
                     [lampiran_hasil_kompetisi] = CONVERT(VARBINARY(MAX), ?) 
                 WHERE [id_prestasi] = ?";
 
-        $params = [
-            $data['tgl_pengajuan'],
-            $data['program_studi'],
-            $data['thn_akademik'],
-            $data['jenis_kompetisi'],
-            $data['juara'],
-            $data['tingkat_kompetisi'],
-            $data['judul_kompetisi'],
-            $data['tempat_kompetisi'],
-            $data['jumlah_pt'],
-            $data['jumlah_peserta'],
-            $data['no_surat_tugas'],
-            $data['tgl_surat_tugas'],
-            $data['foto_kegiatan'],
-            $data['file_surat_tugas'],
-            $data['file_sertifikat'],
-            $data['file_poster'],
-            $data['lampiran_hasil_kompetisi'],
-            $data['id_prestasi'],
-        ];
+            $params = [
+                $data['tgl_pengajuan'],
+                $data['program_studi'],
+                $data['thn_akademik'],
+                $data['jenis_kompetisi'],
+                $data['juara'],
+                $data['tingkat_kompetisi'],
+                $data['judul_kompetisi'],
+                $data['tempat_kompetisi'],
+                $data['jumlah_pt'],
+                $data['jumlah_peserta'],
+                $data['no_surat_tugas'],
+                $data['tgl_surat_tugas'],
+                $data['foto_kegiatan'],
+                $data['file_surat_tugas'],
+                $data['file_sertifikat'],
+                $data['file_poster'],
+                $data['lampiran_hasil_kompetisi'],
+                $data['id_prestasi'],
+            ];
 
-        $stmt = sqlsrv_query($this->conn, $sql, $params);
-        if (!$stmt) {
-            throw new Exception('Update data_prestasi gagal: ' . print_r(sqlsrv_errors(), true));
-        }
+            $stmt = sqlsrv_query($this->conn, $sql, $params);
+            if (!$stmt) {
+                throw new Exception('Update data_prestasi gagal: ' . print_r(sqlsrv_errors(), true));
+            }
 
-        // Hapus data lama di prestasi_mahasiswa dan pembimbing_prestasi
-        $deleteMahasiswa = "DELETE FROM [dbo].[prestasi_mahasiswa] WHERE [id_prestasi] = ?";
-        $deleteDosen = "DELETE FROM [dbo].[pembimbing_prestasi] WHERE [id_prestasi] = ?";
-        sqlsrv_query($this->conn, $deleteMahasiswa, [$data['id_prestasi']]);
-        sqlsrv_query($this->conn, $deleteDosen, [$data['id_prestasi']]);
+            // Hapus data lama di prestasi_mahasiswa dan pembimbing_prestasi
+            $deleteMahasiswa = "DELETE FROM [dbo].[prestasi_mahasiswa] WHERE [id_prestasi] = ?";
+            $deleteDosen = "DELETE FROM [dbo].[pembimbing_prestasi] WHERE [id_prestasi] = ?";
+            sqlsrv_query($this->conn, $deleteMahasiswa, [$data['id_prestasi']]);
+            sqlsrv_query($this->conn, $deleteDosen, [$data['id_prestasi']]);
 
-        // Insert data baru ke prestasi_mahasiswa
-        $sql_mahasiswa = "INSERT INTO [dbo].[prestasi_mahasiswa] 
+            // Insert data baru ke prestasi_mahasiswa
+            $sql_mahasiswa = "INSERT INTO [dbo].[prestasi_mahasiswa] 
                           ([id_mahasiswa], [id_prestasi], [peran_mahasiswa]) 
                           VALUES (?, ?, ?)";
-        foreach ($data['mahasiswa_data'] as $mahasiswa) {
-            sqlsrv_query($this->conn, $sql_mahasiswa, [
-                $mahasiswa['id_mahasiswa'],
-                $data['id_prestasi'],
-                $mahasiswa['peran_mahasiswa']
-            ]);
-        }
+            foreach ($data['mahasiswa_data'] as $mahasiswa) {
+                sqlsrv_query($this->conn, $sql_mahasiswa, [
+                    $mahasiswa['id_mahasiswa'],
+                    $data['id_prestasi'],
+                    $mahasiswa['peran_mahasiswa']
+                ]);
+            }
 
-        // Insert data baru ke pembimbing_prestasi
-        $sql_pembimbing = "INSERT INTO [dbo].[pembimbing_prestasi] 
+            // Insert data baru ke pembimbing_prestasi
+            $sql_pembimbing = "INSERT INTO [dbo].[pembimbing_prestasi] 
                            ([id_dosen], [id_prestasi], [peran_pembimbing]) 
                            VALUES (?, ?, ?)";
-        foreach ($data['dosen_data'] as $dosen) {
-            sqlsrv_query($this->conn, $sql_pembimbing, [
-                $dosen['id_dosen'],
-                $data['id_prestasi'],
-                $dosen['peran_pembimbing']
-            ]);
+            foreach ($data['dosen_data'] as $dosen) {
+                sqlsrv_query($this->conn, $sql_pembimbing, [
+                    $dosen['id_dosen'],
+                    $data['id_prestasi'],
+                    $dosen['peran_pembimbing']
+                ]);
+            }
+
+            sqlsrv_commit($this->conn);
+            return true;
+        } catch (Exception $e) {
+            sqlsrv_rollback($this->conn);
+            error_log('SQL Error: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+
+
+
+
+
+    public function deletePrestasi($id_prestasi)
+    {
+        // Step 1: Hapus data terkait di tabel prestasi_mahasiswa
+        $sqlDeleteRelated = "DELETE FROM prestasi_mahasiswa WHERE id_prestasi = ?";
+        $stmtDeleteRelated = sqlsrv_query($this->conn, $sqlDeleteRelated, [$id_prestasi]);
+
+        if ($stmtDeleteRelated === false) {
+            error_log("Error deleting related data: " . print_r(sqlsrv_errors(), true));
+            return false; // Return false if deleting related data fails
         }
 
-        sqlsrv_commit($this->conn);
-        return true;
-    } catch (Exception $e) {
-        sqlsrv_rollback($this->conn);
-        error_log('SQL Error: ' . $e->getMessage());
-        return false;
+        // Step 2: Hapus data dari tabel data_prestasi
+        $sqlDeleteMain = "DELETE FROM data_prestasi WHERE id_prestasi = ?";
+        $stmtDeleteMain = sqlsrv_query($this->conn, $sqlDeleteMain, [$id_prestasi]);
+
+        if ($stmtDeleteMain === false) {
+            error_log("Error deleting main data: " . print_r(sqlsrv_errors(), true));
+            return false; // Return false if deleting main data fails
+        }
+
+        return true; // Return true if both operations succeed
     }
-}
-
-
-
-
-
-
-public function deletePrestasi($id_prestasi)
-{
-    // Step 1: Hapus data terkait di tabel prestasi_mahasiswa
-    $sqlDeleteRelated = "DELETE FROM prestasi_mahasiswa WHERE id_prestasi = ?";
-    $stmtDeleteRelated = sqlsrv_query($this->conn, $sqlDeleteRelated, [$id_prestasi]);
-
-    if ($stmtDeleteRelated === false) {
-        error_log("Error deleting related data: " . print_r(sqlsrv_errors(), true));
-        return false; // Return false if deleting related data fails
-    }
-
-    // Step 2: Hapus data dari tabel data_prestasi
-    $sqlDeleteMain = "DELETE FROM data_prestasi WHERE id_prestasi = ?";
-    $stmtDeleteMain = sqlsrv_query($this->conn, $sqlDeleteMain, [$id_prestasi]);
-
-    if ($stmtDeleteMain === false) {
-        error_log("Error deleting main data: " . print_r(sqlsrv_errors(), true));
-        return false; // Return false if deleting main data fails
-    }
-
-    return true; // Return true if both operations succeed
-}
 
 
     public function getPrestasiById($id_prestasi)
@@ -575,7 +575,7 @@ public function deletePrestasi($id_prestasi)
         $query = "SELECT dp.* 
         FROM data_prestasi dp
         INNER JOIN prestasi_mahasiswa pm ON dp.id_prestasi = pm.id_prestasi
-        WHERE pm.id_mahasiswa = ?;";
+        WHERE pm.id_mahasiswa = ?";
         $params = [$id_mahasiswa];
 
         if (isset($filters['juara']) && $filters['juara'] !== '') {
@@ -589,7 +589,7 @@ public function deletePrestasi($id_prestasi)
         }
 
         if (isset($filters['tingkat_kompetisi']) && $filters['tingkat_kompetisi'] !== '') {
-            $query .= " AND tingkat_kompetisi = ?";
+            $query .= " AND LOWER(TRIM(tingkat_kompetisi)) = LOWER(TRIM(?))";
             $params[] = $filters['tingkat_kompetisi'];
         }
 
@@ -603,10 +603,12 @@ public function deletePrestasi($id_prestasi)
             $params[] = $filters['status_pengajuan'];
         }
 
+
         // Debugging query dan parameter sebelum eksekusi
         error_log("Input jenis_kompetisi: " . $filters['jenis_kompetisi']);
-        error_log("Final Query: $query");
-        error_log("Params: " . print_r($params, true));
+        error_log("Final Query (After Fix): $query");
+        error_log("Params (After Fix): " . print_r($params, true));
+
 
         // Eksekusi query dengan SQLSRV
         $stmt = sqlsrv_query($this->conn, $query, $params);
@@ -794,7 +796,4 @@ public function deletePrestasi($id_prestasi)
 
         return $result;
     }
-
-
-
 }

@@ -30,6 +30,12 @@
 //     console.log("Selected role:", button.textContent);
 //   });
 // });
+
+
+
+
+
+
 const togglePassword = document.querySelector("#togglePassword");
 const password = document.querySelector("#password");
 
