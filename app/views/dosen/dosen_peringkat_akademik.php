@@ -1,5 +1,39 @@
-<?php include 'partials/header.php'; ?>
-<?php include 'partials/sidenav.php'; ?>
+<?php
+include 'partials/header.php';
+include 'partials/sidenav.php';
+$conn = require '../config/config.php';
+
+if (!$conn) {
+    die("Koneksi ke database gagal.");
+}
+
+$query = "SELECT TOP 10 
+    m.NIM,
+    m.nama_mahasiswa,
+    m.program_studi,
+    COUNT(pm.id_prestasi) AS jumlah_prestasi
+    FROM 
+        mahasiswa m
+    LEFT JOIN 
+        prestasi_mahasiswa pm ON m.id_mahasiswa = pm.id_mahasiswa
+    LEFT JOIN 
+        data_prestasi dp ON pm.id_prestasi = dp.id_prestasi
+    GROUP BY 
+        m.NIM, m.nama_mahasiswa, m.program_studi
+    ORDER BY 
+        jumlah_prestasi DESC";
+
+$stmt = sqlsrv_query($conn, $query);
+
+if ($stmt === false) {
+    die(print_r(sqlsrv_errors(), true));
+}
+
+$leaderboard = [];
+while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+    $leaderboard[] = $row;
+}
+?>
 
 
 <div class="" style="margin-left: 317px; margin-right: 32px; margin-top: 90px;">
@@ -10,244 +44,56 @@
     <div class="card mb-5">
         <div class="card-body">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <!-- Tab navigation -->
                 <li class="nav-item" role="presentation">
                     <button aria-controls="akademik" aria-selected="true" class="nav-link active" data-bs-target="#akademik"
-                        data-bs-toggle="tab" id="akademik-tab" role="tab" type="button">
-                        Akademik
-                    </button>
+                        data-bs-toggle="tab" id="akademik-tab" role="tab" type="button">Akademik</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button aria-controls="non-akademik" aria-selected="false" class="nav-link"
-                        data-bs-target="#non-akademik" data-bs-toggle="tab" id="non-akademik-tab" role="tab" type="button">
-                        Non-Akademik
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button aria-controls="ipk" aria-selected="false" class="nav-link" data-bs-target="#ipk"
-                        data-bs-toggle="tab" id="ipk-tab" role="tab" type="button">
-                        IPK
-                    </button>
+                        data-bs-target="#non-akademik" data-bs-toggle="tab" id="non-akademik-tab" role="tab" type="button">Non-Akademik</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button aria-controls="semua" aria-selected="false" class="nav-link" data-bs-target="#semua"
-                        data-bs-toggle="tab" id="semua-tab" role="tab" type="button">
-                        Semua
-                    </button>
+                        data-bs-toggle="tab" id="semua-tab" role="tab" type="button">Semua</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div aria-labelledby="akademik-tab" class="tab-pane fade show active" id="akademik" role="tabpanel">
-                    <div class="d-flex justify-content-end mt-3">
-                        <div class="dropdown">
-                            <button aria-expanded="false" class="btn btn-outline-secondary dropdown-toggle"
-                                data-bs-toggle="dropdown" id="dropdownMenuButton" type="button">
-                                2024
-                            </button>
-                            <ul aria-labelledby="dropdownMenuButton" class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        2023
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        2022
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        2021
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                     <table class="table mt-3">
                         <thead>
                             <tr class="text-center">
-                                <th>
-                                    Peringkat
-                                </th>
-                                <th>
-                                    NIM
-                                </th>
-                                <th>
-                                    Nama
-                                </th>
-                                <th>
-                                    Jurusan
-                                </th>
-                                <th>
-                                    Jumlah Prestasi
-                                </th>
+                                <th>Peringkat</th>
+                                <th>NIM</th>
+                                <th>Nama</th>
+                                <th>Jurusan</th>
+                                <th>Jumlah Prestasi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="text-center">
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    1234567890
-                                </td>
-                                <td>
-                                    <img alt="Profile picture of Daniel Levi" height="40"
-                                        src="https://storage.googleapis.com/a1aa/image/S97ecnhW5jW0QiiW7vDbmbljqn6Zthh9oS6plZrNSeRVBwzTA.jpg"
-                                        width="40" />
-                                    Daniel Levi
-                                </td>
-                                <td>
-                                    D-IV Teknik Informatika
-                                </td>
-                                <td>
-                                    50
-                                </td>
-                            </tr>
-                            <tr class="text-center">
-                                <td>
-                                    2
-                                </td>
-                                <td>
-                                    1234567890
-                                </td>
-                                <td>
-                                    <img alt="Profile picture of Daniel Levi" height="40"
-                                        src="https://storage.googleapis.com/a1aa/image/S97ecnhW5jW0QiiW7vDbmbljqn6Zthh9oS6plZrNSeRVBwzTA.jpg"
-                                        width="40" />
-                                    Daniel Levi
-                                </td>
-                                <td>
-                                    D-IV Teknik Informatika
-                                </td>
-                                <td>
-                                    50
-                                </td>
-                            </tr>
-                            <tr class="text-center">
-                                <td>
-                                    3
-                                </td>
-                                <td>
-                                    1234567890
-                                </td>
-                                <td>
-                                    <img alt="Profile picture of Daniel Levi" height="40"
-                                        src="https://storage.googleapis.com/a1aa/image/S97ecnhW5jW0QiiW7vDbmbljqn6Zthh9oS6plZrNSeRVBwzTA.jpg"
-                                        width="40" />
-                                    Daniel Levi
-                                </td>
-                                <td>
-                                    D-IV Teknik Informatika
-                                </td>
-                                <td>
-                                    50
-                                </td>
-                            </tr>
-                            <tr class="text-center">
-                                <td>
-                                    4
-                                </td>
-                                <td>
-                                    1234567890
-                                </td>
-                                <td>
-                                    <img alt="Profile picture of Daniel Levi" height="40"
-                                        src="https://storage.googleapis.com/a1aa/image/S97ecnhW5jW0QiiW7vDbmbljqn6Zthh9oS6plZrNSeRVBwzTA.jpg"
-                                        width="40" />
-                                    Daniel Levi
-                                </td>
-                                <td>
-                                    D-IV Teknik Informatika
-                                </td>
-                                <td>
-                                    50
-                                </td>
-                            </tr>
-                            <tr class="text-center">
-                                <td>
-                                    5
-                                </td>
-                                <td>
-                                    1234567890
-                                </td>
-                                <td>
-                                    <img alt="Profile picture of Daniel Levi" height="40"
-                                        src="https://storage.googleapis.com/a1aa/image/S97ecnhW5jW0QiiW7vDbmbljqn6Zthh9oS6plZrNSeRVBwzTA.jpg"
-                                        width="40" />
-                                    Daniel Levi
-                                </td>
-                                <td>
-                                    D-IV Teknik Informatika
-                                </td>
-                                <td>
-                                    50
-                                </td>
-                            </tr>
+                            <?php
+                            if (!empty($leaderboard)) {
+                                $rank = 1;
+                                foreach ($leaderboard as $row) { ?>
+                                    <tr class="text-center">
+                                        <td><?= $rank++ ?></td>
+                                        <td><?= $row['NIM'] ?></td>
+                                        <td><?= $row['nama_mahasiswa'] ?></td>
+                                        <td><?= $row['program_studi'] ?></td>
+                                        <td><?= $row['jumlah_prestasi'] ?></td>
+                                    </tr>
+                                <?php }
+                            } else { ?>
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada data tersedia.</td>
+                                </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <select class="form-select" style="width: 70px;">
-                                <option value="10">
-                                    10
-                                </option>
-                                <option value="20">
-                                    20
-                                </option>
-                                <option value="30">
-                                    30
-                                </option>
-                            </select>
-                        </div>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a aria-label="Previous" class="page-link" href="#">
-                                        <span aria-hidden="true">
-                                            «
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">
-                                        1
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        2
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        ...
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        10
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a aria-label="Next" class="page-link" href="#">
-                                        <span aria-hidden="true">
-                                            »
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
                 </div>
-                <div aria-labelledby="non-akademik-tab" class="tab-pane fade" id="non-akademik" role="tabpanel">
-                    Non-Akademik content
-                </div>
-                <div aria-labelledby="ipk-tab" class="tab-pane fade" id="ipk" role="tabpanel">
-                    IPK content
-                </div>
-                <div aria-labelledby="semua-tab" class="tab-pane fade" id="semua" role="tabpanel">
-                    Semua content
-                </div>
+                <!-- Konten untuk tab lainnya -->
+                <div aria-labelledby="non-akademik-tab" class="tab-pane fade" id="non-akademik" role="tabpanel">Non-Akademik content</div>
+                <div aria-labelledby="semua-tab" class="tab-pane fade" id="semua" role="tabpanel">Semua content</div>
             </div>
         </div>
     </div>
