@@ -105,7 +105,7 @@
                 <div class="card-body">
                     <div class="row ">
                         <div class="col-md-6">
-                            <p class="mb-0 fw-bold">No Surat Tugas</p>
+                            <p class="mb-0 fw-bold">URL Kompetisi</p>
                             <p class="mb-0 text-secondary">
                                 <?= htmlspecialchars($prestasi['no_surat_tugas']); ?>
                             </p>
@@ -463,13 +463,14 @@
 </div>
 
 <nav class="navbar fixed-bottom bg-light d-flex justify-content-end p-3 shadow-sm">
-    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin' && in_array($prestasi['status_pengajuan'], ['Waiting for Approval', 'Rejected', 'Approved'])): ?>
+    <?php if (in_array($prestasi['status_pengajuan'], ['Waiting for Approval', 'Rejected', 'Approved'])): ?>
         <a href="#" class="btn btn-danger me-3" data-bs-toggle="modal" data-bs-target="#rejectModal<?php echo $prestasi['id_prestasi']; ?>">
             Reject
         </a>
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveModal<?php echo $prestasi['id_prestasi']; ?>">
             Approve
         </button>
+
     <?php endif; ?>
 </nav>
 
@@ -505,9 +506,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <a href="index.php?page=dosen_prestasi_detail&id_preJuara
-
-1stasi=<?php echo $prestasi['id_prestasi']; ?>&action=approve" class="btn btn-success">Ya, Setujui</a>
+                <a href="index.php?page=dosen_prestasi_detail&id_prestasi=<?php echo $prestasi['id_prestasi']; ?>&action=approve" class="btn btn-success">Ya, Setujui</a>
             </div>
         </div>
     </div>

@@ -205,7 +205,6 @@ class DosenPrestasiModel
     public function insertPrestasi($data)
     {
         sqlsrv_begin_transaction($this->conn);
-
         try {
             $poin = 0;
 
@@ -223,24 +222,23 @@ class DosenPrestasiModel
                     $poin = 0;
             }
 
-
             $sql = "INSERT INTO [dbo].[data_prestasi] 
-    ([tgl_pengajuan], [program_studi], [thn_akademik], [jenis_kompetisi], [juara], 
-     [tingkat_kompetisi], [judul_kompetisi], [tempat_kompetisi], [url_kompetisi], 
-     [jumlah_pt], [jumlah_peserta], [status_pengajuan], [foto_kegiatan],
-     [no_surat_tugas], [tgl_surat_tugas], [file_surat_tugas],
-     [file_sertifikat], [file_poster], [lampiran_hasil_kompetisi], [poin]) 
-VALUES 
-    (?, ?, ?, ?, ?, 
-     ?, ?, ?, ?,
-     ?, ?, 'Waiting for Approval', 
-     CONVERT(VARBINARY(MAX), ?),
-     ?, ?, 
-     CONVERT(VARBINARY(MAX), ?),
-     CONVERT(VARBINARY(MAX), ?),
-     CONVERT(VARBINARY(MAX), ?),
-     CONVERT(VARBINARY(MAX), ?),
-     ?);";
+                        ([tgl_pengajuan], [program_studi], [thn_akademik], [jenis_kompetisi], [juara], 
+                        [tingkat_kompetisi], [judul_kompetisi], [tempat_kompetisi], [url_kompetisi], 
+                        [jumlah_pt], [jumlah_peserta], [status_pengajuan], [foto_kegiatan],
+                        [no_surat_tugas], [tgl_surat_tugas], [file_surat_tugas],
+                        [file_sertifikat], [file_poster], [lampiran_hasil_kompetisi], [poin]) 
+                    VALUES 
+                        (?, ?, ?, ?, ?, 
+                        ?, ?, ?, ?,
+                        ?, ?, 'Waiting for Approval', 
+                        CONVERT(VARBINARY(MAX), ?),
+                        ?, ?, 
+                        CONVERT(VARBINARY(MAX), ?),
+                        CONVERT(VARBINARY(MAX), ?),
+                        CONVERT(VARBINARY(MAX), ?),
+                        CONVERT(VARBINARY(MAX), ?),
+                        ?);";
 
             $params = [
                 $data['tgl_pengajuan'],
