@@ -301,35 +301,43 @@ $topRankedCombined = array_slice($combinedLeaderboard, 0, 3);
         <div id="akademik-content" class="tab-pane">
             <div class="row d-flex justify-content-center align-items-end">
                 <!-- Juara 2 -->
-                <div class="col-md-3 d-flex justify-content-center">
-                    <div class="card-profile card-profile2">
-                        <img src="<?= !empty($topRanked[1]['foto_mahasiswa']) ? $topRanked[1]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
-                        <div class="name"><?= $topRanked[1]['nama_mahasiswa']; ?></div>
-                        <div class="id"><?= $topRanked[1]['NIM']; ?></div>
-                        <div class="prodi"><?= $topRanked[1]['program_studi']; ?></div> <!-- Menampilkan program studi -->
-                        <div class="ipk">IPK <?= number_format($topRanked[1]['IPK'], 2); ?></div>
+                <?php if (!empty($topRanked[1])): ?>
+                    <div class="col-md-3 d-flex justify-content-center">
+                        <div class="card-profile card-profile2">
+                            <img src="<?= !empty($topRanked[1]['foto_mahasiswa']) ? $topRanked[1]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
+                            <div class="name"><?= $topRanked[1]['nama_mahasiswa']; ?></div>
+                            <div class="id"><?= $topRanked[1]['NIM']; ?></div>
+                            <div class="prodi"><?= $topRanked[1]['program_studi']; ?></div> <!-- Menampilkan program studi -->
+                            <div class="ipk">IPK <?= number_format($topRanked[1]['IPK'], 2); ?></div>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
+
                 <!-- Juara 1 -->
-                <div class="col-md-2 d-flex justify-content-center">
-                    <div class="card-profile card-profile1">
-                        <img src="<?= !empty($topRanked[0]['foto_mahasiswa']) ? $topRanked[0]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
-                        <div class="name"><?= $topRanked[0]['nama_mahasiswa']; ?></div>
-                        <div class="id"><?= $topRanked[0]['NIM']; ?></div>
-                        <div class="prodi"><?= $topRanked[0]['program_studi']; ?></div> <!-- Menampilkan program studi -->
-                        <div class="ipk">IPK <?= number_format($topRanked[0]['IPK'], 2); ?></div>
+                <?php if (!empty($topRanked[0])): ?>
+                    <div class="col-md-2 d-flex justify-content-center">
+                        <div class="card-profile card-profile1">
+                            <img src="<?= !empty($topRanked[0]['foto_mahasiswa']) ? $topRanked[0]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
+                            <div class="name"><?= $topRanked[0]['nama_mahasiswa']; ?></div>
+                            <div class="id"><?= $topRanked[0]['NIM']; ?></div>
+                            <div class="prodi"><?= $topRanked[0]['program_studi']; ?></div> <!-- Menampilkan program studi -->
+                            <div class="ipk">IPK <?= number_format($topRanked[0]['IPK'], 2); ?></div>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
+
                 <!-- Juara 3 -->
-                <div class="col-md-3 d-flex justify-content-center">
-                    <div class="card-profile card-profile3">
-                        <img src="<?= !empty($topRanked[2]['foto_mahasiswa']) ? $topRanked[2]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
-                        <div class="name"><?= $topRanked[2]['nama_mahasiswa']; ?></div>
-                        <div class="id"><?= $topRanked[2]['NIM']; ?></div>
-                        <div class="prodi"><?= $topRanked[2]['program_studi']; ?></div> <!-- Menampilkan program studi -->
-                        <div class="ipk">IPK <?= number_format($topRanked[2]['IPK'], 2); ?></div>
+                <?php if (!empty($topRanked[2])): ?>
+                    <div class="col-md-3 d-flex justify-content-center">
+                        <div class="card-profile card-profile3">
+                            <img src="<?= !empty($topRanked[2]['foto_mahasiswa']) ? $topRanked[2]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
+                            <div class="name"><?= $topRanked[2]['nama_mahasiswa']; ?></div>
+                            <div class="id"><?= $topRanked[2]['NIM']; ?></div>
+                            <div class="prodi"><?= $topRanked[2]['program_studi']; ?></div> <!-- Menampilkan program studi -->
+                            <div class="ipk">IPK <?= number_format($topRanked[2]['IPK'], 2); ?></div>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
 
             <div class="card p-4 mt-5">
@@ -344,22 +352,28 @@ $topRankedCombined = array_slice($combinedLeaderboard, 0, 3);
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($remainingLeaderboard as $index => $student): ?>
+                            <?php if (empty($remainingLeaderboard)): ?>
                                 <tr>
-                                    <td><?= $index + 4; ?></td>
-                                    <td class="text-start">
-                                        <div class="d-flex align-items-center justify-content-start gap-2">
-                                            <img src="<?= !empty($student['foto_mahasiswa']) ? $student['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Foto Profil" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
-                                            <div>
-                                                <p class="mb-0 fw-bold"><?= $student['nama_mahasiswa']; ?></p>
-                                                <p class="mb-0 text-muted small"><?= $student['NIM']; ?></p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><?= $student['program_studi']; ?></td>
-                                    <td><?= number_format($student['IPK'], 2); ?></td>
+                                    <td colspan="4" class="text-center">Belum ada data untuk ditampilkan</td>
                                 </tr>
-                            <?php endforeach; ?>
+                            <?php else: ?>
+                                <?php foreach ($remainingLeaderboard as $index => $student): ?>
+                                    <tr>
+                                        <td><?= $index + 4; ?></td>
+                                        <td class="text-start">
+                                            <div class="d-flex align-items-center justify-content-start gap-2">
+                                                <img src="<?= !empty($student['foto_mahasiswa']) ? $student['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Foto Profil" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                                                <div>
+                                                    <p class="mb-0 fw-bold"><?= $student['nama_mahasiswa']; ?></p>
+                                                    <p class="mb-0 text-muted small"><?= $student['NIM']; ?></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><?= $student['program_studi']; ?></td>
+                                        <td><?= number_format($student['IPK'], 2); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -369,41 +383,46 @@ $topRankedCombined = array_slice($combinedLeaderboard, 0, 3);
         <!-- Tab Non-Akademik -->
         <div id="non-akademik-content" class="tab-pane">
             <div class="row d-flex justify-content-center align-items-end">
-
                 <!-- Juara 2 -->
-                <div class="col-md-3 d-flex justify-content-center">
-                    <div class="card-profile card-profile2">
-                        <img src="<?= !empty($topRankedNonAkademik[1]['foto_mahasiswa']) ? $topRankedNonAkademik[1]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
-                        <div class="name"><?= $topRankedNonAkademik[1]['nama_mahasiswa']; ?></div>
-                        <div class="id"><?= $topRankedNonAkademik[1]['NIM']; ?></div>
-                        <div class="prodi"><?= $topRankedNonAkademik[1]['program_studi']; ?></div> <!-- Menampilkan program studi -->
-                        <div class="ipk">Poin <?= number_format($topRankedNonAkademik[0]['totalPoin'], 0); ?></div>
+                <?php if (!empty($topRankedNonAkademik[1])): ?>
+                    <div class="col-md-3 d-flex justify-content-center">
+                        <div class="card-profile card-profile2">
+                            <img src="<?= !empty($topRankedNonAkademik[1]['foto_mahasiswa']) ? $topRankedNonAkademik[1]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
+                            <div class="name"><?= $topRankedNonAkademik[1]['nama_mahasiswa']; ?></div>
+                            <div class="id"><?= $topRankedNonAkademik[1]['NIM']; ?></div>
+                            <div class="prodi"><?= $topRankedNonAkademik[1]['program_studi']; ?></div> 
+                            <div class="ipk">Poin <?= number_format($topRankedNonAkademik[1]['totalPoin'], 0); ?></div>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
 
                 <!-- Juara 1 -->
-                <div class="col-md-2 d-flex justify-content-center">
-                    <div class="card-profile card-profile1">
-                        <img src="<?= !empty($topRankedNonAkademik[0]['foto_mahasiswa']) ? $topRankedNonAkademik[0]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
-                        <div class="name"><?= $topRankedNonAkademik[0]['nama_mahasiswa']; ?></div>
-                        <div class="id"><?= $topRankedNonAkademik[0]['NIM']; ?></div>
-                        <div class="prodi"><?= $topRankedNonAkademik[0]['program_studi']; ?></div> <!-- Menampilkan program studi -->
-                        <div class="ipk">Poin <?= number_format($topRankedNonAkademik[0]['totalPoin'], 0); ?></div>
+                <?php if (!empty($topRankedNonAkademik[0])): ?>
+                    <div class="col-md-2 d-flex justify-content-center">
+                        <div class="card-profile card-profile1">
+                            <img src="<?= !empty($topRankedNonAkademik[0]['foto_mahasiswa']) ? $topRankedNonAkademik[0]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
+                            <div class="name"><?= $topRankedNonAkademik[0]['nama_mahasiswa']; ?></div>
+                            <div class="id"><?= $topRankedNonAkademik[0]['NIM']; ?></div>
+                            <div class="prodi"><?= $topRankedNonAkademik[0]['program_studi']; ?></div> <!-- Menampilkan program studi -->
+                            <div class="ipk">Poin <?= number_format($topRankedNonAkademik[0]['totalPoin'], 0); ?></div>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
 
                 <!-- Juara 3 -->
-                <div class="col-md-3 d-flex justify-content-center">
-                    <div class="card-profile card-profile3">
-                        <img src="<?= !empty($topRankedNonAkademik[2]['foto_mahasiswa']) ? $topRankedNonAkademik[2]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
-                        <div class="name"><?= $topRankedNonAkademik[2]['nama_mahasiswa']; ?></div>
-                        <div class="id"><?= $topRankedNonAkademik[2]['NIM']; ?></div>
-                        <div class="prodi"><?= $topRankedNonAkademik[2]['program_studi']; ?></div> <!-- Menampilkan program studi -->
-                        <div class="ipk">Poin <?= number_format($topRankedNonAkademik[0]['totalPoin'], 0); ?></div>
-
+                <?php if (!empty($topRankedNonAkademik[2])): ?>
+                    <div class="col-md-3 d-flex justify-content-center">
+                        <div class="card-profile card-profile3">
+                            <img src="<?= !empty($topRankedNonAkademik[2]['foto_mahasiswa']) ? $topRankedNonAkademik[2]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
+                            <div class="name"><?= $topRankedNonAkademik[2]['nama_mahasiswa']; ?></div>
+                            <div class="id"><?= $topRankedNonAkademik[2]['NIM']; ?></div>
+                            <div class="prodi"><?= $topRankedNonAkademik[2]['program_studi']; ?></div> 
+                            <div class="ipk">Poin <?= number_format($topRankedNonAkademik[2]['totalPoin'], 0); ?></div>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
+
             <div class="card p-4 mt-5">
                 <div class="table-container">
                     <table class="table table-hover text-center align-middle">
@@ -416,48 +435,52 @@ $topRankedCombined = array_slice($combinedLeaderboard, 0, 3);
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-
-                            $rank = 4;
-                            $topStudents = array_slice($remainingLeaderboardNonAkademik, 0, 3);
-                            foreach ($topStudents as $row):
-                            ?>
+                            <?php if (empty($remainingLeaderboardNonAkademik)): ?>
                                 <tr>
-                                    <td><?= $rank++; ?></td>
-                                    <td class="text-start">
-                                        <div class="d-flex align-items-center justify-content-start gap-2">
-                                            <img src="<?= !empty($row['foto_mahasiswa']) ? $row['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Foto Profil" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
-                                            <div>
-                                                <p class="mb-0 fw-bold"><?= $row['nama_mahasiswa']; ?></p>
-                                                <p class="mb-0 text-muted small"><?= $row['NIM']; ?></p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><?= $row['program_studi']; ?></td>
-                                    <td><?= $row['totalPoin']; ?></td>
+                                    <td colspan="4" class="text-center">Belum ada data untuk ditampilkan</td>
                                 </tr>
-                            <?php endforeach; ?>
-
-                            <?php
-
-                            $remainingStudents = array_slice($remainingLeaderboardNonAkademik, 3);
-                            foreach ($remainingStudents as $row):
-                            ?>
-                                <tr>
-                                    <td><?= $rank++; ?></td>
-                                    <td class="text-start">
-                                        <div class="d-flex align-items-center justify-content-start gap-2">
-                                            <img src="<?= !empty($row['foto_mahasiswa']) ? $row['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Foto Profil" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
-                                            <div>
-                                                <p class="mb-0 fw-bold"><?= $row['nama_mahasiswa']; ?></p>
-                                                <p class="mb-0 text-muted small"><?= $row['NIM']; ?></p>
+                            <?php else: ?>
+                                <?php
+                                $rank = 4;
+                                $topStudents = array_slice($remainingLeaderboardNonAkademik, 0, 3);
+                                foreach ($topStudents as $row):
+                                ?>
+                                    <tr>
+                                        <td><?= $rank++; ?></td>
+                                        <td class="text-start">
+                                            <div class="d-flex align-items-center justify-content-start gap-2">
+                                                <img src="<?= !empty($row['foto_mahasiswa']) ? $row['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Foto Profil" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                                                <div>
+                                                    <p class="mb-0 fw-bold"><?= $row['nama_mahasiswa']; ?></p>
+                                                    <p class="mb-0 text-muted small"><?= $row['NIM']; ?></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td><?= $row['program_studi']; ?></td>
-                                    <td><?= $row['totalPoin']; ?></td>
-                                </tr>
-                            <?php endforeach; ?>
+                                        </td>
+                                        <td><?= $row['program_studi']; ?></td>
+                                        <td><?= $row['totalPoin']; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+
+                                <?php
+                                $remainingStudents = array_slice($remainingLeaderboardNonAkademik, 3);
+                                foreach ($remainingStudents as $row):
+                                ?>
+                                    <tr>
+                                        <td><?= $rank++; ?></td>
+                                        <td class="text-start">
+                                            <div class="d-flex align-items-center justify-content-start gap-2">
+                                                <img src="<?= !empty($row['foto_mahasiswa']) ? $row['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Foto Profil" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                                                <div>
+                                                    <p class="mb-0 fw-bold"><?= $row['nama_mahasiswa']; ?></p>
+                                                    <p class="mb-0 text-muted small"><?= $row['NIM']; ?></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><?= $row['program_studi']; ?></td>
+                                        <td><?= $row['totalPoin']; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -468,37 +491,43 @@ $topRankedCombined = array_slice($combinedLeaderboard, 0, 3);
         <div id="semua-content" class="tab-pane">
             <div class="row d-flex justify-content-center align-items-end">
                 <!-- Juara 2 -->
-                <div class="col-md-3 d-flex justify-content-center">
-                    <div class="card-profile card-profile2">
-                        <img src="<?= !empty($topRankedCombined[1]['foto_mahasiswa']) ? $topRankedCombined[1]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
-                        <div class="name"><?= $topRankedCombined[1]['nama_mahasiswa']; ?></div>
-                        <div class="id"><?= $topRankedCombined[1]['NIM']; ?></div>
-                        <div class="prodi"><?= $topRankedCombined[1]['program_studi']; ?></div>
-                        <div class="ipk">Poin: <?= number_format($topRankedCombined[1]['poinTotal'], 0); ?></div>
+                <?php if (!empty($topRankedCombined[1])): ?>
+                    <div class="col-md-3 d-flex justify-content-center">
+                        <div class="card-profile card-profile2">
+                            <img src="<?= !empty($topRankedCombined[1]['foto_mahasiswa']) ? $topRankedCombined[1]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
+                            <div class="name"><?= $topRankedCombined[1]['nama_mahasiswa']; ?></div>
+                            <div class="id"><?= $topRankedCombined[1]['NIM']; ?></div>
+                            <div class="prodi"><?= $topRankedCombined[1]['program_studi']; ?></div>
+                            <div class="ipk">Poin: <?= number_format($topRankedCombined[1]['poinTotal'], 0); ?></div>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
 
                 <!-- Juara 1 -->
-                <div class="col-md-2 d-flex justify-content-center">
-                    <div class="card-profile card-profile1">
-                        <img src="<?= !empty($topRankedCombined[0]['foto_mahasiswa']) ? $topRankedCombined[0]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
-                        <div class="name"><?= $topRankedCombined[0]['nama_mahasiswa']; ?></div>
-                        <div class="id"><?= $topRankedCombined[0]['NIM']; ?></div>
-                        <div class="prodi"><?= $topRankedCombined[0]['program_studi']; ?></div>
-                        <div class="ipk">Poin: <?= number_format($topRankedCombined[0]['poinTotal'], 0); ?></div>
+                <?php if (!empty($topRankedCombined[0])): ?>
+                    <div class="col-md-2 d-flex justify-content-center">
+                        <div class="card-profile card-profile1">
+                            <img src="<?= !empty($topRankedCombined[0]['foto_mahasiswa']) ? $topRankedCombined[0]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
+                            <div class="name"><?= $topRankedCombined[0]['nama_mahasiswa']; ?></div>
+                            <div class="id"><?= $topRankedCombined[0]['NIM']; ?></div>
+                            <div class="prodi"><?= $topRankedCombined[0]['program_studi']; ?></div>
+                            <div class="ipk">Poin: <?= number_format($topRankedCombined[0]['poinTotal'], 0); ?></div>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
 
                 <!-- Juara 3 -->
-                <div class="col-md-3 d-flex justify-content-center">
-                    <div class="card-profile card-profile3">
-                        <img src="<?= !empty($topRankedCombined[2]['foto_mahasiswa']) ? $topRankedCombined[2]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
-                        <div class="name"><?= $topRankedCombined[2]['nama_mahasiswa']; ?></div>
-                        <div class="id"><?= $topRankedCombined[2]['NIM']; ?></div>
-                        <div class="prodi"><?= $topRankedCombined[2]['program_studi']; ?></div>
-                        <div class="ipk">Poin: <?= number_format($topRankedCombined[2]['poinTotal'], 0); ?></div>
+                <?php if (!empty($topRankedCombined[2])): ?>
+                    <div class="col-md-3 d-flex justify-content-center">
+                        <div class="card-profile card-profile3">
+                            <img src="<?= !empty($topRankedCombined[2]['foto_mahasiswa']) ? $topRankedCombined[2]['foto_mahasiswa'] : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; ?>" alt="Profile Image" class="profile-img">
+                            <div class="name"><?= $topRankedCombined[2]['nama_mahasiswa']; ?></div>
+                            <div class="id"><?= $topRankedCombined[2]['NIM']; ?></div>
+                            <div class="prodi"><?= $topRankedCombined[2]['program_studi']; ?></div>
+                            <div class="ipk">Poin: <?= number_format($topRankedCombined[2]['poinTotal'], 0); ?></div>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
 
             <!-- Tabel untuk leaderboard -->
@@ -510,7 +539,7 @@ $topRankedCombined = array_slice($combinedLeaderboard, 0, 3);
                                 <th class="text-center">Peringkat</th>
                                 <th class="text-start">Nama</th>
                                 <th class="text-center">Jurusan</th>
-                                <th class="text-center">Poin</th> <!-- Ganti nama kolom -->
+                                <th class="text-center">Poin</th> 
                             </tr>
                         </thead>
                         <tbody>
@@ -536,7 +565,7 @@ $topRankedCombined = array_slice($combinedLeaderboard, 0, 3);
                                         </div>
                                     </td>
                                     <td><?php echo $rank['program_studi']; ?></td>
-                                    <td><?php echo $rank['poinTotal']; ?></td> <!-- Menampilkan total poin -->
+                                    <td><?php echo $rank['poinTotal']; ?></td>
                                 </tr>
                             <?php
                             }
