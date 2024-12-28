@@ -399,6 +399,21 @@ class PrestasiModel
         sqlsrv_begin_transaction($this->conn);
 
         try {
+            //Hitung Poin Prestasi
+            $poin = 0;
+            switch ($data['tingkat_kompetisi']) {
+                case 'Internasional':
+                    $poin = ($data['juara'] == 1) ? 8 : ($data['juara'] == 2 ? 7 : 6);
+                    break;
+                case 'Nasional':
+                    $poin = ($data['juara'] == 1) ? 6 : ($data['juara'] == 2 ? 5 : 4);
+                    break;
+                case 'Provinsi':
+                    $poin = ($data['juara'] == 1) ? 5 : ($data['juara'] == 2 ? 4 : 3);
+                    break;
+                default:
+                    $poin = 0;
+            }
             // Update data_prestasi
             $sql = "UPDATE [dbo].[data_prestasi] 
                 SET [tgl_pengajuan] = ?, [program_studi] = ?, [thn_akademik] = ?, 
@@ -409,7 +424,8 @@ class PrestasiModel
                     [file_surat_tugas] = CASE WHEN ? IS NOT NULL THEN CONVERT(VARBINARY(MAX), ?) ELSE [file_surat_tugas] END, 
                     [file_sertifikat] = CASE WHEN ? IS NOT NULL THEN CONVERT(VARBINARY(MAX), ?) ELSE [file_sertifikat] END, 
                     [file_poster] = CASE WHEN ? IS NOT NULL THEN CONVERT(VARBINARY(MAX), ?) ELSE [file_poster] END, 
-                    [lampiran_hasil_kompetisi] = CASE WHEN ? IS NOT NULL THEN CONVERT(VARBINARY(MAX), ?) ELSE [lampiran_hasil_kompetisi] END 
+                    [lampiran_hasil_kompetisi] = CASE WHEN ? IS NOT NULL THEN CONVERT(VARBINARY(MAX), ?) ELSE [lampiran_hasil_kompetisi] END,
+                    [poin] = ?
                 WHERE [id_prestasi] = ?";
 
             $params = [
@@ -435,7 +451,8 @@ class PrestasiModel
                 $data['file_poster'],            // 20 (untuk CASE WHEN)
                 $data['lampiran_hasil_kompetisi'], // 21
                 $data['lampiran_hasil_kompetisi'], // 22 (untuk CASE WHEN)
-                $data['id_prestasi'],            // 23 (untuk WHERE)
+                $poin,                           // 23
+                $data['id_prestasi']       // 23 (untuk WHERE)
             ];
 
             error_log("Jumlah parameter: " . count($params));
@@ -599,7 +616,7 @@ class PrestasiModel
         $query = "SELECT dp.* 
         FROM data_prestasi dp
         INNER JOIN prestasi_mahasiswa pm ON dp.id_prestasi = pm.id_prestasi
-        WHERE pm.id_mahasiswa = ?";
+        WHERE pm.id_mahasiswa = ? ORDER BY dp.tgl_pengajuan DESC";
         $params = [$id_mahasiswa];
 
         if (isset($filters['juara']) && $filters['juara'] !== '') {
