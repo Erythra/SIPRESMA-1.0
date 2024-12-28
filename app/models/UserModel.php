@@ -49,4 +49,35 @@ class UserModel
 
         return false;
     }
+
+    public function getDaftarMataKuliah($id_mahasiswa)
+    {
+        $query = "SELECT 
+                ROW_NUMBER() OVER (ORDER BY mk.kode_mata_kuliah) AS No,
+                mk.kode_mata_kuliah AS Kode_MK,
+                mk.nama_mata_kuliah AS Mata_Kuliah,
+                mk.sks AS SKS,
+                mk.jam AS Jam,
+                CASE
+                    WHEN n.nilai_mahasiswa >= 80 THEN 'A'
+                    WHEN n.nilai_mahasiswa >= 70 THEN 'B'
+                    WHEN n.nilai_mahasiswa >= 60 THEN 'C'
+                    ELSE 'D'
+                END AS Nilai
+            FROM 
+                nilai_mahasiswa n
+            INNER JOIN 
+                mahasiswa m ON n.id_mahasiswa = m.id_mahasiswa
+            INNER JOIN 
+                mata_kuliah mk ON n.id_mata_kuliah = mk.id_mata_kuliah
+            WHERE 
+                n.id_mahasiswa = :id_mahasiswa
+        ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id_mahasiswa', $id_mahasiswa, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
