@@ -185,14 +185,14 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                         onchange="updateFileName()">
                     <span id="fileName" class="ms-2 text-muted fs-6">
                         <?php
-                // Cek jika file sudah ada
-                $suratTugasFilePath = 'uploads/file_surat_tugas' . $prestasi['id_prestasi'] . '.pdf';
-                if (file_exists($suratTugasFilePath)) {
-                    echo basename($suratTugasFilePath);
-                } else {
-                    echo "No file chosen";
-                }
-                ?>
+                        // Cek jika file sudah ada
+                        $suratTugasFilePath = 'uploads/file_surat_tugas' . $prestasi['id_prestasi'] . '.pdf';
+                        if (file_exists($suratTugasFilePath)) {
+                            echo basename($suratTugasFilePath);
+                        } else {
+                            echo "No file chosen";
+                        }
+                        ?>
                     </span>
                 </div>
                 <small class="form-text text-muted">
@@ -200,33 +200,33 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                 </small>
             </div>
             <script>
-            function updateFileName() {
-                var fileInput = document.getElementById('customFile');
-                var fileName = document.getElementById('fileName');
-                var file = fileInput.files[0];
+                function updateFileName() {
+                    var fileInput = document.getElementById('customFile');
+                    var fileName = document.getElementById('fileName');
+                    var file = fileInput.files[0];
 
-                if (file) {
-                    var maxSize = 5000 * 1024; // 5000 KB
-                    var allowedExtensions = /(\.pdf|\.docx)$/i;
+                    if (file) {
+                        var maxSize = 5000 * 1024; // 5000 KB
+                        var allowedExtensions = /(\.pdf|\.docx)$/i;
 
-                    if (file.size > maxSize) {
-                        alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
-                        fileInput.value = ''; // Reset file input
-                        fileName.textContent = "No file chosen";
-                    } else if (!allowedExtensions.exec(file.name)) {
-                        alert(
-                            'Ekstensi file tidak valid. Hanya file .pdf, .docx yang diperbolehkan.'
-                        );
-                        fileInput.value = ''; // Reset file input
-                        fileName.textContent = "No file chosen";
+                        if (file.size > maxSize) {
+                            alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
+                            fileInput.value = ''; // Reset file input
+                            fileName.textContent = "No file chosen";
+                        } else if (!allowedExtensions.exec(file.name)) {
+                            alert(
+                                'Ekstensi file tidak valid. Hanya file .pdf, .docx yang diperbolehkan.'
+                            );
+                            fileInput.value = ''; // Reset file input
+                            fileName.textContent = "No file chosen";
+                        } else {
+                            fileName.textContent = file.name;
+                        }
                     } else {
-                        fileName.textContent = file.name;
+                        // Jika tidak ada file baru yang dipilih, gunakan nilai dari database
+                        fileName.textContent = "<?php echo basename($suratTugasFilePath); ?>";
                     }
-                } else {
-                    // Jika tidak ada file baru yang dipilih, gunakan nilai dari database
-                    fileName.textContent = "<?php echo basename($suratTugasFilePath); ?>";
                 }
-            }
             </script>
         </div>
 
@@ -249,11 +249,11 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                             onchange="updateFileNameSertifikat()">
                         <span id="fileNameSertifikat" class="ms-2 text-muted fs-6">
                             <?php
-                        $sertifikatFilePath = 'uploads/file_sertifikat' . $prestasi['id_prestasi'] . '.pdf';
-                        if (file_exists($sertifikatFilePath)) {
-                            echo basename($sertifikatFilePath);
-                        }
-                        ?>
+                            $sertifikatFilePath = 'uploads/file_sertifikat' . $prestasi['id_prestasi'] . '.pdf';
+                            if (file_exists($sertifikatFilePath)) {
+                                echo basename($sertifikatFilePath);
+                            }
+                            ?>
 
                         </span>
                     </div>
@@ -263,35 +263,35 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                 </div>
 
                 <script>
-                function updateFileNameSertifikat() {
-                    var fileInput = document.getElementById('customFileSertifikat');
-                    var fileName = document.getElementById('fileNameSertifikat');
-                    var file = fileInput.files[0];
+                    function updateFileNameSertifikat() {
+                        var fileInput = document.getElementById('customFileSertifikat');
+                        var fileName = document.getElementById('fileNameSertifikat');
+                        var file = fileInput.files[0];
 
-                    if (file) {
-                        var maxSize = 5000 * 1024; // 5000 KB
-                        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
+                        if (file) {
+                            var maxSize = 5000 * 1024; // 5000 KB
+                            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.pdf|\.docx)$/i;
 
-                        // Check file size
-                        if (file.size > maxSize) {
-                            alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
-                            fileInput.value = ''; // Reset file input
-                            fileName.textContent = "No file chosen";
-                        }
-                        // Check file extension
-                        else if (!allowedExtensions.exec(file.name)) {
-                            alert(
-                                'Ekstensi file tidak valid. Hanya file .jpg, .jpeg, .png, .pdf, .docx yang diperbolehkan.'
-                            );
-                            fileInput.value = ''; // Reset file input
-                            fileName.textContent = "No file chosen";
+                            // Check file size
+                            if (file.size > maxSize) {
+                                alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
+                                fileInput.value = ''; // Reset file input
+                                fileName.textContent = "No file chosen";
+                            }
+                            // Check file extension
+                            else if (!allowedExtensions.exec(file.name)) {
+                                alert(
+                                    'Ekstensi file tidak valid. Hanya file .jpg, .jpeg, .png, .pdf, .docx yang diperbolehkan.'
+                                );
+                                fileInput.value = ''; // Reset file input
+                                fileName.textContent = "No file chosen";
+                            } else {
+                                fileName.textContent = file.name;
+                            }
                         } else {
-                            fileName.textContent = file.name;
+                            fileName.textContent = "No file chosen";
                         }
-                    } else {
-                        fileName.textContent = "No file chosen";
                     }
-                }
                 </script>
             </div>
             <div class="col-md-6">
@@ -320,33 +320,33 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                 </div>
 
                 <script>
-                function updateFileNameFotoKegiatan() {
-                    var fileInput = document.getElementById('customFileFotoKegiatan');
-                    var fileName = document.getElementById('fileNameFotoKegiatan');
-                    var file = fileInput.files[0];
+                    function updateFileNameFotoKegiatan() {
+                        var fileInput = document.getElementById('customFileFotoKegiatan');
+                        var fileName = document.getElementById('fileNameFotoKegiatan');
+                        var file = fileInput.files[0];
 
-                    if (file) {
-                        var maxSize = 5000 * 1024; // 5000 KB
-                        var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+                        if (file) {
+                            var maxSize = 5000 * 1024; // 5000 KB
+                            var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 
-                        // Check file size
-                        if (file.size > maxSize) {
-                            alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
-                            fileInput.value = ''; // Reset file input
-                            fileName.textContent = "No file chosen";
-                        }
-                        // Check file extension
-                        else if (!allowedExtensions.exec(file.name)) {
-                            alert('Ekstensi file tidak valid. Hanya file .jpg, .jpeg, .png, yang diperbolehkan.');
-                            fileInput.value = ''; // Reset file input
-                            fileName.textContent = "No file chosen";
+                            // Check file size
+                            if (file.size > maxSize) {
+                                alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
+                                fileInput.value = ''; // Reset file input
+                                fileName.textContent = "No file chosen";
+                            }
+                            // Check file extension
+                            else if (!allowedExtensions.exec(file.name)) {
+                                alert('Ekstensi file tidak valid. Hanya file .jpg, .jpeg, .png, yang diperbolehkan.');
+                                fileInput.value = ''; // Reset file input
+                                fileName.textContent = "No file chosen";
+                            } else {
+                                fileName.textContent = file.name;
+                            }
                         } else {
-                            fileName.textContent = file.name;
+                            fileName.textContent = "No file chosen";
                         }
-                    } else {
-                        fileName.textContent = "No file chosen";
                     }
-                }
                 </script>
             </div>
         </div>
@@ -377,33 +377,33 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                 </div>
 
                 <script>
-                function updateFileNamePoster() {
-                    var fileInput = document.getElementById('customFilePoster');
-                    var fileName = document.getElementById('fileNamePoster');
-                    var file = fileInput.files[0];
+                    function updateFileNamePoster() {
+                        var fileInput = document.getElementById('customFilePoster');
+                        var fileName = document.getElementById('fileNamePoster');
+                        var file = fileInput.files[0];
 
-                    if (file) {
-                        var maxSize = 5000 * 1024; // 5000 KB
-                        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
+                        if (file) {
+                            var maxSize = 5000 * 1024; // 5000 KB
+                            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
 
-                        // Check file size
-                        if (file.size > maxSize) {
-                            alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
-                            fileInput.value = ''; // Reset file input
-                            fileName.textContent = "No file chosen";
-                        }
-                        // Check file extension
-                        else if (!allowedExtensions.exec(file.name)) {
-                            alert('Ekstensi file tidak valid. Hanya file .jpg, .jpeg, .png yang diperbolehkan.');
-                            fileInput.value = ''; // Reset file input
-                            fileName.textContent = "No file chosen";
+                            // Check file size
+                            if (file.size > maxSize) {
+                                alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
+                                fileInput.value = ''; // Reset file input
+                                fileName.textContent = "No file chosen";
+                            }
+                            // Check file extension
+                            else if (!allowedExtensions.exec(file.name)) {
+                                alert('Ekstensi file tidak valid. Hanya file .jpg, .jpeg, .png yang diperbolehkan.');
+                                fileInput.value = ''; // Reset file input
+                                fileName.textContent = "No file chosen";
+                            } else {
+                                fileName.textContent = file.name;
+                            }
                         } else {
-                            fileName.textContent = file.name;
+                            fileName.textContent = "No file chosen";
                         }
-                    } else {
-                        fileName.textContent = "No file chosen";
                     }
-                }
                 </script>
             </div>
             <div class="col-md-6">
@@ -432,33 +432,33 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                 </div>
 
                 <script>
-                function updateFileNameHasilKompetisi() {
-                    var fileInput = document.getElementById('customFileHasilKompetisi');
-                    var fileName = document.getElementById('fileNameHasilKompetisi');
-                    var file = fileInput.files[0];
+                    function updateFileNameHasilKompetisi() {
+                        var fileInput = document.getElementById('customFileHasilKompetisi');
+                        var fileName = document.getElementById('fileNameHasilKompetisi');
+                        var file = fileInput.files[0];
 
-                    if (file) {
-                        var maxSize = 5000 * 1024; // 5000 KB
-                        var allowedExtensions = /(\.pdf|\.docx)$/i;
+                        if (file) {
+                            var maxSize = 5000 * 1024; // 5000 KB
+                            var allowedExtensions = /(\.pdf|\.docx)$/i;
 
-                        // Check file size
-                        if (file.size > maxSize) {
-                            alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
-                            fileInput.value = ''; // Reset file input
-                            fileName.textContent = "No file chosen";
-                        }
-                        // Check file extension
-                        else if (!allowedExtensions.exec(file.name)) {
-                            alert('Ekstensi file tidak valid. Hanya file .pdf, .docx yang diperbolehkan.');
-                            fileInput.value = ''; // Reset file input
-                            fileName.textContent = "No file chosen";
+                            // Check file size
+                            if (file.size > maxSize) {
+                                alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
+                                fileInput.value = ''; // Reset file input
+                                fileName.textContent = "No file chosen";
+                            }
+                            // Check file extension
+                            else if (!allowedExtensions.exec(file.name)) {
+                                alert('Ekstensi file tidak valid. Hanya file .pdf, .docx yang diperbolehkan.');
+                                fileInput.value = ''; // Reset file input
+                                fileName.textContent = "No file chosen";
+                            } else {
+                                fileName.textContent = file.name;
+                            }
                         } else {
-                            fileName.textContent = file.name;
+                            fileName.textContent = "No file chosen";
                         }
-                    } else {
-                        fileName.textContent = "No file chosen";
                     }
-                }
                 </script>
             </div>
         </div>
@@ -478,35 +478,35 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                 </thead>
                 <tbody>
                     <?php foreach ($mahasiswaTabel as $index => $mahasiswa): ?>
-                    <tr>
-                        <td class="text-center"><?php echo $index + 1; ?></td>
-                        <td>
-                            <select class="form-select select2" id="select-mahasiswa-<?php echo $index; ?>"
-                                name="id_mahasiswa[]">
-                                <?php foreach ($mahasiswaList as $mhs): ?>
-                                <option value="<?php echo htmlspecialchars($mhs['id_mahasiswa']); ?>"
-                                    <?php echo ($mahasiswa['id_mahasiswa'] == $mhs['id_mahasiswa']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($mhs['nama_mahasiswa']); ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="form-select" name="peran_mahasiswa[]">
-                                <option value="Anggota"
-                                    <?php echo ($mahasiswa['peran_mahasiswa'] == 'Anggota') ? 'selected' : ''; ?>>
-                                    Anggota
-                                </option>
-                                <option value="Ketua Tim"
-                                    <?php echo ($mahasiswa['peran_mahasiswa'] == 'Ketua Tim') ? 'selected' : ''; ?>>
-                                    Ketua Tim
-                                </option>
-                            </select>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="text-center"><?php echo $index + 1; ?></td>
+                            <td>
+                                <select class="form-select select2" id="select-mahasiswa-<?php echo $index; ?>"
+                                    name="id_mahasiswa[]">
+                                    <?php foreach ($mahasiswaList as $mhs): ?>
+                                        <option value="<?php echo htmlspecialchars($mhs['id_mahasiswa']); ?>"
+                                            <?php echo ($mahasiswa['id_mahasiswa'] == $mhs['id_mahasiswa']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($mhs['nama_mahasiswa']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select" name="peran_mahasiswa[]">
+                                    <option value="Anggota"
+                                        <?php echo ($mahasiswa['peran_mahasiswa'] == 'Anggota') ? 'selected' : ''; ?>>
+                                        Anggota
+                                    </option>
+                                    <option value="Ketua Tim"
+                                        <?php echo ($mahasiswa['peran_mahasiswa'] == 'Ketua Tim') ? 'selected' : ''; ?>>
+                                        Ketua Tim
+                                    </option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -528,35 +528,35 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                 </thead>
                 <tbody>
                     <?php foreach ($dosenTabel as $index => $dosen): ?>
-                    <tr>
-                        <td class="text-center"><?php echo $index + 1; ?></td>
-                        <td>
-                            <select class="form-select select2" id="select-dosen-<?php echo $index; ?>"
-                                name="id_dosen[]">
-                                <?php foreach ($dosenList as $d): ?>
-                                <option value="<?php echo htmlspecialchars($d['id_dosen']); ?>"
-                                    <?php echo ($dosen['id_dosen'] == $d['id_dosen']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($d['nama_dosen']); ?>
-                                </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="form-select" name="peran_pembimbing[]">
-                                <option value="Pembimbing Utama"
-                                    <?php echo ($dosen['peran_pembimbing'] == 'Pembimbing Utama') ? 'selected' : ''; ?>>
-                                    Pembimbing Utama
-                                </option>
-                                <option value="Pendamping"
-                                    <?php echo ($dosen['peran_pembimbing'] == 'Pendamping') ? 'selected' : ''; ?>>
-                                    Pendamping
-                                </option>
-                            </select>
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="text-center"><?php echo $index + 1; ?></td>
+                            <td>
+                                <select class="form-select select2" id="select-dosen-<?php echo $index; ?>"
+                                    name="id_dosen[]">
+                                    <?php foreach ($dosenList as $d): ?>
+                                        <option value="<?php echo htmlspecialchars($d['id_dosen']); ?>"
+                                            <?php echo ($dosen['id_dosen'] == $d['id_dosen']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($d['nama_dosen']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select" name="peran_pembimbing[]">
+                                    <option value="Pembimbing Utama"
+                                        <?php echo ($dosen['peran_pembimbing'] == 'Pembimbing Utama') ? 'selected' : ''; ?>>
+                                        Pembimbing Utama
+                                    </option>
+                                    <option value="Pendamping"
+                                        <?php echo ($dosen['peran_pembimbing'] == 'Pendamping') ? 'selected' : ''; ?>>
+                                        Pendamping
+                                    </option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
 
@@ -564,144 +564,146 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
         </div>
         <button class="btn btn-outline-primary mb-3" type="button" onclick="tambahDosen()">Tambah Dosen</button>
         <script>
-        var mahasiswaList = <?php echo json_encode($mahasiswaList); ?>;
-        var dosenList = <?php echo json_encode($dosenList); ?>;
+            var mahasiswaList = <?php echo json_encode($mahasiswaList); ?>;
+            var dosenList = <?php echo json_encode($dosenList); ?>;
 
-        // Fungsi untuk menambah baris mahasiswa
-        function tambahMahasiswa() {
-            var table = document.getElementById('mahasiswa-table').getElementsByTagName('tbody')[0];
-            var rowCount = table.rows.length;
-            var newRow = table.insertRow(rowCount);
+            // Fungsi untuk menambah baris mahasiswa
+            function tambahMahasiswa() {
+                var table = document.getElementById('mahasiswa-table').getElementsByTagName('tbody')[0];
+                var rowCount = table.rows.length;
+                var newRow = table.insertRow(rowCount);
 
-            var cell1 = newRow.insertCell(0); // Kolom No
-            var cell2 = newRow.insertCell(1); // Kolom Mahasiswa
-            var cell3 = newRow.insertCell(2); // Kolom Peran
-            var cell4 = newRow.insertCell(3); // Kolom Action
+                var cell1 = newRow.insertCell(0); // Kolom No
+                var cell2 = newRow.insertCell(1); // Kolom Mahasiswa
+                var cell3 = newRow.insertCell(2); // Kolom Peran
+                var cell4 = newRow.insertCell(3); // Kolom Action
 
-            // Nomor
-            cell1.innerHTML = rowCount + 1;
-            cell1.classList.add('text-center');
+                // Nomor
+                cell1.innerHTML = rowCount + 1;
+                cell1.classList.add('text-center');
 
-            // Dropdown Mahasiswa
-            var mahasiswaDropdownId = `mahasiswa-dropdown-${rowCount}`; // ID unik untuk Select2
-            var mahasiswaDropdown =
-                `<select class="form-select select2" id="${mahasiswaDropdownId}" name="id_mahasiswa[]" required>`;
-            mahasiswaDropdown += `<option value="">Pilih Mahasiswa</option>`;
-            mahasiswaList.forEach(mahasiswa => {
-                mahasiswaDropdown +=
-                    `<option value="${mahasiswa.id_mahasiswa}">${mahasiswa.nama_mahasiswa}</option>`;
-            });
-            mahasiswaDropdown += `</select>`;
-            cell2.innerHTML = mahasiswaDropdown;
+                // Dropdown Mahasiswa
+                var mahasiswaDropdownId = `mahasiswa-dropdown-${rowCount}`; // ID unik untuk Select2
+                var mahasiswaDropdown =
+                    `<select class="form-select select2" id="${mahasiswaDropdownId}" name="id_mahasiswa[]" required>`;
+                mahasiswaDropdown += `<option value="">Pilih Mahasiswa</option>`;
+                mahasiswaList.forEach(mahasiswa => {
+                    mahasiswaDropdown +=
+                        `<option value="${mahasiswa.id_mahasiswa}">${mahasiswa.nama_mahasiswa}</option>`;
+                });
+                mahasiswaDropdown += `</select>`;
+                cell2.innerHTML = mahasiswaDropdown;
 
-            // Dropdown Peran
-            cell3.innerHTML = `
+                // Dropdown Peran
+                cell3.innerHTML = `
                     <select class="form-select"  name="peran_mahasiswa[]" required>
                         <option value="Anggota">Anggota</option>
                         <option value="Ketua Tim">Ketua Tim</option>
                     </select>
                 `;
 
-            // Tombol Hapus
-            cell4.innerHTML =
-                `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
-            cell4.classList.add('text-center');
 
-            // Inisialisasi Select2 untuk dropdown baru
-            $(`#${mahasiswaDropdownId}`).select2({
-                placeholder: "Pilih Mahasiswa",
-                allowClear: true
+                // Tombol Hapus
+                cell4.innerHTML =
+                    `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
+                cell4.classList.add('text-center');
+
+                // Inisialisasi Select2 untuk dropdown baru
+                $(`#${mahasiswaDropdownId}`).select2({
+                    placeholder: "Pilih Mahasiswa",
+                    allowClear: true
+                });
+
+                // Inisialisasi ulang Select2 untuk dropdown Peran
+                $(cell3.querySelector('select')).select2({
+                    minimumResultsForSearch: -1 // Nonaktifkan pencarian (opsional)
+                });
+            }
+
+            // Inisialisasi Select2 pada elemen mahasiswa yang sudah ada
+            $(document).ready(function() {
+                $('#select-dosen, .select2').select2({
+                    placeholder: "Pilih Pembimbing",
+                    allowClear: true
+                });
+
+                // Inisialisasi untuk dropdown mahasiswa yang sudah ada
+                $('select[name="id_mahasiswa[]"]').select2({
+                    placeholder: "Pilih Mahasiswa",
+                    allowClear: true
+                });
+
+                $('select[name="peran_mahasiswa[]"]').select2({
+                    minimumResultsForSearch: -1 // Nonaktifkan pencarian (opsional)
+                });
             });
 
-            // Inisialisasi ulang Select2 untuk dropdown Peran
-            $(cell3.querySelector('select')).select2({
-                minimumResultsForSearch: -1 // Nonaktifkan pencarian (opsional)
-            });
-        }
 
-        // Inisialisasi Select2 pada elemen mahasiswa yang sudah ada
-        $(document).ready(function() {
-            $('#select-dosen, .select2').select2({
-                placeholder: "Pilih Pembimbing",
-                allowClear: true
-            });
+            // Fungsi untuk menambah baris dosen
+            function tambahDosen() {
+                var table = document.getElementById('dosen-table').getElementsByTagName('tbody')[0];
+                var rowCount = table.rows.length;
+                var newRow = table.insertRow(rowCount);
 
-            // Inisialisasi untuk dropdown mahasiswa yang sudah ada
-            $('select[name="id_mahasiswa[]"]').select2({
-                placeholder: "Pilih Mahasiswa",
-                allowClear: true
-            });
+                var cell1 = newRow.insertCell(0); // Kolom No
+                var cell2 = newRow.insertCell(1); // Kolom Dosen
+                var cell3 = newRow.insertCell(2); // Kolom Peran
+                var cell4 = newRow.insertCell(3); // Kolom Action
 
-            $('select[name="peran_mahasiswa[]"]').select2({
-                minimumResultsForSearch: -1 // Nonaktifkan pencarian (opsional)
-            });
-        });
+                // Nomor
+                cell1.innerHTML = rowCount + 1;
+                cell1.classList.add('text-center'); // Menambahkan text-center
 
+                // Dropdown Dosen
+                var dosenDropdownId = `dosen-dropdown-${rowCount}`; // ID unik untuk Select2
+                var dosenDropdown =
+                    `<select class="form-select select2" id="${dosenDropdownId}" name="id_dosen[]" required>`;
+                dosenDropdown += `<option value="">Pilih Pembimbing</option>`;
+                dosenList.forEach(dosen => {
+                    dosenDropdown += `<option value="${dosen.id_dosen}">${dosen.nama_dosen}</option>`;
+                });
+                dosenDropdown += `</select>`;
+                cell2.innerHTML = dosenDropdown;
 
-        // Fungsi untuk menambah baris dosen
-        function tambahDosen() {
-            var table = document.getElementById('dosen-table').getElementsByTagName('tbody')[0];
-            var rowCount = table.rows.length;
-            var newRow = table.insertRow(rowCount);
-
-            var cell1 = newRow.insertCell(0); // Kolom No
-            var cell2 = newRow.insertCell(1); // Kolom Dosen
-            var cell3 = newRow.insertCell(2); // Kolom Peran
-            var cell4 = newRow.insertCell(3); // Kolom Action
-
-            // Nomor
-            cell1.innerHTML = rowCount + 1;
-            cell1.classList.add('text-center'); // Menambahkan text-center
-
-            // Dropdown Dosen
-            var dosenDropdownId = `dosen-dropdown-${rowCount}`; // ID unik untuk Select2
-            var dosenDropdown =
-                `<select class="form-select select2" id="${dosenDropdownId}" name="id_dosen[]" required>`;
-            dosenDropdown += `<option value="">Pilih Pembimbing</option>`;
-            dosenList.forEach(dosen => {
-                dosenDropdown += `<option value="${dosen.id_dosen}">${dosen.nama_dosen}</option>`;
-            });
-            dosenDropdown += `</select>`;
-            cell2.innerHTML = dosenDropdown;
-
-            // Dropdown Peran
-            cell3.innerHTML = `
+                // Dropdown Peran
+                cell3.innerHTML = `
         <select class="form-select select2" name="peran_pembimbing[]" required>
             <option value="Pembimbing Utama">Pembimbing Utama</option>
             <option value="Pendamping">Pendamping</option>
         </select>
     `;
 
-            // Tombol Hapus
-            cell4.innerHTML =
-                `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
-            cell4.classList.add('text-center'); // Menambahkan text-center
 
-            // Inisialisasi Select2 untuk dropdown baru
-            $(`#${dosenDropdownId}`).select2({
-                placeholder: "Pilih Pembimbing",
-                allowClear: true
-            });
+                // Tombol Hapus
+                cell4.innerHTML =
+                    `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
+                cell4.classList.add('text-center'); // Menambahkan text-center
 
-            // Inisialisasi ulang Select2 untuk dropdown Peran
-            $(cell3.querySelector('select')).select2({
-                minimumResultsForSearch: -1 // Nonaktifkan pencarian (opsional)
-            });
-        }
+                // Inisialisasi Select2 untuk dropdown baru
+                $(`#${dosenDropdownId}`).select2({
+                    placeholder: "Pilih Pembimbing",
+                    allowClear: true
+                });
 
-
-        // Fungsi untuk menghapus baris (berlaku untuk mahasiswa dan dosen)
-        function hapusBaris(button) {
-            var row = button.closest('tr');
-            row.parentNode.removeChild(row);
-
-            // Perbarui nomor setelah penghapusan
-            var table = row.closest('table');
-            var rows = table.getElementsByTagName('tbody')[0].rows;
-            for (var i = 0; i < rows.length; i++) {
-                rows[i].cells[0].innerText = i + 1;
+                // Inisialisasi ulang Select2 untuk dropdown Peran
+                $(cell3.querySelector('select')).select2({
+                    minimumResultsForSearch: -1 // Nonaktifkan pencarian (opsional)
+                });
             }
-        }
+
+
+            // Fungsi untuk menghapus baris (berlaku untuk mahasiswa dan dosen)
+            function hapusBaris(button) {
+                var row = button.closest('tr');
+                row.parentNode.removeChild(row);
+
+                // Perbarui nomor setelah penghapusan
+                var table = row.closest('table');
+                var rows = table.getElementsByTagName('tbody')[0].rows;
+                for (var i = 0; i < rows.length; i++) {
+                    rows[i].cells[0].innerText = i + 1;
+                }
+            }
         </script>
 
         <hr>
@@ -720,21 +722,23 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
 <script>
-$(document).ready(function() {
-    <?php for ($i = 0; $i < count($dosenTabel); $i++): ?>
-    $('#select-dosen-<?php echo $i; ?>').select2({
-        placeholder: "Pilih Pembimbing",
-        allowClear: true,
-        dropdownCssClass: 'text-start'
-    });
-    <?php endfor; ?>
+    $(document).ready(function() {
+        <?php for ($i = 0; $i < count($dosenTabel); $i++): ?>
+            $('#select-dosen-<?php echo $i; ?>').select2({
+                placeholder: "Pilih Pembimbing",
+                allowClear: true,
+                dropdownCssClass: 'text-start'
+            });
+        <?php endfor; ?>
 
-    <?php for ($i = 0; $i < count($mahasiswaTabel); $i++): ?>
+        <?php for ($i = 0; $i < count($mahasiswaTabel); $i++): ?>
+
             $('#select-mahasiswa-<?php echo $i; ?>').select2({
                 placeholder: "Pilih Mahasiswa",
                 allowClear: true,
                 dropdownCssClass: 'text-start'
             });
         <?php endfor; ?>
-});
+    });
+
 </script>

@@ -31,8 +31,21 @@ if ($action === 'submit_prestasi') {
 }
 
 if ($action === 'update_prestasi') {
-    $id_prestasi = $_SESSION['id_prestasi'] ?? 0;
-    if ($id_prestasi <= 0) {
+
+    $id_prestasi = $_POST['id_prestasi'] ?? $_SESSION['id_prestasi'] ?? null;
+
+    error_log("ID Prestasi dari GET: " . ($_GET['id_prestasi'] ?? 'Tidak ada'));
+    error_log("ID Prestasi dari POST: " . ($_POST['id_prestasi'] ?? 'Tidak ada'));
+    error_log("ID Prestasi dari SESSION: " . ($_SESSION['id_prestasi'] ?? 'Tidak ada'));
+
+    if (!$id_prestasi) {
+        echo "ID Prestasi tidak ditemukan.";
+        error_log("ID Prestasi tidak ditemukan. POST: " . ($_POST['id_prestasi'] ?? 'null') . ", SESSION: " . ($_SESSION['id_prestasi'] ?? 'null'));
+        exit;
+    }
+
+    if ($id_prestasi < 0) {
+
         echo "ID Prestasi tidak valid.";
         exit;
     }
@@ -188,11 +201,11 @@ switch ($page) {
     case 'bantuan':
         include '../app/views/mahasiswa/bantuan.php';
         break;
-    
+
     case 'bantuantanpalogin':
         include '../app/views/bantuantanpalogin.php';
         break;
-    
+
     case 'panduantanpalogin':
         include '../app/views/panduantanpalogin.php';
         break;
@@ -200,7 +213,7 @@ switch ($page) {
     case 'faqtanpalogin':
         include '../app/views/faqtanpalogin.php';
         break;
-    
+
     case 'faq':
         include '../app/views/mahasiswa/faq.php';
         break;
@@ -215,56 +228,5 @@ switch ($page) {
 
     case 'detail_pengumuman':
         include '../app/views/mahasiswa/mhs_detail_pengumuman.php';
-        break;
-
-    case 'addPrestasi':
-        $data_prestasi = [
-            'judul_kompetisi' => $_POST['judul_kompetisi'] ?? '',
-            'thn_akademik' => $_POST['thn_akademik'] ?? '',
-            'jenis_kompetisi' => $_POST['jenis_kompetisi'] ?? '',
-            'juara' => $_POST['juara'] ?? 1,
-            'tingkat_kompetisi' => $_POST['tingkat_kompetisi'] ?? '',
-            'tempat_kompetisi' => $_POST['tempat_kompetisi'] ?? '',
-            'jumlah_pt' => $_POST['jumlah_pt'] ?? 0,
-            'jumlah_peserta' => $_POST['jumlah_peserta'] ?? 0,
-            'program_studi' => $_POST['program_studi'] ?? '',
-            'url_kompetisi' => $_POST['url_kompetisi'] ?? '',
-            'no_surat_tugas' => $_POST['no_surat_tugas'] ?? '',
-            'tgl_surat_tugas' => $_POST['tgl_surat_tugas'] ?? '',
-            'status_pengajuan' => $_POST['status_pengajuan'] ?? 'belum disetujui',
-            'tanggal_mulai' => $_POST['tanggal_mulai'] ?? '',
-            'tanggal_selesai' => $_POST['tanggal_selesai'] ?? '',
-            'tgl_pengajuan' => date('Y-m-d H:i:s')
-        ];
-
-        $mahasiswa_ids = $_POST['mahasiswa_ids'];
-        $dosen_ids = $_POST['dosen_ids'];
-
-        // Validasi File Upload
-        $files = [
-            'surat_tugas' => $_FILES['file_surat_tugas'] ?? null,
-            'sertifikat' => $_FILES['file_sertifikat'] ?? null,
-            'foto_kegiatan' => $_FILES['foto_kegiatan'] ?? null,
-            'poster' => $_FILES['file_poster'] ?? null,
-            'lampiran_hasil_kompetisi' => $_FILES['lampiran_hasil_kompetisi'] ?? null
-        ];
-
-        foreach ($files as $key => $file) {
-            if ($file === null || $file['error'] !== UPLOAD_ERR_OK) {
-                $_SESSION['flash_message'] = [
-                    'type' => 'danger',
-                    'message' => "File $key tidak valid atau tidak di-upload!"
-                ];
-                header("Location: index.php?page=dosen_prestasi");
-                exit;
-            }
-        }
-
-        $prestasiController->addPrestasi($data_prestasi, $mahasiswa_ids, $dosen_ids, $files);
-        include '../app/views/dosen/dosen_prestasi.php';
-        break;
-
-    default:
-        echo "Halaman tidak ditemukan.";
         break;
 }

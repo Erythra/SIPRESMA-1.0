@@ -25,7 +25,7 @@ class ApprovalModel
         $stmt = sqlsrv_query($this->conn, $query, $params);
 
         if (!$stmt) {
-            die(print_r(sqlsrv_errors(), true)); 
+            die(print_r(sqlsrv_errors(), true));
         }
     }
 
@@ -36,7 +36,7 @@ class ApprovalModel
         $stmt = sqlsrv_query($this->conn, $query, $params);
 
         if (!$stmt) {
-            die(print_r(sqlsrv_errors(), true)); 
+            die(print_r(sqlsrv_errors(), true));
         }
 
         $query = "INSERT INTO history_approval (id_prestasi, dosen_id, status_approval, alasan, tgl_approval) 

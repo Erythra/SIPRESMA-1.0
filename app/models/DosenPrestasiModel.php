@@ -205,24 +205,40 @@ class DosenPrestasiModel
     public function insertPrestasi($data)
     {
         sqlsrv_begin_transaction($this->conn);
-
         try {
+            $poin = 0;
+
+            switch ($data['tingkat_kompetisi']) {
+                case 'Internasional':
+                    $poin = ($data['juara'] == 1) ? 8 : ($data['juara'] == 2 ? 7 : 6);
+                    break;
+                case 'Nasional':
+                    $poin = ($data['juara'] == 1) ? 6 : ($data['juara'] == 2 ? 5 : 4);
+                    break;
+                case 'Provinsi':
+                    $poin = ($data['juara'] == 1) ? 5 : ($data['juara'] == 2 ? 4 : 3);
+                    break;
+                default:
+                    $poin = 0;
+            }
+
             $sql = "INSERT INTO [dbo].[data_prestasi] 
-                ([tgl_pengajuan], [program_studi], [thn_akademik], [jenis_kompetisi], [juara], 
-                 [tingkat_kompetisi], [judul_kompetisi], [tempat_kompetisi], [url_kompetisi], 
-                 [jumlah_pt], [jumlah_peserta], [status_pengajuan], [foto_kegiatan],
-                 [no_surat_tugas], [tgl_surat_tugas], [file_surat_tugas],
-                 [file_sertifikat], [file_poster], [lampiran_hasil_kompetisi]) 
-            VALUES 
-                (?, ?, ?, ?, ?, 
-                 ?, ?, ?, ?,
-                 ?, ?, 'Waiting for Approval', 
-                 CONVERT(VARBINARY(MAX), ?),
-                 ?, ?, 
-                 CONVERT(VARBINARY(MAX), ?),
-                 CONVERT(VARBINARY(MAX), ?),
-                 CONVERT(VARBINARY(MAX), ?),
-                 CONVERT(VARBINARY(MAX), ?));";
+                        ([tgl_pengajuan], [program_studi], [thn_akademik], [jenis_kompetisi], [juara], 
+                        [tingkat_kompetisi], [judul_kompetisi], [tempat_kompetisi], [url_kompetisi], 
+                        [jumlah_pt], [jumlah_peserta], [status_pengajuan], [foto_kegiatan],
+                        [no_surat_tugas], [tgl_surat_tugas], [file_surat_tugas],
+                        [file_sertifikat], [file_poster], [lampiran_hasil_kompetisi], [poin]) 
+                    VALUES 
+                        (?, ?, ?, ?, ?, 
+                        ?, ?, ?, ?,
+                        ?, ?, 'Waiting for Approval', 
+                        CONVERT(VARBINARY(MAX), ?),
+                        ?, ?, 
+                        CONVERT(VARBINARY(MAX), ?),
+                        CONVERT(VARBINARY(MAX), ?),
+                        CONVERT(VARBINARY(MAX), ?),
+                        CONVERT(VARBINARY(MAX), ?),
+                        ?);";
 
             $params = [
                 $data['tgl_pengajuan'],
@@ -242,7 +258,8 @@ class DosenPrestasiModel
                 $data['file_surat_tugas'],
                 $data['file_sertifikat'],
                 $data['file_poster'],
-                $data['lampiran_hasil_kompetisi']
+                $data['lampiran_hasil_kompetisi'],
+                $poin
             ];
 
             $stmt = sqlsrv_query($this->conn, $sql, $params);

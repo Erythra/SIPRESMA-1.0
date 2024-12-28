@@ -2,80 +2,8 @@
 include 'partials/header.php';
 
 $id_mahasiswa = $_SESSION['user']['id_mahasiswa'];
-$ipkList = [
-    [
-        'id_ipk' => 1,
-        'kode_matakuliah' => 'MK001',
-        'matakuliah' => 'Metode Numerik',
-        'sks' => 3,
-        'jam' => 40,
-        'nilai' => 'A',
-    ],
-    [
-        'id_ipk' => 2,
-        'kode_matakuliah' => 'MK002',
-        'matakuliah' => 'Praktik PBO',
-        'sks' => 4,
-        'jam' => 50,
-        'nilai' => 'B+',
-    ],
-    [
-        'id_ipk' => 3,
-        'kode_matakuliah' => 'MK003',
-        'matakuliah' => 'Sistem Informasi Manajemen',
-        'sks' => 3,
-        'jam' => 45,
-        'nilai' => 'A',
-    ],
-    [
-        'id_ipk' => 4,
-        'kode_matakuliah' => 'MK004',
-        'matakuliah' => 'Kewarganegaraan',
-        'sks' => 2,
-        'jam' => 30,
-        'nilai' => 'A-',
-    ],
-    [
-        'id_ipk' => 5,
-        'kode_matakuliah' => 'MK005',
-        'matakuliah' => 'Bahasa Inggris 2',
-        'sks' => 3,
-        'jam' => 45,
-        'nilai' => 'A+',
-    ],
-    [
-        'id_ipk' => 6,
-        'kode_matakuliah' => 'MK006',
-        'matakuliah' => 'Desain dan Pemrograman Web',
-        'sks' => 4,
-        'jam' => 60,
-        'nilai' => 'B',
-    ],
-    [
-        'id_ipk' => 7,
-        'kode_matakuliah' => 'MK007',
-        'matakuliah' => 'Manajemen Proyek',
-        'sks' => 3,
-        'jam' => 50,
-        'nilai' => 'A',
-    ],
-    [
-        'id_ipk' => 8,
-        'kode_matakuliah' => 'MK008',
-        'matakuliah' => 'Basis Data Lanjut',
-        'sks' => 3,
-        'jam' => 45,
-        'nilai' => 'A-',
-    ],
-];
+
 ?>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@floating-ui/core@1.6.8"></script>
 <link rel="stylesheet" href="./../../../assets/css/style.css">
 <style>
     table.table-hover tbody tr td {

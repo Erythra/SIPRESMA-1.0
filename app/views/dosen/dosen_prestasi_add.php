@@ -33,8 +33,8 @@
                         <option value="Sistem Informasi Bisnis">
                             D-IV Sistem Informasi Bisnis
                         </option>
-                        <option value="D-II Pengembangan Perangkat Lunak Situs">
-                            D-II Pengembangan Perangkat Lunak Situs
+                        <option value="D-II Pengembangan Perangkat Lunak Situs">
+                            D-II Pengembangan Perangkat Lunak Situs
                         </option>
                     </select>
                 </div>
@@ -68,10 +68,10 @@
                         <option value="1">
                             1
                         </option>
-                        <option value=" 2">
+                        <option value="2">
                             2
                         </option>
-                        <option value=" 3">
+                        <option value="3">
                             3
                         </option>
                     </select>
@@ -96,10 +96,10 @@
                         <option value="Kota">
                             Kota
                         </option>
-                        <option value=" Nasional">
+                        <option value="Nasional">
                             Nasional
                         </option>
-                        <option value=" Internasional">
+                        <option value="Internasional">
                             Internasional
                         </option>
                     </select>
@@ -388,13 +388,13 @@
                                 // Check file size
                                 if (file.size > maxSize) {
                                     alert('Ukuran file terlalu besar. Maksimal 5000 KB.');
-                                    fileInput.value = ''; // Reset file input
+                                    fileInput.value = ''; 
                                     fileName.textContent = "No file chosen";
                                 }
                                 // Check file extension
                                 else if (!allowedExtensions.exec(file.name)) {
                                     alert('Ekstensi file tidak valid. Hanya file .pdf, .docx yang diperbolehkan.');
-                                    fileInput.value = ''; // Reset file input
+                                    fileInput.value = ''; 
                                     fileName.textContent = "No file chosen";
                                 } else {
                                     fileName.textContent = file.name;

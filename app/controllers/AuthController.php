@@ -8,9 +8,11 @@ require_once __DIR__ . '/../models/UserModel.php';
 class AuthController
 {
     private $userModel;
+    private $conn;
 
     public function __construct($conn)
     {
+        $this->conn = $conn;
         $this->userModel = new UserModel($conn);
     }
 

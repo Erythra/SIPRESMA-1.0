@@ -19,17 +19,18 @@ if (!isset($_SESSION['user'])) {
             <div class="col-lg-6 my-4">
                 <form>
                     <?php if (isset($_SESSION['success'])): ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <?php echo $_SESSION['success'];
-                                unset($_SESSION['success']); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?php echo $_SESSION['success'];
+                            unset($_SESSION['success']); ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     <?php elseif (isset($_SESSION['error'])): ?>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <?php echo $_SESSION['error'];
-                                unset($_SESSION['error']); ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?php echo $_SESSION['error'];
+                            unset($_SESSION['error']); ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     <?php endif; ?>
                     <div class="row mb-3">
                         <h4 class="fw-semibold fs-3 mb-3">Profile Mahasiswa</h4>
