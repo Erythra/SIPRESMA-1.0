@@ -11,8 +11,6 @@ if (!$user) {
 }
 ?>
 
-
-
 <!-- Main Content -->
 <div class="container my-5 style=" margin-top: 6rem;">
 

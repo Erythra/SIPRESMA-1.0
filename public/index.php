@@ -31,11 +31,25 @@ if ($action === 'submit_prestasi') {
 }
 
 if ($action === 'update_prestasi') {
-    $id_prestasi = $_GET['id_prestasi'] ?? 0;
-    if ($id_prestasi <= 0) {
-        echo "ID Prestasi tidak valid.";
+    
+    $id_prestasi = $_POST['id_prestasi'] ?? $_SESSION['id_prestasi'] ?? null;
+    
+    error_log("ID Prestasi dari GET: " . ($_GET['id_prestasi'] ?? 'Tidak ada'));
+    error_log("ID Prestasi dari POST: " . ($_POST['id_prestasi'] ?? 'Tidak ada'));
+    error_log("ID Prestasi dari SESSION: " . ($_SESSION['id_prestasi'] ?? 'Tidak ada'));
+    
+    if (!$id_prestasi) {
+        echo "ID Prestasi tidak ditemukan.";
+        error_log("ID Prestasi tidak ditemukan. POST: " . ($_POST['id_prestasi'] ?? 'null') . ", SESSION: " . ($_SESSION['id_prestasi'] ?? 'null'));
         exit;
     }
+
+    if ($id_prestasi < 0) {
+        echo "ID Prestasi tidak valid.";
+        error_log("ID Prestasi tidak valid: " . $id_prestasi);
+        exit;
+    }
+
     $prestasiController->handleUpdateRequest($id_prestasi);
 }
 
