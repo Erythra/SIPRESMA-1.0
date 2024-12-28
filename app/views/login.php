@@ -19,7 +19,7 @@
                     <div class="text-center">
                         <h2 class="fw-bold mb-2"><img src="../assets/img/cil_education.png" alt="" style="width: 80px; height:80px;" ></h2>
                         <h1 class="fw-bold fs-2 mb-0" style="color: #FEC01A;">Selamat Datang</h1>
-                        <p class="mt-1 text-muted" style="font-size: 15px; padding-left: 50px; padding-right: 50px;">Silakan masukkan <strong>NIM/NIDN</strong> dan <strong>password</strong> Anda
+                        <p class="mt-1 text-muted" style="font-size: 15px; padding-left: 30px; padding-right: 30px;">Silakan masukkan <strong>NIM/NIDN</strong> dan <strong>password</strong> Anda
                             untuk melanjutkan.</p>
                     </div>
                     <?php if (isset($_GET['message']) && $_GET['message'] == 'error'): ?>

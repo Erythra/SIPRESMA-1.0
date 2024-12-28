@@ -19,6 +19,7 @@ if (!isset($_SESSION['user'])) {
             <div class="col-lg-6 my-4">
                 <form>
                     <?php if (isset($_SESSION['success'])): ?>
+
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <?php echo $_SESSION['success'];
                             unset($_SESSION['success']); ?>

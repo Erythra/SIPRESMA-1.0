@@ -45,12 +45,15 @@ if ($action === 'update_prestasi') {
     }
 
     if ($id_prestasi < 0) {
+
         echo "ID Prestasi tidak valid.";
-        error_log("ID Prestasi tidak valid: " . $id_prestasi);
         exit;
     }
-
     $prestasiController->handleUpdateRequest($id_prestasi);
+}
+
+if ($action === 'ganti_password') {
+    $authController->changePassword();
 }
 
 $page = $_GET['page'] ?? 'homepertama';
@@ -92,6 +95,7 @@ switch ($page) {
         if (isset($_GET['action'])) {
             $action = $_GET['action'];
             $dosen_id = $_SESSION['user']['id_dosen'];
+            // $id_prestasi = $_GET['id_prestasi'];
 
             if ($action == 'approve') {
                 $approvalController->approve($id_prestasi, $dosen_id);

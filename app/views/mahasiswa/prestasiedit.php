@@ -602,6 +602,7 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                     </select>
                 `;
 
+
                 // Tombol Hapus
                 cell4.innerHTML =
                     `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
@@ -672,6 +673,7 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
         </select>
     `;
 
+
                 // Tombol Hapus
                 cell4.innerHTML =
                     `<button class="btn btn-danger" type="button" onclick="hapusBaris(this)">Hapus</button>`;
@@ -730,6 +732,7 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
         <?php endfor; ?>
 
         <?php for ($i = 0; $i < count($mahasiswaTabel); $i++): ?>
+
             $('#select-mahasiswa-<?php echo $i; ?>').select2({
                 placeholder: "Pilih Mahasiswa",
                 allowClear: true,
@@ -737,4 +740,5 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
             });
         <?php endfor; ?>
     });
+
 </script>

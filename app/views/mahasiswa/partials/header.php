@@ -23,10 +23,55 @@
     <link rel="stylesheet" href="././../assets/css/mahasiswa/profile.css">
     <link rel="stylesheet" href="././../assets/css/mahasiswa/editprofile.css">
     <link rel="stylesheet" href="././../assets/css/mahasiswa/tabelprestasi.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet">
+
+    <style>
+                /* Basic styling for table and dropdown */
+        .table-bordered {
+            border: 1px solid #dee2e6;
+            border-radius: .25rem;
+        }
+
+        .table-bordered th, .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-outline-primary {
+            color: #007bff;
+            border-color: #007bff;
+        }
+
+        .select2 {
+            width: 100%;
+        }
+
+        .select2-container .select2-selection--single {
+            height: calc(1.5em + .75rem + 2px);
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            display: none;
+        }
+    </style>
+
+</head>
 
     <!-- Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <!-- AJAX -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
@@ -42,6 +87,7 @@
     }
 </style>
 <nav>
+
     <div class="fixed-top">
         <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
             <div class="container">
@@ -56,7 +102,10 @@
                             <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'home') ? 'active' : ''; ?>" href="index.php?page=home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (isset($_GET['page']) && ($_GET['page'] == 'prestasi' || $_GET['page'] == 'tambahprestasi')) ? 'active' : ''; ?>" href="index.php?page=prestasi">Prestasi</a>
+                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'prestasi' || isset($_GET['page']) && $_GET['page'] == 'tambahprestasi') || isset($_GET['page']) && $_GET['page'] == 'prestasidetail' ? 'active' : ''; ?>"
+                                href="././../public/index.php?page=prestasi">
+                                Prestasi
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'ipk') ? 'active' : ''; ?>" href="index.php?page=ipk">IPK</a>
@@ -115,8 +164,8 @@
 
                 <!-- Navbar Toggler for mobile view -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>

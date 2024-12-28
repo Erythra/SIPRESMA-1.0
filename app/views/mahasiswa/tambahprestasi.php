@@ -183,6 +183,7 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                     </small>
                 </div>
                 <script>
+
                     function updateFileName() {
                         var fileInput = document.getElementById('customFile');
                         var fileName = document.getElementById('fileName');
@@ -205,6 +206,8 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                             } else {
                                 fileName.textContent = file.name;
                             }
+
+          
                         } else {
                             fileName.textContent = "No file chosen";
                         }
@@ -264,6 +267,7 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                                 fileName.textContent = "No file chosen";
                             }
                         }
+
                     </script>
                 </div>
                 <div class="col-md-6">
@@ -285,6 +289,7 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                     </div>
 
                     <script>
+
                         function updateFileNameFotoKegiatan() {
                             var fileInput = document.getElementById('customFileFotoKegiatan');
                             var fileName = document.getElementById('fileNameFotoKegiatan');
@@ -312,6 +317,7 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                                 fileName.textContent = "No file chosen";
                             }
                         }
+
                     </script>
                 </div>
             </div>
@@ -335,6 +341,7 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                     </div>
 
                     <script>
+
                         function updateFileNamePoster() {
                             var fileInput = document.getElementById('customFilePoster');
                             var fileName = document.getElementById('fileNamePoster');
@@ -362,6 +369,7 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                                 fileName.textContent = "No file chosen";
                             }
                         }
+
                     </script>
                 </div>
                 <div class="col-md-6">
@@ -669,6 +677,7 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                 dropdownCssClass: 'text-start'
             });
         });
+
     </script>
 
 </body>
