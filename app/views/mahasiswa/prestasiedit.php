@@ -100,13 +100,13 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                 <select class="form-select" id="tingkatKompetisi" name="tingkat_kompetisi" required>
                     <option value="<?php echo $prestasi['tingkat_kompetisi']; ?>">
                         <?php echo $prestasi['tingkat_kompetisi']; ?></option>
-                    <option value="Kota">
-                        Kota
+                    <option value="Provinsi">
+                        Provinsi
                     </option>
-                    <option value=" Nasional">
+                    <option value="Nasional">
                         Nasional
                     </option>
-                    <option value=" Internasional">
+                    <option value="Internasional">
                         Internasional
                     </option>
                 </select>
@@ -493,7 +493,7 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                             </td>
                             <td>
                                 <select class="form-select" name="peran_mahasiswa[]">
-                                    <option value="Peserta"
+                                    <option value="Anggota"
                                         <?php echo ($mahasiswa['peran_mahasiswa'] == 'Anggota') ? 'selected' : ''; ?>>
                                         Anggota
                                     </option>
