@@ -616,7 +616,7 @@ class PrestasiModel
         $query = "SELECT dp.* 
         FROM data_prestasi dp
         INNER JOIN prestasi_mahasiswa pm ON dp.id_prestasi = pm.id_prestasi
-        WHERE pm.id_mahasiswa = ? ORDER BY dp.tgl_pengajuan DESC";
+        WHERE pm.id_mahasiswa = ?";
         $params = [$id_mahasiswa];
 
         if (isset($filters['juara']) && $filters['juara'] !== '') {
