@@ -5,8 +5,8 @@ require_once __DIR__ . '/../../controllers/AuthController.php';
 $AuthController = new AuthController($conn);
 $leaderboard = $AuthController->getLeaderboardMahasiswa($semester);
 
-$topRanked = array_slice($leaderboard, 0, 3);  // Ambil 3 peringkat pertama
-$remainingLeaderboard = array_slice($leaderboard, 3); // Sisanya
+$topRanked = array_slice($leaderboard, 0, 3);
+$remainingLeaderboard = array_slice($leaderboard, 3);
 ?>
 
 <style>
@@ -234,7 +234,6 @@ $remainingLeaderboard = array_slice($leaderboard, 3); // Sisanya
             </div>
         </div>
 
-
         <!-- Tab Non-Akademik -->
         <div id="non-akademik-content" class="tab-pane">
             <div class="row d-flex justify-content-center align-items-end">
@@ -399,14 +398,13 @@ $remainingLeaderboard = array_slice($leaderboard, 3); // Sisanya
 
         tabButtons.forEach(button => {
             button.addEventListener("click", () => {
-                // Reset semua tombol
+
                 tabButtons.forEach(btn => {
                     btn.classList.remove("active");
                     btn.classList.add("btn-outline-secondary");
                     btn.classList.remove("btn-primary");
                 });
 
-                // Aktifkan tombol yang diklik
                 button.classList.add("active");
                 button.classList.remove("btn-outline-secondary");
                 button.classList.add("btn-primary");
@@ -420,18 +418,16 @@ $remainingLeaderboard = array_slice($leaderboard, 3); // Sisanya
         const tabButtons = document.querySelectorAll(".tab-btn");
         const tabContents = document.querySelectorAll(".tab-pane");
 
-        // Set default tab pertama
         tabContents.forEach(content => content.classList.add("d-none"));
         tabButtons[0].classList.replace("btn-outline-secondary", "btn-primary");
         document.getElementById(tabButtons[0].dataset.tab + "-content").classList.remove("d-none");
 
         tabButtons.forEach(button => {
             button.addEventListener("click", () => {
-                // Reset semua tombol dan konten
+
                 tabButtons.forEach(btn => btn.classList.replace("btn-primary", "btn-outline-secondary"));
                 tabContents.forEach(content => content.classList.add("d-none"));
 
-                // Aktifkan tombol dan konten yang sesuai
                 button.classList.replace("btn-outline-secondary", "btn-primary");
                 const targetTab = document.getElementById(button.dataset.tab + "-content");
                 if (targetTab) {
