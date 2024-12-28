@@ -20,24 +20,26 @@ class AuthController
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            // if (strlen($username) < 5 || strlen($password) < 5) {
-            //     echo "Username dan password harus minimal 5 karakter.";
-            //     return;
-            // }
-
             $user = $this->userModel->validateLogin($username, $password);
 
             if ($user) {
+                // Set session data
                 $_SESSION['user'] = $user;
-                $_SESSION['role'] = $user['role'] ?? '';
+                $_SESSION['role_dosen'] = $user['role_dosen'] ?? '';
                 $_SESSION['loggedin_time'] = time();
 
-                if (isset($user['role_dosen'])) {
+                // Redirect based on role_dosen
+                if (isset($user['role_dosen']) && $user['role_dosen'] === 'dosen') {
+                    header("Location: index.php?page=dosen_prestasi");
+                } elseif (isset($user['role_dosen']) && $user['role_dosen'] === 'ketua jurusan') {
+                    header("Location: index.php?page=dosen_dashboard");
+                } elseif (isset($user['role_dosen']) && $user['role_dosen'] === 'admin') {
                     header("Location: index.php?page=dosen_dashboard");
                 } else {
                     header("Location: index.php?page=home");
                 }
             } else {
+                // Login failed, set error message
                 $_SESSION['error'] = "NIM/NIDN atau password salah.";
                 header("Location: index.php?page=login");
             }

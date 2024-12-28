@@ -394,43 +394,49 @@
                 <div class="card-body">
                     <ul class="list-group">
                         <?php if (!empty($mahasiswa)) : ?>
-                            <?php foreach ($mahasiswa as $row) : ?>
-                                <li class="list-group-item d-flex align-items-center mb-2">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <p class="mb-0 fw-bold">
-                                            <?= htmlspecialchars($row['nama_mahasiswa']); ?>
-                                        </p>
-                                        <p class="mb-0" style="color: #495057;"><?= htmlspecialchars($row['program_studi']); ?></p>
-                                    </div>
-                                </li>
-                            <?php endforeach; ?>
+                        <?php foreach ($mahasiswa as $row) : ?>
+                        <li class="list-group-item d-flex align-items-center mb-2">
+                            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile"
+                                class="rounded-circle" style="width: 40px; height: 40px;">
+                            <div class="ms-2">
+                                <p class="mb-0 fw-bold">
+                                    <?= htmlspecialchars($row['nama_mahasiswa']); ?>
+                                </p>
+                                <p class="mb-0" style="color: #495057;"><?= htmlspecialchars($row['program_studi']); ?>
+                                </p>
+                            </div>
+                        </li>
+                        <?php endforeach; ?>
                         <?php else : ?>
-                            <li class="list-group-item">Tidak ada mahasiswa yang ditemukan.</li>
+                        <li class="list-group-item">Tidak ada mahasiswa yang ditemukan.</li>
                         <?php endif; ?>
                     </ul>
                     <hr>
                     <div>
                         <div class="bg-white fw-bold mb-2" style="font-size: 16px;">Riwayat Persetujuan</div>
                         <?php if (isset($historyApproval) && !empty($historyApproval)): ?>
-                            <div style="max-height: 200px; overflow-y: auto;">
-                                <ul class="list-group">
-                                    <?php foreach ($historyApproval as $history): ?>
-                                        <li class="list-group-item <?php echo ($history['status_approval'] == 'Approved') ? 'list-group-item-success' : 'list-group-item-danger'; ?>">
-                                            <?php echo htmlspecialchars($history['status_approval'] ?? 'Status tidak tersedia'); ?> by
-                                            <strong><?php echo htmlspecialchars($history['nama_dosen'] ?? 'Tidak diketahui'); ?></strong>
-                                            <br>
-                                            <?php if ($history['status_approval'] == 'Rejected'): ?>
-                                                <small>Alasan: <?php echo htmlspecialchars($history['alasan'] ?? 'Tidak ada alasan'); ?></small>
-                                                <br>
-                                            <?php endif; ?>
-                                            <small>Tanggal: <?php echo isset($history['tgl_approval']) ? $history['tgl_approval']->format('d-m-Y H:i') : 'Tanggal tidak tersedia'; ?></small>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </div>
+                        <div style="max-height: 200px; overflow-y: auto;">
+                            <ul class="list-group">
+                                <?php foreach ($historyApproval as $history): ?>
+                                <li
+                                    class="list-group-item <?php echo ($history['status_approval'] == 'Approved') ? 'list-group-item-success' : 'list-group-item-danger'; ?>">
+                                    <?php echo htmlspecialchars($history['status_approval'] ?? 'Status tidak tersedia'); ?>
+                                    by
+                                    <strong><?php echo htmlspecialchars($history['nama_dosen'] ?? 'Tidak diketahui'); ?></strong>
+                                    <br>
+                                    <?php if ($history['status_approval'] == 'Rejected'): ?>
+                                    <small>Alasan:
+                                        <?php echo htmlspecialchars($history['alasan'] ?? 'Tidak ada alasan'); ?></small>
+                                    <br>
+                                    <?php endif; ?>
+                                    <small>Tanggal:
+                                        <?php echo isset($history['tgl_approval']) ? $history['tgl_approval']->format('d-m-Y H:i') : 'Tanggal tidak tersedia'; ?></small>
+                                </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                         <?php else: ?>
-                            <p>Tidak ada riwayat persetujuan untuk prestasi ini.</p>
+                        <p>Tidak ada riwayat persetujuan untuk prestasi ini.</p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -441,19 +447,21 @@
                 <div class="card-body">
                     <ul class="list-group">
                         <?php if (!empty($dosen)) : ?>
-                            <?php foreach ($dosen as $row) : ?>
-                                <li class="list-group-item d-flex align-items-center mb-3">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <p class="mb-0 fw-bold">
-                                            <?= htmlspecialchars($row['nama_dosen']); ?>
-                                        </p>
-                                        <p class="mb-0" style="color: #495057;"><?= htmlspecialchars($row['peran_pembimbing']); ?></p>
-                                    </div>
-                                </li>
-                            <?php endforeach; ?>
+                        <?php foreach ($dosen as $row) : ?>
+                        <li class="list-group-item d-flex align-items-center mb-3">
+                            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile"
+                                class="rounded-circle" style="width: 40px; height: 40px;">
+                            <div class="ms-2">
+                                <p class="mb-0 fw-bold">
+                                    <?= htmlspecialchars($row['nama_dosen']); ?>
+                                </p>
+                                <p class="mb-0" style="color: #495057;">
+                                    <?= htmlspecialchars($row['peran_pembimbing']); ?></p>
+                            </div>
+                        </li>
+                        <?php endforeach; ?>
                         <?php else : ?>
-                            <li class="list-group-item">Tidak ada Dosen yang ditemukan.</li>
+                        <li class="list-group-item">Tidak ada Dosen yang ditemukan.</li>
                         <?php endif; ?>
                     </ul>
                 </div>
@@ -462,27 +470,34 @@
     </div>
 </div>
 
+<?php if (isset($_SESSION['role_dosen']) && $_SESSION['role_dosen'] === 'admin'): ?>
 <nav class="navbar fixed-bottom bg-light d-flex justify-content-end p-3 shadow-sm">
     <?php if (in_array($prestasi['status_pengajuan'], ['Waiting for Approval', 'Rejected', 'Approved'])): ?>
-        <a href="#" class="btn btn-danger me-3" data-bs-toggle="modal" data-bs-target="#rejectModal<?php echo $prestasi['id_prestasi']; ?>">
-            Reject
-        </a>
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveModal<?php echo $prestasi['id_prestasi']; ?>">
-            Approve
-        </button>
-
+    <a href="#" class="btn btn-danger me-3" data-bs-toggle="modal"
+        data-bs-target="#rejectModal<?php echo $prestasi['id_prestasi']; ?>">
+        Reject
+    </a>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+        data-bs-target="#approveModal<?php echo $prestasi['id_prestasi']; ?>">
+        Approve
+    </button>
     <?php endif; ?>
 </nav>
 
-<div class="modal fade" id="rejectModal<?php echo $prestasi['id_prestasi']; ?>" tabindex="-1" aria-labelledby="rejectModalLabel<?php echo $prestasi['id_prestasi']; ?>" aria-hidden="true">
+<!-- Modal untuk Reject -->
+<div class="modal fade" id="rejectModal<?php echo $prestasi['id_prestasi']; ?>" tabindex="-1"
+    aria-labelledby="rejectModalLabel<?php echo $prestasi['id_prestasi']; ?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="rejectModalLabel<?php echo $prestasi['id_prestasi']; ?>">Konfirmasi Penolakan</h5>
+                <h5 class="modal-title" id="rejectModalLabel<?php echo $prestasi['id_prestasi']; ?>">Konfirmasi
+                    Penolakan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="index.php?page=dosen_prestasi_detail&id_prestasi=<?php echo $prestasi['id_prestasi']; ?>&action=reject" method="POST">
+                <form
+                    action="index.php?page=dosen_prestasi_detail&id_prestasi=<?php echo $prestasi['id_prestasi']; ?>&action=reject"
+                    method="POST">
                     <div class="mb-3">
                         <label for="alasan" class="form-label">Alasan Penolakan</label>
                         <textarea class="form-control" id="alasan" name="alasan" rows="3" required></textarea>
@@ -494,11 +509,14 @@
     </div>
 </div>
 
-<div class="modal fade" id="approveModal<?php echo $prestasi['id_prestasi']; ?>" tabindex="-1" aria-labelledby="approveModalLabel<?php echo $prestasi['id_prestasi']; ?>" aria-hidden="true">
+<!-- Modal untuk Approve -->
+<div class="modal fade" id="approveModal<?php echo $prestasi['id_prestasi']; ?>" tabindex="-1"
+    aria-labelledby="approveModalLabel<?php echo $prestasi['id_prestasi']; ?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="approveModalLabel<?php echo $prestasi['id_prestasi']; ?>">Konfirmasi Persetujuan</h5>
+                <h5 class="modal-title" id="approveModalLabel<?php echo $prestasi['id_prestasi']; ?>">Konfirmasi
+                    Persetujuan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -506,11 +524,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <a href="index.php?page=dosen_prestasi_detail&id_prestasi=<?php echo $prestasi['id_prestasi']; ?>&action=approve" class="btn btn-success">Ya, Setujui</a>
+                <a href="index.php?page=dosen_prestasi_detail&id_prestasi=<?php echo $prestasi['id_prestasi']; ?>&action=approve"
+                    class="btn btn-success">Ya, Setujui</a>
             </div>
         </div>
     </div>
 </div>
+<?php endif; ?>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
