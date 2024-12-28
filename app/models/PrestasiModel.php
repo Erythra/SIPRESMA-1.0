@@ -282,13 +282,28 @@ class PrestasiModel
         sqlsrv_begin_transaction($this->conn);
 
         try {
+            //Hitung Poin Prestasi
+            $poin = 0;
+            switch ($data['tingkat_kompetisi']) {
+                case 'Internasional':
+                    $poin = ($data['juara'] == 1) ? 8 : ($data['juara'] == 2 ? 7 : 6);
+                    break;
+                case 'Nasional':
+                    $poin = ($data['juara'] == 1) ? 6 : ($data['juara'] == 2 ? 5 : 4);
+                    break;
+                case 'Provinsi':
+                    $poin = ($data['juara'] == 1) ? 5 : ($data['juara'] == 2 ? 4 : 3);
+                    break;
+                default:
+                    $poin = 0;
+            }
             // Insert ke tabel data_prestasi
             $sql = "INSERT INTO [dbo].[data_prestasi] 
             ([tgl_pengajuan], [program_studi], [thn_akademik], [jenis_kompetisi], [juara], 
              [tingkat_kompetisi], [judul_kompetisi], [tempat_kompetisi], [url_kompetisi], 
              [jumlah_pt], [jumlah_peserta], [status_pengajuan], [foto_kegiatan],
              [no_surat_tugas], [tgl_surat_tugas], [file_surat_tugas],
-             [file_sertifikat], [file_poster], [lampiran_hasil_kompetisi], [id_mahasiswa]) 
+             [file_sertifikat], [file_poster], [lampiran_hasil_kompetisi], [id_mahasiswa],[poin]) 
         VALUES 
             (?, ?, ?, ?, ?, 
              ?, ?, ?, ?, 
@@ -298,7 +313,7 @@ class PrestasiModel
              CONVERT(VARBINARY(MAX), ?),
              CONVERT(VARBINARY(MAX), ?),
              CONVERT(VARBINARY(MAX), ?),
-             CONVERT(VARBINARY(MAX), ?), ?);";
+             CONVERT(VARBINARY(MAX), ?), ?, ?);";
 
             $params = [
                 $data['tgl_pengajuan'],
@@ -319,7 +334,8 @@ class PrestasiModel
                 $data['file_sertifikat'],
                 $data['file_poster'],
                 $data['lampiran_hasil_kompetisi'],
-                $data['id_mahasiswa']
+                $data['id_mahasiswa'],
+                $poin
             ];
 
             $stmt = sqlsrv_query($this->conn, $sql, $params);

@@ -88,13 +88,13 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                     <label class="form-label fw-medium" for="tingkatKompetisi">Tingkat Kompetisi<span
                             class="text-danger">*</span></label>
                     <select class="form-select" id="tingkatKompetisi" name="tingkat_kompetisi" required>
-                        <option value="Kota">
-                            Kota
+                        <option value="Provinsi">
+                            Provinsi
                         </option>
-                        <option value=" Nasional">
+                        <option value="Nasional">
                             Nasional
                         </option>
-                        <option value=" Internasional">
+                        <option value="Internasional">
                             Internasional
                         </option>
                     </select>
@@ -530,7 +530,7 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                 // Dropdown Peran
                 cell3.innerHTML = `
                     <select class="form-select select2" name="peran_mahasiswa[]" required>
-                        <option value="Peserta">Peserta</option>
+                        <option value="Anggota">Anggota</option>
                         <option value="Ketua Tim">Ketua Tim</option>
                     </select>
                 `;
