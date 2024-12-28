@@ -493,7 +493,7 @@ $dosenTabel = $prestasiController->getPeranDosen($_GET['id_prestasi']);
                         </td>
                         <td>
                             <select class="form-select" name="peran_mahasiswa[]">
-                                <option value="Peserta"
+                                <option value="Anggota"
                                     <?php echo ($mahasiswa['peran_mahasiswa'] == 'Anggota') ? 'selected' : ''; ?>>
                                     Anggota
                                 </option>

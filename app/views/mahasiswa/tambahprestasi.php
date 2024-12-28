@@ -442,7 +442,7 @@ $mahasiswaList = $prestasiController->getMahasiswaList();
                             </td>
                             <td>
                                 <select class="form-select select2" name="peran_mahasiswa[]" required>
-                                    <option value="Peserta">Anggota</option>
+                                    <option value="Anggota">Anggota</option>
                                     <option value="Ketua Tim">Ketua Tim</option>
                                 </select>
                             </td>
