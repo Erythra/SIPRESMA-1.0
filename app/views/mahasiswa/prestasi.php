@@ -1,8 +1,4 @@
-<?php
-include 'partials/header.php';
-?>
-
-
+<?php include 'partials/header.php' ?>
 
 <div class="card p-4" style="margin: 50px 84px 50px 84px; margin-top: 8rem;">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -13,20 +9,20 @@ include 'partials/header.php';
             <div class="input-group" style="max-width: 300px;">
                 <button class="btn btn-primary" type="button"
                     style="color: white; background-color: #244282; outline: none; border: none;">
-                    <i class="fas fa-search"></i>
+                    <i class="bi bi-search"></i>
                 </button>
                 <input class="form-control" placeholder="Search Prestasi" type="text" />
             </div>
             <button class="btn btn-primary d-flex justify-content-center align-items-center gap-2"
                 data-bs-toggle="modal" data-bs-target="#filterModal"
                 style="color: white; background-color: #244282; outline: none; border: none;">
-                <i class="fas fa-filter"></i>
+                <i class="bi bi-funnel"></i>
                 <p class="mb-0">Filter</p>
             </button>
             <div class="d-flex align-items-center gap-3">
                 <button class="btn btn-primary d-flex justify-content-center align-items-center gap-2"
                     style="color: white; background-color: #244282; outline: none; border: none;">
-                    <i class="fas fa-plus"></i>
+                    <i class="bi bi-plus-circle"></i>
                     <a href="index.php?page=tambahprestasi" style="text-decoration: none; color: white;">
                         <p class="mb-0">Tambah</p>
                     </a>
@@ -159,12 +155,12 @@ include 'partials/header.php';
                             <div class="d-flex align-items-center justify-content-start gap-1">
                                 <!-- Tombol Detail -->
                                 <a href="index.php?page=prestasidetail&id_prestasi=<?php echo $prestasi['id_prestasi']; ?>" class="btn btn-outline-primary btn-xs">
-                                    <i class="fas fa-file-alt"></i>
+                                    <i class="bi bi-file-earmark-text"></i>
                                 </a>
 
                                 <!-- Tombol Edit -->
                                 <a href="index.php?page=prestasiedit&id_prestasi=<?php echo $prestasi['id_prestasi']; ?>" class="btn btn-outline-warning btn-xs">
-                                    <i class="fas fa-edit"></i>
+                                    <i class="bi bi-pencil"></i>
                                 </a>
 
                             </div>
@@ -219,6 +215,3 @@ include 'partials/header.php';
 </div>
 
 <?php include 'partials/footer.php'; ?>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-</script>

@@ -4,35 +4,42 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>SIPRESMA</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"
+        integrity="sha384-1xu3hIvtwpZ2K7dCDEevO6GukF5KtAKIvPYuhU1bDrK9OK91bIY1F9WmrDCNzA3Q" crossorigin="anonymous">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:wght@400;500;700&display=swap"
-        rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="././../assets/css/mahasiswa/scroll.css">
     <link rel="stylesheet" href="././../assets/css/style.css">
     <link rel="stylesheet" href="././../assets/css/header.css">
     <link rel="stylesheet" href="././../assets/css/mahasiswa/profile.css">
     <link rel="stylesheet" href="././../assets/css/mahasiswa/editprofile.css">
     <link rel="stylesheet" href="././../assets/css/mahasiswa/tabelprestasi.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+
+    <!-- Bootstrap JS -->
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
-
-<body>
+<style>
+    body {
+        background-color: #F5F2FE;
+        margin: 0;
+    }
+</style>
+<nav>
     <div class="fixed-top">
-
-
         <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
             <div class="container">
                 <!-- Logo -->
@@ -43,32 +50,22 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav text-center">
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'home') ? 'active' : ''; ?>"
-                                href="././../public/index.php?page=home">
-                                Home
-                            </a>
+                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'home') ? 'active' : ''; ?>" href="index.php?page=home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'prestasi' || isset($_GET['page']) && $_GET['page'] == 'tambahprestasi') ? 'active' : ''; ?>"
-                                href="././../public/index.php?page=prestasi">
-                                Prestasi
-                            </a>
+                            <a class="nav-link <?php echo (isset($_GET['page']) && ($_GET['page'] == 'prestasi' || $_GET['page'] == 'tambahprestasi')) ? 'active' : ''; ?>" href="index.php?page=prestasi">Prestasi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'ipk') ? 'active' : ''; ?>"
-                                href="././../public/index.php?page=ipk">IPK</a>
+                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'ipk') ? 'active' : ''; ?>" href="index.php?page=ipk">IPK</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  <?php echo (isset($_GET['page']) && $_GET['page'] == 'peringkat_akademik') ? 'active' : ''; ?>"
-                                href="././../public/index.php?page=peringkat_akademik">Leaderboard</a>
+                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'peringkat_akademik') ? 'active' : ''; ?>" href="index.php?page=peringkat_akademik">Leaderboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'bantuan') ? 'active' : ''; ?>"
-                                href="././../public/index.php?page=bantuan">Bantuan</a>
+                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'bantuan') ? 'active' : ''; ?>" href="index.php?page=bantuan">Bantuan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'semua_pengumuman') ? 'active' : ''; ?>"
-                                href="././../public/index.php?page=semua_pengumuman">Pengumuman</a>
+                            <a class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'semua_pengumuman') ? 'active' : ''; ?>" href="index.php?page=semua_pengumuman">Pengumuman</a>
                         </li>
                     </ul>
                 </div>
@@ -124,5 +121,5 @@
         <div class="mb-5">
             <p class="info-text fw-light"></p>
         </div>
-
     </div>
+</nav>

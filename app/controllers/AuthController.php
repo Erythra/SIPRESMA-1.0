@@ -63,50 +63,6 @@ class AuthController
         return true;
     }
 
-    public function changePassword()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $oldPassword = $_POST['old_password'];
-            $newPassword = $_POST['new_password'];
-            $confirmPassword = $_POST['confirm_password'];
-
-            // Validasi input
-            if (strlen($newPassword) < 6) {
-                $_SESSION['error'] = "Password baru harus minimal 6 karakter.";
-                header("Location: index.php?page=edit");
-                return;
-            }
-
-            if ($newPassword !== $confirmPassword) {
-                $_SESSION['error'] = "Password baru dan konfirmasi password tidak cocok.";
-                header("Location: index.php?page=edit");
-                return;
-            }
-
-            // Pastikan pengguna login sebagai mahasiswa
-            $user = $_SESSION['user'] ?? null;
-            if (!$user || $user['role'] !== 'mahasiswa') {
-                $_SESSION['error'] = "Anda tidak memiliki izin untuk mengubah password.";
-                header("Location: index.php?page=login");
-                return;
-            }
-
-            $NIM = $user['NIM'];
-
-            // Ganti password
-            $result = $this->userModel->changePasswordMahasiswa($NIM, $oldPassword, $newPassword);
-
-            if ($result) {
-                $_SESSION['user']['password_mahasiswa'] = $newPassword;
-                $_SESSION['success'] = "Password berhasil diubah.";
-                header("Location: index.php?page=profile");
-            } else {
-                $_SESSION['error'] = "Password lama salah atau gagal mengubah password.";
-                header("Location: index.php?page=profile");
-            }
-        }
-    }
-
     public function getDaftarMataKuliah($id_mahasiswa, $semester)
     {
         $query = "SELECT 
@@ -282,5 +238,103 @@ class AuthController
         });
 
         return $data;
+    }
+
+    public function getLeaderboardNonAkademik()
+    {
+        // Query untuk mengambil leaderboard non-akademik
+        $query = "SELECT 
+                    m.nama_mahasiswa,
+                    m.NIM,
+                    m.program_studi,
+                    SUM(dp.poin) AS totalPoin,  -- Menjumlahkan poin untuk setiap mahasiswa
+                    m.foto_mahasiswa
+                FROM 
+                    prestasi_mahasiswa pm
+                JOIN 
+                    mahasiswa m ON pm.id_mahasiswa = m.id_mahasiswa
+                JOIN 
+                    data_prestasi dp ON pm.id_prestasi = dp.id_prestasi
+                WHERE 
+                    dp.status_pengajuan = 'Approved'
+                GROUP BY 
+                    m.nama_mahasiswa,
+                    m.NIM,
+                    m.program_studi,
+                    m.foto_mahasiswa
+                ORDER BY 
+                    totalPoin DESC";
+
+        // Eksekusi query menggunakan sqlsrv_query
+        $result = sqlsrv_query($this->conn, $query);
+
+        // Cek apakah query berhasil
+        if ($result === false) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+
+        // Ambil hasil query dalam bentuk array
+        $leaderboard = [];
+        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+            $leaderboard[] = $row;
+        }
+
+        return $leaderboard;
+    }
+
+    public function getLeaderboardAll($semester = null)
+    {
+        // Ambil leaderboard akademik
+        $academicLeaderboard = $this->getLeaderboardMahasiswa($semester);
+
+        // Ambil leaderboard non-akademik
+        $nonAcademicLeaderboard = $this->getLeaderboardNonAkademik();
+
+        // Gabungkan kedua leaderboard berdasarkan NIM (agar bisa disatukan data akademik dan non-akademik)
+        $leaderboard = [];
+
+        // Gabungkan data akademik ke leaderboard
+        foreach ($academicLeaderboard as $academic) {
+            $leaderboard[$academic['NIM']] = [
+                'NIM' => $academic['NIM'],
+                'nama_mahasiswa' => $academic['nama_mahasiswa'],
+                'foto_mahasiswa' => $academic['foto_mahasiswa'],
+                'program_studi' => $academic['program_studi'],
+                'IPK' => $academic['IPK'],
+                'Grade' => $academic['Grade'],
+                'totalPoinAkademik' => $academic['totalPoin'],  // Total Poin Akademik
+                'totalSks' => $academic['totalSks'],  // Total SKS
+                'totalPoinNonAkademik' => 0,  // Nilai default untuk Non Akademik
+            ];
+        }
+
+        // Gabungkan data non-akademik ke leaderboard
+        foreach ($nonAcademicLeaderboard as $nonAcademic) {
+            if (isset($leaderboard[$nonAcademic['NIM']])) {
+                $leaderboard[$nonAcademic['NIM']]['totalPoinNonAkademik'] = $nonAcademic['totalPoin'];
+            } else {
+                // Jika mahasiswa ini belum ada di leaderboard akademik
+                $leaderboard[$nonAcademic['NIM']] = [
+                    'NIM' => $nonAcademic['NIM'],
+                    'nama_mahasiswa' => $nonAcademic['nama_mahasiswa'],
+                    'foto_mahasiswa' => $nonAcademic['foto_mahasiswa'],
+                    'program_studi' => $nonAcademic['program_studi'],
+                    'IPK' => 0,  // Default jika tidak ada data akademik
+                    'Grade' => 'D',  // Default jika tidak ada data akademik
+                    'totalPoinAkademik' => 0,  // Default jika tidak ada data akademik
+                    'totalSks' => 0,  // Default jika tidak ada data akademik
+                    'totalPoinNonAkademik' => $nonAcademic['totalPoin'],
+                ];
+            }
+        }
+
+        // Urutkan berdasarkan gabungan total poin akademik + non-akademik
+        usort($leaderboard, function ($a, $b) {
+            $totalA = $a['totalPoinAkademik'] + $a['totalPoinNonAkademik'];
+            $totalB = $b['totalPoinAkademik'] + $b['totalPoinNonAkademik'];
+            return $totalB <=> $totalA;
+        });
+
+        return $leaderboard;
     }
 }
