@@ -16,57 +16,40 @@ if (!$user) {
     <div class="row">
         <!-- Form Section -->
         <div class="col-lg-8">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                Isi identitas anda dengan lengkap. Jika sudah selesai, klik tombol simpan.
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Isi Password baru anda. Jika sudah selesai, klik tombol simpan.
             </div>
             <form method="POST" action="index.php?action=ganti_password">
-            <?php if (isset($_SESSION['success'])): ?>
+                <?php if (isset($_SESSION['success'])): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <?php echo $_SESSION['success'];
-                                unset($_SESSION['success']); ?>
+                        unset($_SESSION['success']); ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    <?php elseif (isset($_SESSION['error'])): ?>
+                <?php elseif (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <?php echo $_SESSION['error'];
-                                unset($_SESSION['error']); ?>
+                        unset($_SESSION['error']); ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    <?php endif; ?>
+                <?php endif; ?>
                 <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="nama" class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" id="nama" name="nama"
-                            value="<?php echo htmlspecialchars($user['nama_mahasiswa']); ?>" disabled>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="nim" class="form-label">NIM</label>
-                        <input type="text" class="form-control" id="nim" name="nim"
-                            value="<?php echo htmlspecialchars($user['NIM']); ?>" disabled>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email"
-                            value="<?php echo htmlspecialchars($user['email_mahasiswa']); ?>" disabled>
-                    </div>
                     <div class="col-md-6">
                         <label for="nim" class="form-label">Password lama</label>
                         <input type="password" class="form-control" id="password_mahasiswa" name="old_password"
-                            value="" >
+                            value="">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="nim" class="form-label">Password Baru</label>
                         <input type="password" class="form-control" id="password_mahasiswa" name="new_password"
-                            value="" >
+                            value="">
                     </div>
                     <div class="col-md-6">
                         <label for="nim" class="form-label">Konfirmasi</label>
                         <input type="password" class="form-control" id="password_mahasiswa" name="confirm_password"
-                            value="" >
+                            value="">
                     </div>
                 </div>
 
@@ -79,7 +62,7 @@ if (!$user) {
 
         <!-- Profile Section -->
         <div class="col-lg-4 text-center profile-section">
-            <img src="<?php echo htmlspecialchars($user['foto_mahasiswa'] ?? 'default-image.png'); ?>"
+            <img src="<?php echo htmlspecialchars($user['foto_mahasiswa'] ?? 'https://cdn-icons-png.flaticon.com/512/149/149071.png'); ?>"
                 alt="Foto Profil">
             <h3 id="profile-name"><?php echo htmlspecialchars($user['nama_mahasiswa']); ?></h3>
             <p class="text-primary" id="profile-nim">NIM. <?php echo htmlspecialchars($user['NIM']); ?></p>

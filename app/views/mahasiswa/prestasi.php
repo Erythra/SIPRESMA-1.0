@@ -64,7 +64,7 @@
                             <label for="filterTingkat" class="form-label">Tingkat Kompetisi</label>
                             <select class="form-select" id="filterTingkat" name="tingkat_kompetisi">
                                 <option value="">All</option>
-                                <option value="Lokal" <?= isset($_GET['tingkat_kompetisi']) && $_GET['tingkat_kompetisi'] === 'Lokal' ? 'selected' : '' ?>>Lokal</option>
+                                <option value="Provinsi" <?= isset($_GET['tingkat_kompetisi']) && $_GET['tingkat_kompetisi'] === 'Provinsi' ? 'selected' : '' ?>>Provinsi</option>
                                 <option value="Nasional" <?= isset($_GET['tingkat_kompetisi']) && $_GET['tingkat_kompetisi'] === 'Nasional' ? 'selected' : '' ?>>Nasional</option>
                                 <option value="Internasional" <?= isset($_GET['tingkat_kompetisi']) && $_GET['tingkat_kompetisi'] === 'Internasional' ? 'selected' : '' ?>>Internasional</option>
                             </select>
@@ -101,6 +101,7 @@
     <table class="table table-hover ">
         <thead>
             <tr>
+                <th>Tanggal Pengajuan</th>
                 <th>Juara</th>
                 <th>Lomba</th>
                 <th>Tingkat</th>
@@ -114,6 +115,10 @@
                 <?php foreach ($prestasiList as $prestasi) : ?>
                     <tr>
                         <!-- Kolom Juara -->
+                        <td class="align-middle text-left">
+                            <?= htmlspecialchars($prestasi['tgl_pengajuan']->format('Y-m-d H:i:s')); ?>
+                        </td>
+
                         <td class="align-middle text-left">
                             <?= htmlspecialchars($prestasi['juara']); ?>
                         </td>
@@ -163,6 +168,28 @@
                                     <i class="bi bi-pencil"></i>
                                 </a>
 
+                                <!-- Tombol Delete dengan Modal -->
+                                <button class="btn btn-outline-danger btn-xs" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $prestasi['id_prestasi']; ?>">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                <!-- Modal Delete -->
+                                <div class="modal fade" id="deleteModal<?php echo $prestasi['id_prestasi']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteModalLabel">Hapus Prestasi</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Apakah Anda yakin ingin menghapus prestasi ini? Data akan dihapus secara permanen dan tidak dapat dipulihkan.
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <a href="prestasi_delete.php?id_prestasi=<?php echo $prestasi['id_prestasi']; ?>" class="btn btn-danger">Hapus</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>

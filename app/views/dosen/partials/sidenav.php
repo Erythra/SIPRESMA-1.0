@@ -15,20 +15,20 @@ $role = $_SESSION['role_dosen'] ?? ''; // Default ke 'guest' jika sesi belum dia
     <ul class="nav nav-pills flex-column mb-auto text-white" style="padding-left: 20px; padding-right: 20px;">
         <!-- Dashboard (Hanya untuk 'ketua jurusan' dan 'admin') -->
         <?php if ($role == 'ketua jurusan' || $role == 'admin'): ?>
-        <li>
-            <a href="././../public/index.php?page=dosen_dashboard" 
-                class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'dosen_dashboard') ? 'active' : ''; ?> link-body-emphasis text-white" 
-                style="padding: 14px;">
-                <i class="bi bi-grid me-2"></i>
-                Dashboard
-            </a>
-        </li>
+            <li>
+                <a href="././../public/index.php?page=dosen_dashboard"
+                    class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'dosen_dashboard') ? 'active' : ''; ?> link-body-emphasis text-white"
+                    style="padding: 14px;">
+                    <i class="bi bi-grid me-2"></i>
+                    Dashboard
+                </a>
+            </li>
         <?php endif; ?>
 
         <!-- Prestasi (Untuk Semua Role) -->
         <li>
-            <a href="././../public/index.php?page=dosen_prestasi" 
-                class="nav-link <?php echo (isset($_GET['page']) && ($_GET['page'] == 'dosen_prestasi' || $_GET['page'] == 'dosen_prestasi_add')) || isset($_GET['page']) && $_GET['page'] == 'dosen_prestasi_detail' ? 'active' : ''; ?> link-body-emphasis text-white" 
+            <a href="././../public/index.php?page=dosen_prestasi"
+                class="nav-link <?php echo (isset($_GET['page']) && ($_GET['page'] == 'dosen_prestasi' || $_GET['page'] == 'dosen_prestasi_add')) || isset($_GET['page']) && $_GET['page'] == 'dosen_prestasi_detail' ? 'active' : ''; ?> link-body-emphasis text-white"
                 style="padding: 14px;">
                 <i class="bi bi-book me-2"></i>
                 Prestasi
@@ -36,19 +36,19 @@ $role = $_SESSION['role_dosen'] ?? ''; // Default ke 'guest' jika sesi belum dia
         </li>
 
         <!-- Data IPK (Hanya untuk 'admin') -->
-        <?php if ($role == 'admin'): ?>
+        <!-- <?php if ($role == 'admin'): ?>
         <li>
             <a href="#" class="nav-link link-body-emphasis text-white" style="padding: 14px;">
                 <i class="bi bi-folder2 me-2"></i>
                 Data IPK
             </a>
         </li>
-        <?php endif; ?>
+        <?php endif; ?> -->
 
         <!-- Papan Peringkat (Untuk Semua Role) -->
         <li>
-            <a href="././../public/index.php?page=dosen_peringkat_akademik" 
-                class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'dosen_peringkat_akademik') ? 'active' : ''; ?> link-body-emphasis text-white" 
+            <a href="././../public/index.php?page=dosen_peringkat_akademik"
+                class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'dosen_peringkat_akademik') ? 'active' : ''; ?> link-body-emphasis text-white"
                 style="padding: 14px;">
                 <i class="bi bi-trophy me-2"></i>
                 Papan Peringkat
@@ -57,14 +57,14 @@ $role = $_SESSION['role_dosen'] ?? ''; // Default ke 'guest' jika sesi belum dia
 
         <!-- Pengumuman (Hanya untuk 'admin') -->
         <?php if ($role == 'admin'): ?>
-        <li>
-            <a href="././../public/index.php?page=dosen_pengumuman_list" 
-                class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'dosen_pengumuman_list') ? 'active' : ''; ?> link-body-emphasis text-white" 
-                style="padding: 14px;">
-                <i class="bi bi-megaphone me-2"></i>
-                Pengumuman
-            </a>
-        </li>
+            <li>
+                <a href="././../public/index.php?page=dosen_pengumuman_list"
+                    class="nav-link <?php echo (isset($_GET['page']) && $_GET['page'] == 'dosen_pengumuman_list') ? 'active' : ''; ?> link-body-emphasis text-white"
+                    style="padding: 14px;">
+                    <i class="bi bi-megaphone me-2"></i>
+                    Pengumuman
+                </a>
+            </li>
         <?php endif; ?>
     </ul>
 </div>

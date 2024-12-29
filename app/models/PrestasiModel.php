@@ -279,6 +279,7 @@ class PrestasiModel
     }
     public function insertPrestasi($data)
     {
+        date_default_timezone_set('Asia/Jakarta');
         sqlsrv_begin_transaction($this->conn);
 
         try {
@@ -391,9 +392,6 @@ class PrestasiModel
         }
     }
 
-
-
-
     public function updatePrestasi($data)
     {
         sqlsrv_begin_transaction($this->conn);
@@ -502,32 +500,25 @@ class PrestasiModel
         }
     }
 
-
-
-
-
-
     public function deletePrestasi($id_prestasi)
     {
-        // Step 1: Hapus data terkait di tabel prestasi_mahasiswa
         $sqlDeleteRelated = "DELETE FROM prestasi_mahasiswa WHERE id_prestasi = ?";
         $stmtDeleteRelated = sqlsrv_query($this->conn, $sqlDeleteRelated, [$id_prestasi]);
 
         if ($stmtDeleteRelated === false) {
             error_log("Error deleting related data: " . print_r(sqlsrv_errors(), true));
-            return false; // Return false if deleting related data fails
+            return false; 
         }
 
-        // Step 2: Hapus data dari tabel data_prestasi
         $sqlDeleteMain = "DELETE FROM data_prestasi WHERE id_prestasi = ?";
         $stmtDeleteMain = sqlsrv_query($this->conn, $sqlDeleteMain, [$id_prestasi]);
 
         if ($stmtDeleteMain === false) {
             error_log("Error deleting main data: " . print_r(sqlsrv_errors(), true));
-            return false; // Return false if deleting main data fails
+            return false;
         }
 
-        return true; // Return true if both operations succeed
+        return true; 
     }
 
 
@@ -613,43 +604,51 @@ class PrestasiModel
 
     public function getPrestasiByMahasiswa($id_mahasiswa, $filters = [])
     {
+        // Mulai query dasar
         $query = "SELECT dp.* 
         FROM data_prestasi dp
         INNER JOIN prestasi_mahasiswa pm ON dp.id_prestasi = pm.id_prestasi
         WHERE pm.id_mahasiswa = ?";
+
+        // Inisialisasi parameter
         $params = [$id_mahasiswa];
 
+        // Filter juara
         if (isset($filters['juara']) && $filters['juara'] !== '') {
             $query .= " AND juara = ?";
             $params[] = $filters['juara'];
         }
 
+        // Filter jenis kompetisi
         if (isset($filters['jenis_kompetisi']) && $filters['jenis_kompetisi'] !== '') {
             $query .= " AND LOWER(jenis_kompetisi) LIKE LOWER(?)";
             $params[] = '%' . strtolower($filters['jenis_kompetisi']) . '%';
         }
 
+        // Filter tingkat kompetisi
         if (isset($filters['tingkat_kompetisi']) && $filters['tingkat_kompetisi'] !== '') {
             $query .= " AND LOWER(TRIM(tingkat_kompetisi)) = LOWER(TRIM(?))";
             $params[] = $filters['tingkat_kompetisi'];
         }
 
+        // Filter tempat kompetisi
         if (isset($filters['tempat_kompetisi']) && $filters['tempat_kompetisi'] !== '') {
             $query .= " AND tempat_kompetisi = ?";
             $params[] = $filters['tempat_kompetisi'];
         }
 
+        // Filter status pengajuan
         if (isset($filters['status_pengajuan']) && $filters['status_pengajuan'] !== '') {
             $query .= " AND status_pengajuan = ?";
             $params[] = $filters['status_pengajuan'];
         }
 
+        // Tambahkan ORDER BY setelah semua filter
+        $query .= " ORDER BY dp.tgl_pengajuan DESC";
 
         // Debugging query dan parameter sebelum eksekusi
-        error_log("Input jenis_kompetisi: " . $filters['jenis_kompetisi']);
-        error_log("Final Query (After Fix): $query");
-        error_log("Params (After Fix): " . print_r($params, true));
-
+        error_log("Final Query: $query");
+        error_log("Params: " . print_r($params, true));
 
         // Eksekusi query dengan SQLSRV
         $stmt = sqlsrv_query($this->conn, $query, $params);
@@ -670,7 +669,6 @@ class PrestasiModel
 
         return $result;
     }
-
 
 
     public function editPrestasi($id_prestasi, $data)

@@ -11,6 +11,8 @@ $prestasiController = new PrestasiController($conn);
 $dosenPrestasiController = new DosenPrestasiController($conn);
 $approvalController = new ApprovalController($conn);
 
+date_default_timezone_set('Asia/Jakarta');
+
 if (isset($_SESSION['user'])) {
     $authController->isSessionActive();
 }
@@ -95,7 +97,6 @@ switch ($page) {
         if (isset($_GET['action'])) {
             $action = $_GET['action'];
             $dosen_id = $_SESSION['user']['id_dosen'];
-            // $id_prestasi = $_GET['id_prestasi'];
 
             if ($action == 'approve') {
                 $approvalController->approve($id_prestasi, $dosen_id);

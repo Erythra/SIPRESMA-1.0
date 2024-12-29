@@ -51,6 +51,8 @@ class PrestasiController
 
     public function submitForm()
     {
+        date_default_timezone_set('Asia/Jakarta');
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Data utama prestasi
             $data = [
@@ -106,6 +108,10 @@ class PrestasiController
 
             // Redirect atau tampilkan pesan berdasarkan hasil
             if ($success) {
+                // Set flash message untuk pengajuan berhasil
+                $_SESSION['flash_message'] = 'Pengajuan berhasil dikirim!';
+
+                // Redirect ke halaman prestasi
                 header('Location: index.php?page=prestasi');
                 exit;
             } else {
@@ -318,7 +324,7 @@ class PrestasiController
             ];
         }
 
-        header("Location: http://localhost/sipresma/public/index.php?page=dosen_prestasi");
+        header("Location: index.php?page=prestasi");
         exit;
     }
 

@@ -18,32 +18,36 @@ class AuthController
 
     public function login()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $password = $_POST['password'];
 
             $user = $this->userModel->validateLogin($username, $password);
 
             if ($user) {
-                // Set session data
+                // Set session
                 $_SESSION['user'] = $user;
                 $_SESSION['role_dosen'] = $user['role_dosen'] ?? '';
                 $_SESSION['loggedin_time'] = time();
 
-                // Redirect based on role_dosen
+                // Redirect berdasarkan role
                 if (isset($user['role_dosen']) && $user['role_dosen'] === 'dosen') {
                     header("Location: index.php?page=dosen_prestasi");
+                    exit();
                 } elseif (isset($user['role_dosen']) && $user['role_dosen'] === 'ketua jurusan') {
                     header("Location: index.php?page=dosen_dashboard");
+                    exit();
                 } elseif (isset($user['role_dosen']) && $user['role_dosen'] === 'admin') {
                     header("Location: index.php?page=dosen_dashboard");
+                    exit();
                 } else {
                     header("Location: index.php?page=home");
+                    exit();
                 }
             } else {
-                // Login failed, set error message
                 $_SESSION['error'] = "NIM/NIDN atau password salah.";
                 header("Location: index.php?page=login");
+                exit();
             }
         }
     }
@@ -55,13 +59,18 @@ class AuthController
         header("Location: index.php?page=login&message=logged_out");
         exit();
     }
+
     public function isSessionActive()
     {
-        if (isset($_SESSION['loggedin_time']) && (time() - $_SESSION['loggedin_time'] > 3600)) {
+        $timeout = 3600;
+        if (isset($_SESSION['loggedin_time']) && (time() - $_SESSION['loggedin_time'] > $timeout)) {
+            session_unset();
             session_destroy();
-            echo "<script>sessionExpired();</script>";
+            $_SESSION['error'] = "Sesi Anda telah habis. Silakan login kembali.";
+            header("Location: index.php?page=login");
             exit();
         }
+        $_SESSION['loggedin_time'] = time();
         return true;
     }
 
@@ -72,7 +81,6 @@ class AuthController
             $newPassword = $_POST['new_password'];
             $confirmPassword = $_POST['confirm_password'];
 
-            // Validasi input
             if (strlen($newPassword) < 6) {
                 $_SESSION['error'] = "Password baru harus minimal 6 karakter.";
                 header("Location: index.php?page=edit");
@@ -85,7 +93,6 @@ class AuthController
                 return;
             }
 
-            // Pastikan pengguna login sebagai mahasiswa
             $user = $_SESSION['user'] ?? null;
             if (!$user || $user['role'] !== 'mahasiswa') {
                 $_SESSION['error'] = "Anda tidak memiliki izin untuk mengubah password.";
@@ -95,7 +102,6 @@ class AuthController
 
             $NIM = $user['NIM'];
 
-            // Ganti password
             $result = $this->userModel->changePasswordMahasiswa($NIM, $oldPassword, $newPassword);
 
             if ($result) {
@@ -109,34 +115,40 @@ class AuthController
         }
     }
 
-    public function getDaftarMataKuliah($id_mahasiswa, $semester)
+    public function getDaftarMataKuliah($id_mahasiswa, $semester = null)
     {
         $query = "SELECT 
-                    ROW_NUMBER() OVER (ORDER BY mk.kode_mata_kuliah) AS No,
-                    mk.kode_mata_kuliah AS Kode_MK,
-                    mk.nama_mata_kuliah AS Mata_Kuliah,
-                    mk.sks AS SKS,
-                    mk.jam AS Jam,
-                    CASE
-                        WHEN n.nilai_mahasiswa >= 80 THEN 'A'
-                        WHEN n.nilai_mahasiswa >= 70 THEN 'B'
-                        WHEN n.nilai_mahasiswa >= 60 THEN 'C'
-                        ELSE 'D'
-                    END AS Nilai
-                FROM 
-                    nilai_mahasiswa n
-                INNER JOIN 
-                    mahasiswa m ON n.id_mahasiswa = m.id_mahasiswa
-                INNER JOIN 
-                    mata_kuliah mk ON n.id_mata_kuliah = mk.id_mata_kuliah
-                WHERE 
-                    n.id_mahasiswa = ? 
-                    AND mk.smt = ?";
+                ROW_NUMBER() OVER (ORDER BY mk.kode_mata_kuliah) AS No,
+                mk.kode_mata_kuliah AS Kode_MK,
+                mk.nama_mata_kuliah AS Mata_Kuliah,
+                mk.sks AS SKS,
+                mk.jam AS Jam,
+                CASE
+                    WHEN n.nilai_mahasiswa >= 80 THEN 'A'
+                    WHEN n.nilai_mahasiswa >= 70 THEN 'B'
+                    WHEN n.nilai_mahasiswa >= 60 THEN 'C'
+                    ELSE 'D'
+                END AS Nilai
+            FROM 
+                nilai_mahasiswa n
+            INNER JOIN 
+                mahasiswa m ON n.id_mahasiswa = m.id_mahasiswa
+            INNER JOIN 
+                mata_kuliah mk ON n.id_mata_kuliah = mk.id_mata_kuliah
+            WHERE 
+                n.id_mahasiswa = ?";
 
-        $params = array(
-            array($id_mahasiswa, SQLSRV_PARAM_IN),
-            array($semester, SQLSRV_PARAM_IN)
-        );
+        if ($semester !== null) {
+            $query .= " AND mk.smt = ?";
+            $params = array(
+                array($id_mahasiswa, SQLSRV_PARAM_IN),
+                array($semester, SQLSRV_PARAM_IN)
+            );
+        } else {
+            $params = array(
+                array($id_mahasiswa, SQLSRV_PARAM_IN)
+            );
+        }
 
         $stmt = sqlsrv_prepare($this->conn, $query, $params);
 
@@ -288,12 +300,12 @@ class AuthController
 
     public function getLeaderboardNonAkademik()
     {
-        // Query untuk mengambil leaderboard non-akademik
+
         $query = "SELECT 
                     m.nama_mahasiswa,
                     m.NIM,
                     m.program_studi,
-                    SUM(dp.poin) AS totalPoin,  -- Menjumlahkan poin untuk setiap mahasiswa
+                    SUM(dp.poin) AS totalPoin, 
                     m.foto_mahasiswa
                 FROM 
                     prestasi_mahasiswa pm
@@ -311,15 +323,12 @@ class AuthController
                 ORDER BY 
                     totalPoin DESC";
 
-        // Eksekusi query menggunakan sqlsrv_query
         $result = sqlsrv_query($this->conn, $query);
 
-        // Cek apakah query berhasil
         if ($result === false) {
             die(print_r(sqlsrv_errors(), true));
         }
 
-        // Ambil hasil query dalam bentuk array
         $leaderboard = [];
         while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
             $leaderboard[] = $row;
@@ -330,16 +339,13 @@ class AuthController
 
     public function getLeaderboardAll($semester = null)
     {
-        // Ambil leaderboard akademik
+
         $academicLeaderboard = $this->getLeaderboardMahasiswa($semester);
 
-        // Ambil leaderboard non-akademik
         $nonAcademicLeaderboard = $this->getLeaderboardNonAkademik();
 
-        // Gabungkan kedua leaderboard berdasarkan NIM (agar bisa disatukan data akademik dan non-akademik)
         $leaderboard = [];
 
-        // Gabungkan data akademik ke leaderboard
         foreach ($academicLeaderboard as $academic) {
             $leaderboard[$academic['NIM']] = [
                 'NIM' => $academic['NIM'],
@@ -348,33 +354,31 @@ class AuthController
                 'program_studi' => $academic['program_studi'],
                 'IPK' => $academic['IPK'],
                 'Grade' => $academic['Grade'],
-                'totalPoinAkademik' => $academic['totalPoin'],  // Total Poin Akademik
-                'totalSks' => $academic['totalSks'],  // Total SKS
-                'totalPoinNonAkademik' => 0,  // Nilai default untuk Non Akademik
+                'totalPoinAkademik' => $academic['totalPoin'],
+                'totalSks' => $academic['totalSks'],
+                'totalPoinNonAkademik' => 0,
             ];
         }
 
-        // Gabungkan data non-akademik ke leaderboard
         foreach ($nonAcademicLeaderboard as $nonAcademic) {
             if (isset($leaderboard[$nonAcademic['NIM']])) {
                 $leaderboard[$nonAcademic['NIM']]['totalPoinNonAkademik'] = $nonAcademic['totalPoin'];
             } else {
-                // Jika mahasiswa ini belum ada di leaderboard akademik
+
                 $leaderboard[$nonAcademic['NIM']] = [
                     'NIM' => $nonAcademic['NIM'],
                     'nama_mahasiswa' => $nonAcademic['nama_mahasiswa'],
                     'foto_mahasiswa' => $nonAcademic['foto_mahasiswa'],
                     'program_studi' => $nonAcademic['program_studi'],
-                    'IPK' => 0,  // Default jika tidak ada data akademik
-                    'Grade' => 'D',  // Default jika tidak ada data akademik
-                    'totalPoinAkademik' => 0,  // Default jika tidak ada data akademik
-                    'totalSks' => 0,  // Default jika tidak ada data akademik
+                    'IPK' => 0,
+                    'Grade' => 'D',
+                    'totalPoinAkademik' => 0,
+                    'totalSks' => 0,
                     'totalPoinNonAkademik' => $nonAcademic['totalPoin'],
                 ];
             }
         }
 
-        // Urutkan berdasarkan gabungan total poin akademik + non-akademik
         usort($leaderboard, function ($a, $b) {
             $totalA = $a['totalPoinAkademik'] + $a['totalPoinNonAkademik'];
             $totalB = $b['totalPoinAkademik'] + $b['totalPoinNonAkademik'];

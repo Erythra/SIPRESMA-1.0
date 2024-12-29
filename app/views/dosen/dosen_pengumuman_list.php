@@ -46,8 +46,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id_pen
 
 <div class="" style="margin-left: 317px; margin-right: 32px; margin-top: 90px;">
     <div style="margin-bottom: 17.5px;">
-        <h4 class="fw-semibold">Prestasi</h4>
-        <h6 class="fw-medium text-muted">Home - Prestasi</h6>
+        <h4 class="fw-semibold">Pengumuman</h4>
+        <h6 class="fw-medium text-muted">Home - Pengumuman</h6>
     </div>
 
     <?php if (isset($_SESSION['flash_message'])): ?>
@@ -65,7 +65,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id_pen
                     style="color: white; background-color: #244282; outline: none; border: none;">
                     <i class="fas fa-search"></i>
                 </button>
-                <input class="form-control" placeholder="Search Prestasi" type="text" />
+                <input class="form-control" placeholder="Search Pengumuman" type="text" />
             </div>
             <div class="d-flex align-items-center gap-3">
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
@@ -161,7 +161,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id_pen
                     <!-- Pesan Jika Tidak Ada Data -->
                     <tr>
                         <td colspan="7" class="text-center">
-                            Tidak ada data prestasi tersedia.
+                            Tidak ada data Pengumuman tersedia.
                         </td>
                     </tr>
                 <?php endif; ?>
