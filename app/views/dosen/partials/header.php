@@ -20,6 +20,11 @@
     <link rel="stylesheet" href="././../assets/css/style.css">
     <link rel="stylesheet" href="././../assets/css/header.css">
     <link rel="stylesheet" href="././../assets/css/mahasiswa/profile.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
 
 </head>
@@ -56,7 +61,7 @@
                         <ul class="dropdown-menu dropdown-menu-end fw-semibold custom-dropdown"
                             aria-labelledby="dropdownMenuButton">
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="index.php?page=profile">
+                                <a class="dropdown-item d-flex align-items-center" href="index.php?page=dosen_profile">
                                     <i class="bi bi-person-fill me-2"></i> View Profile
                                 </a>
                             </li>
