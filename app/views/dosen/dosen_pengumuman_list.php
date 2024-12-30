@@ -68,13 +68,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id_pen
                 <input class="form-control" placeholder="Search Pengumuman" type="text" />
             </div>
             <div class="d-flex align-items-center gap-3">
-                <button class="btn btn-primary d-flex justify-content-center align-items-center gap-2"
-                    style="color: white; background-color: #244282; outline: none; border: none;">
-                    <i class="fas fa-plus"></i>
-                    <a href="index.php?page=dosen_pengumuman_add" style="text-decoration: none; color: white;">
-                        <p class="mb-0">Tambah</p>
-                    </a>
-                </button>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                    <button class="btn btn-primary d-flex justify-content-center align-items-center gap-2"
+                        style="color: white; background-color: #244282; outline: none; border: none;">
+                        <i class="fas fa-plus"></i>
+                        <a href="index.php?page=dosen_pengumuman_add" style="text-decoration: none; color: white;">
+                            <p class="mb-0">Tambah</p>
+                        </a>
+                    </button>
+                <?php endif; ?>
+
             </div>
         </div>
 

@@ -56,7 +56,7 @@
                         <ul class="dropdown-menu dropdown-menu-end fw-semibold custom-dropdown"
                             aria-labelledby="dropdownMenuButton">
                             <li>
-                                <a class="dropdown-item d-flex align-items-center" href="index.php?page=profile">
+                                <a class="dropdown-item d-flex align-items-center" href="index.php?page=dosen_profile">
                                     <i class="bi bi-person-fill me-2"></i> View Profile
                                 </a>
                             </li>
