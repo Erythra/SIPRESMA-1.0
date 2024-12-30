@@ -502,23 +502,15 @@ class PrestasiModel
 
     public function deletePrestasi($id_prestasi)
     {
-        $sqlDeleteRelated = "DELETE FROM prestasi_mahasiswa WHERE id_prestasi = ?";
-        $stmtDeleteRelated = sqlsrv_query($this->conn, $sqlDeleteRelated, [$id_prestasi]);
+        $sql = "DELETE FROM data_prestasi WHERE id_prestasi = ?";
 
-        if ($stmtDeleteRelated === false) {
-            error_log("Error deleting related data: " . print_r(sqlsrv_errors(), true));
-            return false; 
+        $stmt = sqlsrv_query($this->conn, $sql, [$id_prestasi]);
+
+        if ($stmt === false) {
+            die(print_r(sqlsrv_errors(), true));
         }
 
-        $sqlDeleteMain = "DELETE FROM data_prestasi WHERE id_prestasi = ?";
-        $stmtDeleteMain = sqlsrv_query($this->conn, $sqlDeleteMain, [$id_prestasi]);
-
-        if ($stmtDeleteMain === false) {
-            error_log("Error deleting main data: " . print_r(sqlsrv_errors(), true));
-            return false;
-        }
-
-        return true; 
+        return true;
     }
 
 

@@ -128,7 +128,7 @@ class DosenPrestasiController
             ];
         }
 
-        header("Location: http://localhost/sipresma-1.0/public/index.php?page=dosen_prestasi");
+        header("Location: index.php?page=dosen_prestasi");
         exit;
     }
 

@@ -374,14 +374,13 @@ class DosenPrestasiModel
     {
         $sql = "DELETE FROM data_prestasi WHERE id_prestasi = ?";
 
-        // Prepare and execute the statement using sqlsrv_query
         $stmt = sqlsrv_query($this->conn, $sql, [$id_prestasi]);
 
         if ($stmt === false) {
-            die(print_r(sqlsrv_errors(), true)); // Handle query failure
+            die(print_r(sqlsrv_errors(), true));
         }
 
-        return true; // Return true if the query executed successfully
+        return true;
     }
 
     public function getPrestasiById($id_prestasi)

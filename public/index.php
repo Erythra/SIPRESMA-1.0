@@ -170,6 +170,11 @@ switch ($page) {
         $id_mahasiswa = $_SESSION['user']['id_mahasiswa'];
         $prestasiList = $prestasiController->showPrestasi($id_mahasiswa, $filters);
 
+        if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id_prestasi'])) {
+            $id_prestasi = $_GET['id_prestasi'];
+            $prestasiController->deletePrestasi($id_prestasi);
+        }
+
         include '../app/views/mahasiswa/prestasi.php';
         break;
 
@@ -189,7 +194,6 @@ switch ($page) {
     case 'tambahprestasi':
         include '../app/views/mahasiswa/tambahprestasi.php';
         break;
-
 
     case 'peringkat_akademik':
         include '../app/views/mahasiswa/peringkat_akademik.php';

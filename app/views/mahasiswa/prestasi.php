@@ -168,28 +168,49 @@
                                     <i class="bi bi-pencil"></i>
                                 </a>
 
-                                <!-- Tombol Delete dengan Modal -->
-                                <button class="btn btn-outline-danger btn-xs" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $prestasi['id_prestasi']; ?>">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                                <!-- Modal Delete -->
-                                <div class="modal fade" id="deleteModal<?php echo $prestasi['id_prestasi']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <!-- Tombol Delete -->
+                                <a href="#" class="btn btn-outline-danger btn-xs deleteButton"
+                                    data-id="<?php echo $prestasi['id_prestasi']; ?>" data-bs-toggle="modal"
+                                    data-bs-target="#confirmDeleteModal">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                                <!-- Modal Konfirmasi -->
+                                <div class="modal fade" id="confirmDeleteModal" tabindex="-1"
+                                    aria-labelledby="confirmDeleteLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel">Hapus Prestasi</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title" id="confirmDeleteLabel">Konfirmasi Penghapusan</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Apakah Anda yakin ingin menghapus prestasi ini? Data akan dihapus secara permanen dan tidak dapat dipulihkan.
+                                                <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                                                <p class="text-danger fw-bold">Data yang sudah dihapus tidak dapat dikembalikan!</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                <a href="prestasi_delete.php?id_prestasi=<?php echo $prestasi['id_prestasi']; ?>" class="btn btn-danger">Hapus</a>
+                                                <a href="#" id="confirmDeleteButton" class="btn btn-danger">Hapus</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const deleteButtons = document.querySelectorAll('.deleteButton');
+                                        const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+
+                                        deleteButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const prestasiId = this.getAttribute('data-id');
+                                                confirmDeleteButton.setAttribute('href',
+                                                    `index.php?page=prestasi&action=delete&id_prestasi=${prestasiId}`
+                                                );
+                                            });
+                                        });
+                                    });
+                                </script>
                             </div>
                         </td>
                     </tr>
