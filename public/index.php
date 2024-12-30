@@ -133,6 +133,10 @@ switch ($page) {
         include '../app/views/dosen/dosen_pengumuman_update.php';
         break;
 
+    case 'dosen_profile':
+        include '../app/views/dosen/dosen_profile.php';
+        break;
+
         // MAHASISWA
     case 'home':
         include '../app/views/mahasiswa/home.php';

@@ -76,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <div class="" style="margin-left: 317px; margin-right: 32px; margin-top: 90px;">
     <div style="margin-bottom: 17.5px;">
-        <h4 class="fw-semibold">Tambah Prestasi</h4>
-        <h6 class="fw-medium text-muted">Home - Prestasi</h6>
+        <h4 class="fw-semibold">Tambah {Pengumuman}</h4>
+        <h6 class="fw-medium text-muted">Home - Pengumuman</h6>
     </div>
     <div class="form-section card container container-form mb-5" style="padding:24px 30px 24px 30px;">
         <h5 style="color: #475261;; font-size: 20px; margin-bottom: 20px;" class="fw-semibold">

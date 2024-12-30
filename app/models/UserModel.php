@@ -24,7 +24,7 @@ class UserModel
         }
 
         // dosen
-        $sqlDosen = "SELECT id_dosen, NIDN, role_dosen, nama_dosen FROM dosen WHERE NIDN = ? AND password_dosen = ?";
+        $sqlDosen = "SELECT id_dosen, NIDN, role_dosen, nama_dosen, email_dosen FROM dosen WHERE NIDN = ? AND password_dosen = ?";
         $stmt = sqlsrv_prepare($this->conn, $sqlDosen, array(&$username, &$password));
 
         if (sqlsrv_execute($stmt)) {
